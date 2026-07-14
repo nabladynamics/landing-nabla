@@ -1,0 +1,158 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", sans-serif;
+  --font-display: var(--font-space-grotesk), var(--font-inter), ui-sans-serif,
+    system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, "SF Mono", "Menlo",
+    monospace;
+}
+
+@theme {
+  /* Surfaces */
+  --color-void: #05070d;
+  --color-raise: #0a0e19;
+  /* Hairlines */
+  --color-line: #8fa0c226;
+  --color-line-strong: #8fa0c240;
+  /* Text */
+  --color-frost: #eef1f8;
+  --color-fog: #9aa4bb;
+  /* Accents */
+  --color-volt: #7c5aff;
+  --color-volt-bright: #a18aff;
+  --color-pulse: #4f8dff;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5.5rem;
+}
+
+body {
+  background-color: var(--color-void);
+  color: var(--color-frost);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: rgba(124, 90, 255, 0.35);
+  color: var(--color-frost);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-volt);
+  outline-offset: 2px;
+}
+
+/* Decorative animations — all disabled under prefers-reduced-motion below. */
+
+@keyframes ping-soft {
+  0% {
+    transform: scale(0.5);
+    opacity: 0.9;
+  }
+  70% {
+    transform: scale(1.9);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.9);
+    opacity: 0;
+  }
+}
+
+@keyframes dash-flow {
+  to {
+    stroke-dashoffset: -28;
+  }
+}
+
+@keyframes cell-glow {
+  0%,
+  100% {
+    opacity: 0.12;
+  }
+  50% {
+    opacity: 0.75;
+  }
+}
+
+@keyframes travel-x {
+  0% {
+    left: 0%;
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    left: calc(100% - 6px);
+    opacity: 0;
+  }
+}
+
+@keyframes drift-up {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 0 -72px;
+  }
+}
+
+@keyframes bob-y {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(6px);
+  }
+}
+
+.anim-ping-soft {
+  animation: ping-soft 2.6s cubic-bezier(0, 0, 0.2, 1) infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.anim-dash {
+  animation: dash-flow 1.6s linear infinite;
+}
+
+.anim-cell {
+  animation: cell-glow 2.8s ease-in-out infinite;
+}
+
+.anim-travel {
+  animation: travel-x 3.2s ease-in-out infinite;
+}
+
+.anim-drift {
+  animation: drift-up 6s linear infinite;
+}
+
+.anim-bob {
+  animation: bob-y 2.4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .anim-ping-soft,
+  .anim-dash,
+  .anim-cell,
+  .anim-travel,
+  .anim-drift,
+  .anim-bob {
+    animation: none !important;
+  }
+}
