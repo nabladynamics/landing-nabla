@@ -6,18 +6,12 @@ export type ContactPayload = {
 };
 
 /**
- * Frontend submission handler. Point NEXT_PUBLIC_CONTACT_ENDPOINT at a
- * Formspree form, a Resend-backed route handler or any custom API to start
- * receiving submissions; until then the payload is accepted locally so the
- * full UI flow can be exercised.
+ * Posts the form to the Resend-backed route handler (app/api/contact).
+ * NEXT_PUBLIC_CONTACT_ENDPOINT overrides the target if the form ever needs
+ * to bypass the built-in handler (e.g. Formspree).
  */
 export async function submitContact(payload: ContactPayload): Promise<void> {
-  const endpoint = process.env.NEXT_PUBLIC_CONTACT_ENDPOINT;
-
-  if (!endpoint) {
-    await new Promise((resolve) => setTimeout(resolve, 800));
-    return;
-  }
+  const endpoint = process.env.NEXT_PUBLIC_CONTACT_ENDPOINT ?? "/api/contact";
 
   const response = await fetch(endpoint, {
     method: "POST",
