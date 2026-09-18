@@ -8,10 +8,10 @@ import { container } from "@/lib/site";
 const principles = [
   "Physics-first numerical simulation",
   "Adaptive computation",
-  "GPU-native execution",
-  "Machine learning where it creates measurable value",
-  "Physically consistent outputs",
-  "Generalisation beyond narrow training distributions",
+  "No body-fitted volume meshing",
+  "Physical evaluation of AI-generated designs",
+  "Benchmark-led validation",
+  "Physics-led design iteration",
 ];
 
 type Row = { text: string; pro?: boolean };
@@ -33,10 +33,10 @@ const approaches: {
   {
     name: "Pure AI surrogate",
     rows: [
-      { text: "Extremely fast", pro: true },
+      { text: "Fast inference", pro: true },
       { text: "Limited generalisation" },
       { text: "Training-data dependent" },
-      { text: "Hard to trust" },
+      { text: "Requires physical validation" },
     ],
   },
   {
@@ -45,8 +45,8 @@ const approaches: {
     rows: [
       { text: "Physics-first", pro: true },
       { text: "Adaptive compute", pro: true },
-      { text: "GPU-native", pro: true },
-      { text: "Automated workflow", pro: true },
+      { text: "Vortex-based flow", pro: true },
+      { text: "Workflow automation", pro: true },
     ],
   },
 ];
@@ -57,8 +57,8 @@ export function Differentiation() {
       <div className={container}>
         <SectionHeading
           eyebrow="Approach"
-          title="Not another CFD surrogate model."
-          lede="Neural surrogates trained on libraries of precomputed simulations can be extremely fast — but they inherit the limits of their training data and offer no physical guarantees on genuinely new designs. Nabla AI is a numerical simulation engine first; machine learning enters only where it accelerates the physics without compromising it."
+          title="AI-generated designs need physical validation."
+          lede="AI can generate candidate geometries, but engineers still need to establish how they behave under real operating conditions. Nabla is being built as a numerical physics engine for that evaluation, starting with CFD."
         />
 
         <Reveal delay={0.1}>
@@ -98,7 +98,7 @@ export function Differentiation() {
                   </h3>
                   {approach.highlight ? (
                     <span className="rounded-full border border-volt/50 px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-[0.14em] text-volt-bright">
-                      our approach
+                      in development
                     </span>
                   ) : null}
                 </div>

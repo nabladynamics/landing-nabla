@@ -6,11 +6,11 @@ import { SectionHeading } from "@/components/ui/section-heading";
 import { container } from "@/lib/site";
 
 const painPoints = [
-  "Manual meshing and geometry clean-up",
+  "Conventional body-fitted volume meshing",
   "Hand-tuned models, solvers and parameters",
   "Uniform or poorly allocated resolution",
   "Long iteration cycles",
-  "Expensive compute infrastructure",
+  "High simulation costs",
   "Highly specialised engineering teams",
 ];
 
@@ -66,7 +66,7 @@ export function Problem() {
           <SectionHeading
             eyebrow="The problem"
             title="High-fidelity simulation remains too slow and too manual."
-            lede="A single trustworthy result can take days or weeks — most of it spent preparing the simulation rather than learning from it. Today's high-fidelity CFD workflows still depend on:"
+            lede="AI is accelerating design generation, but each candidate still needs physical validation. Conventional CFD preparation and computing costs can slow that feedback loop."
           />
           <Reveal delay={0.15} className="lg:pt-14">
             <ul className="space-y-3.5">
@@ -95,7 +95,7 @@ export function Problem() {
                 </h3>
                 <p className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.14em] text-fog/60">
                   <RotateCcw className="h-3.5 w-3.5" aria-hidden="true" />
-                  repeat for days–weeks
+                  repeated preparation cycles
                 </p>
               </div>
               <StepChips steps={traditionalSteps} />
@@ -109,7 +109,7 @@ export function Problem() {
                   Nabla AI workflow
                 </h3>
                 <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-fog/70">
-                  automated · adaptive · continuous
+                  target: automated · adaptive
                 </p>
               </div>
               <StepChips steps={nablaSteps} accent />

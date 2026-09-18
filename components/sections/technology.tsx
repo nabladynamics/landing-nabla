@@ -22,25 +22,25 @@ const blocks: Block[] = [
   {
     index: "01",
     title: "Dynamic resolution allocation",
-    body: "The engine continuously reallocates computational resolution toward shocks, vortices, boundary layers and other physically relevant structures — instead of spending compute uniformly across the domain.",
+    body: "Moving vortex elements follow the evolving flow, with adaptive resolution intended to concentrate computation where aerodynamic detail matters.",
     diagram: <AMRDiagram />,
   },
   {
     index: "02",
-    title: "Automated solver orchestration",
-    body: "Nabla AI selects and coordinates numerical methods, fidelity levels and solver configurations based on the evolving flow — no manual tuning loop.",
+    title: "Workflow automation",
+    body: "We are developing automation to reduce simulation preparation and manual solver setup, helping engineers move from geometry to physical evaluation.",
     diagram: <OrchestratorDiagram />,
   },
   {
     index: "03",
-    title: "GPU-native architecture",
-    body: "The complete simulation pipeline is designed around modern GPU hardware, rather than adapted from legacy CPU-based architectures.",
+    title: "Beyond body-fitted volume meshes",
+    body: "Our vortex-based approach removes the need for conventional body-fitted volume meshing, with the aim of reducing preparation time and computing cost.",
     diagram: <GPUDiagram />,
   },
   {
     index: "04",
-    title: "Configurable fidelity",
-    body: "Users can balance speed and accuracy across a spectrum ranging from engineering-grade LES to near-DNS fidelity, per case and per question.",
+    title: "Higher resolution, targeted effort",
+    body: "Our goal is to resolve more flow detail while keeping simulations practical in time and cost. Performance will be assessed through benchmarks against published experiments.",
     diagram: <FidelityDiagram />,
   },
 ];
@@ -51,8 +51,8 @@ export function Technology() {
       <div className={container}>
         <SectionHeading
           eyebrow="Technology"
-          title="A simulation engine that understands where compute matters."
-          lede="Resolution is treated as a dynamic resource — allocated in space and time by the physics of the flow, not fixed upfront by a mesh."
+          title="Resolution where the physics demands it."
+          lede="We are developing a CFD engine based on moving vortex elements, with adaptive resolution guided by the evolving flow. Faster preparation, shorter simulations and lower computing costs are development goals."
         />
 
         <div className="mt-14 grid gap-x-10 gap-y-14 md:grid-cols-2">

@@ -1,8 +1,8 @@
 export const site = {
   name: "Nabla AI",
-  tagline: "Physics-first, GPU-native CFD",
+  tagline: "Physics-first, adaptive CFD",
   description:
-    "Nabla AI is building a physics-first, GPU-native CFD engine for faster, more automated high-fidelity engineering simulation.",
+    "Nabla AI is developing a CFD engine aimed at faster simulations, lower costs and higher resolution, without conventional body-fitted volume meshing.",
   calendly: "https://calendly.com/massomarti/30min",
   locations: "Barcelona · San Francisco",
 } as const;

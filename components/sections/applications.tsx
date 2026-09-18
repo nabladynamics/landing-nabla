@@ -44,7 +44,7 @@ export function Applications() {
         <SectionHeading
           eyebrow="Applications"
           title="One engine, multiple engineering domains."
-          lede="The same adaptive core applies wherever turbulence, heat and high-speed flow decide how a product performs."
+          lede="Our long-term aim is to extend the adaptive core to engineering problems where turbulence, heat and high-speed flow determine performance."
         />
 
         <Reveal delay={0.1}>

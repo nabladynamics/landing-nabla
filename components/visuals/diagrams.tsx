@@ -114,7 +114,7 @@ export function OrchestratorDiagram() {
       ))}
 
       <text x="16" y="170" className={`${label} fill-fog/60`} style={labelStyle}>
-        closed-loop selection during the run
+        goal: automated solver selection
       </text>
     </Frame>
   );
@@ -155,13 +155,13 @@ export function GPUDiagram() {
             className={`${label} fill-pulse`}
             style={{ ...labelStyle, fontSize: 7 }}
           >
-            HBM
+            FLOW
           </text>
         </g>
       ))}
       <path d="M78 91H100M220 91H240" stroke="#4f8dff" strokeOpacity="0.5" strokeDasharray="3 4" className="anim-dash" fill="none" />
       <text x="160" y="170" textAnchor="middle" className={`${label} fill-fog/60`} style={labelStyle}>
-        solver resident in GPU memory
+        physics-led computation
       </text>
     </Frame>
   );
@@ -197,13 +197,13 @@ export function FidelityDiagram() {
       <circle cx="228" cy="122" r="8" fill="none" stroke="#a18aff" strokeOpacity="0.9" className="anim-ping-soft" />
       <circle cx="228" cy="122" r="4" fill="#7c5aff" stroke="#eef1f8" strokeWidth="1" />
       <text x="30" y="146" className={`${label} fill-fog/70`} style={labelStyle}>
-        engineering LES
+        flow scales
       </text>
       <text x="290" y="146" textAnchor="end" className={`${label} fill-volt-bright`} style={labelStyle}>
-        near-DNS
+        finer detail
       </text>
       <text x="30" y="170" className={`${label} fill-fog/50`} style={labelStyle}>
-        accuracy ↔ speed, set per case
+        goal: detail where physics demands
       </text>
     </Frame>
   );

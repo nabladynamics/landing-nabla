@@ -1,6 +1,6 @@
 # Nabla AI — Landing
 
-Marketing site for Nabla AI: a physics-first, GPU-native CFD engine.
+Marketing site for Nabla AI: a physics-first, adaptive CFD engine in development.
 
 ## Stack
 

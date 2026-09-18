@@ -7,8 +7,8 @@ const PLAYBACK_RATE = 0.5;
 
 export function HeroVideo() {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const playbackRequested = useRef<boolean | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [playbackRequested, setPlaybackRequested] = useState<boolean | null>(null);
   const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
@@ -22,7 +22,7 @@ export function HeroVideo() {
       video.defaultPlaybackRate = PLAYBACK_RATE;
       video.playbackRate = PLAYBACK_RATE;
 
-      const shouldPlay = playbackRequested ?? !motion.matches;
+      const shouldPlay = playbackRequested.current ?? !motion.matches;
       if (shouldPlay && onScreen && !document.hidden) {
         // Muted autoplay can still be blocked by a browser or power-saving mode.
         void video.play().catch(() => {});
@@ -51,7 +51,21 @@ export function HeroVideo() {
       motion.removeEventListener("change", syncPlayback);
       video.pause();
     };
-  }, [playbackRequested]);
+  }, []);
+
+  const togglePlayback = () => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    playbackRequested.current = video.paused;
+    if (video.paused) {
+      video.playbackRate = PLAYBACK_RATE;
+      // Keep this attempt inside the click gesture, and allow a retry if blocked.
+      void video.play().catch(() => {});
+    } else {
+      video.pause();
+    }
+  };
 
   return (
     <>
@@ -80,7 +94,7 @@ export function HeroVideo() {
       {!hasError && (
         <button
           type="button"
-          onClick={() => setPlaybackRequested(!isPlaying)}
+          onClick={togglePlayback}
           aria-label={isPlaying ? "Pause background video" : "Play background video"}
           className="absolute bottom-8 right-6 z-20 inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-void/50 text-frost backdrop-blur-sm transition-colors hover:border-white/50 hover:bg-void/80 sm:right-8"
         >

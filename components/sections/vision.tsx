@@ -27,16 +27,16 @@ export function Vision() {
         </Reveal>
         <Reveal delay={0.15}>
           <p className="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-fog">
-            Instead of waiting days for a simulation result, engineers should
-            be able to explore designs, test hypotheses and iterate at the
-            speed of thought.
+            As AI generates more candidate designs, our ambition is to make
+            physical evaluation fast enough to support a continuous cycle of
+            generating, simulating and improving them.
           </p>
           <p className="mx-auto mt-5 max-w-2xl font-display text-xl font-medium text-frost">
             Nabla AI is building the{" "}
             <span className="bg-gradient-to-r from-volt-bright to-pulse bg-clip-text text-transparent">
               computational layer
             </span>{" "}
-            that makes this possible.
+            to help make this possible.
           </p>
         </Reveal>
       </div>
