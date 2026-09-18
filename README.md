@@ -32,6 +32,6 @@ Copy `.env.example` to `.env.local` and fill in the values. Remember to add the 
 
 ## Notes
 
-- The hero visualisation ([components/visuals/flow-canvas.tsx](components/visuals/flow-canvas.tsx)) is a canvas simulation of flow past a cylinder with an adaptive quadtree mesh. It pauses off-screen and renders a static streamline plot under `prefers-reduced-motion`.
+- The hero background ([components/visuals/hero-video.tsx](components/visuals/hero-video.tsx)) plays `public/videos/meshing-video.mp4` muted, on a loop, at 0.5× speed (roughly 20 seconds per loop). Its framing crops out the source's right-side logo. It pauses off-screen and in hidden tabs, shows a poster under `prefers-reduced-motion`, and includes a play/pause control.
 - Founder avatars are typographic placeholders, ready to be swapped for photos.
 - The footer LinkedIn link is a placeholder (`#`) until the company profile exists.

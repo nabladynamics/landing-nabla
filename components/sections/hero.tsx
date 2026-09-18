@@ -3,7 +3,7 @@
 import { m } from "framer-motion";
 import { ArrowRight, ChevronDown } from "lucide-react";
 import { CTA } from "@/components/ui/cta";
-import { FlowCanvas } from "@/components/visuals/flow-canvas";
+import { HeroVideo } from "@/components/visuals/hero-video";
 import { container, site } from "@/lib/site";
 
 const ease: [number, number, number, number] = [0.22, 0.61, 0.36, 1];
@@ -16,17 +16,13 @@ const fadeUp = (delay: number) => ({
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden pb-16 pt-32 lg:pt-40">
-      <div aria-hidden="true" className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(143,160,194,0.055)_1px,transparent_1px),linear-gradient(90deg,rgba(143,160,194,0.055)_1px,transparent_1px)] bg-[size:56px_56px] [mask-image:radial-gradient(ellipse_80%_65%_at_50%_30%,black,transparent)]" />
-        <div className="absolute -top-44 left-1/3 h-[460px] w-[620px] -translate-x-1/2 rounded-full bg-volt/15 blur-[150px]" />
-        <div className="absolute right-0 top-1/3 h-[340px] w-[460px] translate-x-1/3 rounded-full bg-pulse/10 blur-[150px]" />
-      </div>
+    <section className="relative isolate flex min-h-[min(900px,100svh)] flex-col justify-center overflow-hidden bg-void pb-32 pt-36 sm:pt-40 lg:pb-36">
+      <HeroVideo />
 
       <div
-        className={`${container} grid items-center gap-14 lg:grid-cols-[1.03fr_0.97fr] lg:gap-12`}
+        className={`${container} relative z-10`}
       >
-        <div>
+        <div className="max-w-2xl">
           <m.p
             {...fadeUp(0)}
             className="inline-flex items-center gap-2.5 rounded-full border border-line bg-raise/60 px-4 py-1.5 font-mono text-[11px] uppercase tracking-[0.2em] text-fog"
@@ -40,7 +36,7 @@ export function Hero() {
 
           <m.h1
             {...fadeUp(0.1)}
-            className="mt-7 font-display text-[2.6rem] font-semibold leading-[1.06] tracking-tight text-frost sm:text-5xl lg:text-[3.5rem] xl:text-[3.9rem]"
+            className="mt-7 font-display text-[2.6rem] font-semibold leading-[1.06] tracking-tight text-frost sm:text-6xl lg:text-[4.25rem]"
           >
             High-fidelity CFD, rebuilt for the{" "}
             <span className="whitespace-nowrap bg-gradient-to-r from-volt-bright to-pulse bg-clip-text text-transparent">
@@ -50,7 +46,7 @@ export function Hero() {
 
           <m.p
             {...fadeUp(0.2)}
-            className="mt-6 max-w-xl text-lg leading-relaxed text-fog"
+            className="mt-6 max-w-xl text-lg leading-relaxed text-frost/80"
           >
             Nabla AI is building a physics-first, GPU-native simulation engine
             that dynamically concentrates compute where it matters most.
@@ -61,14 +57,14 @@ export function Hero() {
               Book a conversation
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </CTA>
-            <CTA href="#technology" variant="secondary">
+            <CTA href="#technology" variant="secondary" className="bg-void/35 backdrop-blur-sm">
               Explore the technology
             </CTA>
           </m.div>
 
           <m.ul
             {...fadeUp(0.42)}
-            className="mt-12 flex flex-wrap gap-x-8 gap-y-2.5 border-t border-line pt-6 font-mono text-xs uppercase tracking-[0.14em] text-fog/80"
+            className="mt-12 flex flex-wrap gap-x-8 gap-y-2.5 border-t border-white/15 pt-6 font-mono text-xs uppercase tracking-[0.14em] text-frost/70"
           >
             <li>Dynamic resolution</li>
             <li>Solver orchestration</li>
@@ -76,32 +72,9 @@ export function Hero() {
           </m.ul>
         </div>
 
-        <m.div {...fadeUp(0.22)} className="relative">
-          <div className="overflow-hidden rounded-xl border border-line bg-raise/50 shadow-[0_0_90px_rgba(124,90,255,0.10)]">
-            <div className="flex items-center justify-between gap-3 border-b border-line px-4 py-2.5 font-mono text-[11px] uppercase tracking-[0.16em] text-fog/80">
-              <span>Adaptive simulation preview</span>
-              <span className="text-volt-bright">AMR · L6</span>
-            </div>
-            <FlowCanvas className="aspect-[4/3] w-full sm:aspect-[16/10]" />
-            <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-t border-line px-4 py-2.5 font-mono text-[11px] text-fog/80">
-              <span className="inline-flex items-center gap-2">
-                <span
-                  aria-hidden="true"
-                  className="h-1.5 w-14 rounded-full bg-gradient-to-r from-pulse via-frost/60 to-volt"
-                />
-                vorticity
-              </span>
-              <span>∇ · u = 0</span>
-            </div>
-          </div>
-          <p className="mt-3 text-center font-mono text-[11px] text-fog/60">
-            Live in-browser demo — cells refine around the wake as vortices
-            shed.
-          </p>
-        </m.div>
       </div>
 
-      <div className="mt-14 flex justify-center lg:mt-16">
+      <div className="absolute inset-x-0 bottom-8 z-10 flex justify-center">
         <a
           href="#problem"
           aria-label="Scroll to the next section"
