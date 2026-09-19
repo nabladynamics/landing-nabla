@@ -1,123 +1,114 @@
 "use client";
 
-import { ArrowRight, RotateCcw } from "lucide-react";
 import { Reveal } from "@/components/ui/reveal";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { container } from "@/lib/site";
 
-const painPoints = [
-  "Conventional body-fitted volume meshing",
-  "Hand-tuned models, solvers and parameters",
-  "Uniform or poorly allocated resolution",
-  "Long iteration cycles",
-  "High simulation costs",
-  "Highly specialised engineering teams",
+const stats = [
+  {
+    value: "30 years",
+    label: "since the core CFD workflow last changed: mesh, tune, solve, wait.",
+  },
+  {
+    value: "~60%",
+    label:
+      "of the human effort in a simulation is preprocessing, mostly mesh generation.",
+  },
+  {
+    value: "Days",
+    label:
+      "of compute lost each time a run diverges on a mesh that looked fine.",
+  },
 ];
 
-const traditionalSteps = [
-  "Geometry",
-  "Meshing",
-  "Solver setup",
-  "Run",
-  "Debug",
-  "Remesh",
-  "Run again",
+const pains = [
+  {
+    title: "The run diverges on day three.",
+    body: "You spent a week on the mesh, handed it to the solver and waited. Then a handful of bad cells blew up the residuals, and you are back at the mesh. Again.",
+  },
+  {
+    title: "Preprocessing eats the schedule.",
+    body: "NASA's CFD Vision 2030 study names mesh generation as a major workflow bottleneck, often dominating the human effort a simulation requires. The physics has not even started.",
+  },
+  {
+    title: "Same geometry, two engineers, two drag numbers.",
+    body: "The answer depends on the mesh and the parameters you picked, not only on the physics. Nobody actually wants that.",
+  },
+  {
+    title: "It takes a whole team.",
+    body: "Meshing specialists, solver experts, an HPC budget and weeks of calendar time. All of it for a single design point.",
+  },
+  {
+    title: "The wind tunnel is still the fallback.",
+    body: "Not because blowing air at a scale model is cheap, fast or convenient, but because nobody has made simulation trustworthy enough to replace it.",
+  },
+  {
+    title: "Turbulence gets approximated, not resolved.",
+    body: "Quieter, safer, more efficient vehicles are decided by eddies a tenth of a hair wide. Resolving them costs more than anyone can afford, so it rarely happens.",
+  },
 ];
-
-const nablaSteps = ["Geometry", "Physics intent", "Adaptive simulation", "Results"];
-
-function StepChips({
-  steps,
-  accent = false,
-}: {
-  steps: string[];
-  accent?: boolean;
-}) {
-  return (
-    <ol className="flex flex-wrap items-center gap-x-2.5 gap-y-3">
-      {steps.map((step, index) => (
-        <li key={step} className="flex items-center gap-2.5">
-          <span
-            className={`rounded-md border px-3 py-1.5 text-[13px] ${
-              accent
-                ? "border-volt/40 bg-volt/10 text-frost"
-                : "border-line bg-raise/60 text-fog"
-            }`}
-          >
-            {step}
-          </span>
-          {index < steps.length - 1 ? (
-            <ArrowRight
-              aria-hidden="true"
-              className={`h-3.5 w-3.5 shrink-0 ${accent ? "text-volt-bright" : "text-fog/40"}`}
-            />
-          ) : null}
-        </li>
-      ))}
-    </ol>
-  );
-}
 
 export function Problem() {
   return (
     <section id="problem" className="py-24 md:py-32">
       <div className={container}>
-        <div className="grid gap-12 lg:grid-cols-[1fr_0.85fr] lg:gap-20">
+        <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-20">
           <SectionHeading
-            eyebrow="The problem"
-            title="High-fidelity simulation remains too slow and too manual."
-            lede="AI is accelerating design generation, but each candidate still needs physical validation. Conventional CFD preparation and computing costs can slow that feedback loop."
+            title="Simulation is the cheapest place to find out you got it wrong. It is still far too expensive."
           />
-          <Reveal delay={0.15} className="lg:pt-14">
-            <ul className="space-y-3.5">
-              {painPoints.map((point) => (
-                <li
-                  key={point}
-                  className="flex items-start gap-3 border-b border-line pb-3.5 text-[15px] text-fog"
-                >
-                  <span
-                    aria-hidden="true"
-                    className="mt-[9px] h-px w-4 shrink-0 bg-fog/50"
-                  />
-                  {point}
-                </li>
-              ))}
-            </ul>
+          <Reveal delay={0.12} className="space-y-5 text-base leading-relaxed text-fog sm:text-lg lg:pt-2">
+            <p>
+              Every aircraft, ship, submarine and rocket is a shape that has to
+              survive contact with air or water. CFD is how engineers find out
+              on a computer whether it flies, goes fast or holds together,
+              before anyone cuts metal.
+            </p>
+            <p>
+              Yet the workflow has not fundamentally changed in three decades:
+              wrap the geometry in a body-fitted mesh, tune the parameters, hand
+              it to a finite-volume solver, wait. The industry feels that cost
+              every day.
+            </p>
           </Reveal>
         </div>
 
-        <div className="mt-16 space-y-5 md:mt-20">
-          <Reveal>
-            <div className="rounded-xl border border-line bg-raise/30 p-6 sm:p-8">
-              <div className="mb-6 flex flex-wrap items-center justify-between gap-x-6 gap-y-2">
-                <h3 className="font-mono text-xs uppercase tracking-[0.2em] text-fog">
-                  Traditional CFD workflow
-                </h3>
-                <p className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.14em] text-fog/60">
-                  <RotateCcw className="h-3.5 w-3.5" aria-hidden="true" />
-                  repeated preparation cycles
-                </p>
+        <Reveal delay={0.1}>
+          <dl className="mt-16 grid gap-6 border-y border-line py-8 sm:grid-cols-3 sm:gap-10 md:mt-20">
+            {stats.map((stat) => (
+              <div key={stat.value}>
+                <dt className="font-display text-4xl font-semibold tracking-tight text-volt sm:text-5xl">
+                  {stat.value}
+                </dt>
+                <dd className="mt-3 max-w-xs text-[15px] leading-relaxed text-fog">
+                  {stat.label}
+                </dd>
               </div>
-              <StepChips steps={traditionalSteps} />
-            </div>
-          </Reveal>
+            ))}
+          </dl>
+        </Reveal>
 
-          <Reveal delay={0.12}>
-            <div className="rounded-xl border border-volt/35 bg-gradient-to-b from-volt/[0.07] to-transparent p-6 shadow-[0_0_60px_rgba(124,90,255,0.08)] sm:p-8">
-              <div className="mb-6 flex flex-wrap items-center justify-between gap-x-6 gap-y-2">
-                <h3 className="font-mono text-xs uppercase tracking-[0.2em] text-volt-bright">
-                  Nabla AI workflow
-                </h3>
-                <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-fog/70">
-                  target: automated · adaptive
-                </p>
-              </div>
-              <StepChips steps={nablaSteps} accent />
-              <div className="relative mt-7 h-px bg-line" aria-hidden="true">
-                <span className="anim-travel absolute top-1/2 h-1.5 w-1.5 -translate-y-1/2 rounded-full bg-volt shadow-[0_0_10px_rgba(124,90,255,0.9)]" />
-              </div>
-            </div>
+        <div className="mt-16 md:mt-20">
+          <Reveal>
+            <h3 className="font-display text-2xl font-medium tracking-tight text-frost sm:text-3xl">
+              If you have run CFD, you know these.
+            </h3>
           </Reveal>
+          <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {pains.map((pain, i) => (
+              <li key={pain.title} className="h-full">
+                <Reveal delay={0.06 * (i % 3)} className="h-full">
+                  <div className="flex h-full flex-col rounded-2xl border border-line bg-white p-6 sm:p-7">
+                    <p className="font-display text-xl font-semibold leading-snug tracking-tight text-frost">
+                      {pain.title}
+                    </p>
+                    <p className="mt-4 text-[15px] leading-relaxed text-fog">
+                      {pain.body}
+                    </p>
+                  </div>
+                </Reveal>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </section>

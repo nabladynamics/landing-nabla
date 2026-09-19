@@ -86,9 +86,9 @@ export function HeroVideo() {
           onPause={() => setIsPlaying(false)}
           onError={() => setHasError(true)}
         />
-        <div className="absolute inset-0 bg-void/35" />
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,7,13,0.88)_0%,rgba(5,7,13,0.65)_38%,rgba(5,7,13,0.12)_75%)]" />
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,7,13,0.8)_0%,transparent_24%,transparent_65%,#05070d_100%)]" />
+        <div className="absolute inset-0 bg-void/70 lg:bg-void/10" />
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,#fcfcfa_0%,rgba(252,252,250,0.97)_28%,rgba(252,252,250,0.85)_43%,rgba(252,252,250,0.12)_80%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,#fcfcfa_0%,rgba(252,252,250,0.2)_28%,transparent_65%,#fcfcfa_100%)]" />
       </div>
 
       {!hasError && (
@@ -96,7 +96,7 @@ export function HeroVideo() {
           type="button"
           onClick={togglePlayback}
           aria-label={isPlaying ? "Pause background video" : "Play background video"}
-          className="absolute bottom-8 right-6 z-20 inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-void/50 text-frost backdrop-blur-sm transition-colors hover:border-white/50 hover:bg-void/80 sm:right-8"
+          className="absolute bottom-8 right-6 z-20 inline-flex h-11 w-11 items-center justify-center rounded-full border border-line-strong bg-white/90 text-frost backdrop-blur-sm transition-colors hover:border-volt/50 hover:text-volt sm:right-8"
         >
           {isPlaying ? <Pause className="h-4 w-4" aria-hidden="true" /> : <Play className="h-4 w-4" aria-hidden="true" />}
         </button>

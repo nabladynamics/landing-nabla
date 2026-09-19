@@ -4,7 +4,7 @@ import { container, navLinks, site } from "@/lib/site";
 
 export function Footer() {
   return (
-    <footer className="border-t border-line">
+    <footer className="border-t border-line bg-raise/50">
       <div className={`${container} py-14`}>
         <div className="flex flex-col justify-between gap-10 md:flex-row md:items-start">
           <div className="max-w-xs">
@@ -12,14 +12,14 @@ export function Footer() {
             <p className="mt-4 text-sm leading-relaxed text-fog">
               {site.tagline}.
             </p>
-            <p className="mt-2 font-mono text-xs uppercase tracking-[0.18em] text-fog/70">
+            <p className="mt-2 text-sm text-fog">
               {site.locations}
             </p>
           </div>
 
           <div className="flex flex-wrap gap-x-16 gap-y-8">
             <nav aria-label="Footer">
-              <p className="font-mono text-xs uppercase tracking-[0.18em] text-fog/70">
+              <p className="text-sm font-semibold text-frost">
                 Explore
               </p>
               <ul className="mt-4 space-y-2.5">
@@ -37,7 +37,7 @@ export function Footer() {
             </nav>
 
             <div>
-              <p className="font-mono text-xs uppercase tracking-[0.18em] text-fog/70">
+              <p className="text-sm font-semibold text-frost">
                 Connect
               </p>
               <ul className="mt-4 space-y-2.5">
@@ -65,10 +65,9 @@ export function Footer() {
         </div>
 
         <div className="mt-12 flex flex-col gap-3 border-t border-line pt-6 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-xs text-fog/70">
+          <p className="text-sm text-fog">
             © {new Date().getFullYear()} Nabla AI. All rights reserved.
           </p>
-          <p className="font-mono text-xs text-fog/50">∇ · u = 0</p>
         </div>
       </div>
     </footer>

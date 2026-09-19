@@ -47,10 +47,9 @@ const blocks: Block[] = [
 
 export function Technology() {
   return (
-    <section id="technology" className="scroll-mt-24 py-24 md:py-32">
+    <section id="technology" className="py-24 md:py-32">
       <div className={container}>
         <SectionHeading
-          eyebrow="Technology"
           title="Resolution where the physics demands it."
           lede="We are developing a CFD engine with adaptive resolution guided by the evolving flow. Faster preparation, shorter simulations and lower computing costs are development goals."
         />
@@ -60,7 +59,7 @@ export function Technology() {
             <Reveal key={block.index} delay={0.08 * (i % 2)}>
               {block.diagram}
               <div className="mt-6 flex items-baseline gap-4">
-                <span className="font-mono text-xs text-volt-bright">
+                <span className="text-sm font-medium text-volt-bright">
                   {block.index}
                 </span>
                 <div>

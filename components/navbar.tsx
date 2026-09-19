@@ -30,11 +30,11 @@ export function Navbar() {
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${
         scrolled || open
-          ? "border-b border-line bg-void/80 backdrop-blur-md"
-          : "border-b border-transparent bg-transparent"
+          ? "border-b border-line bg-void/95 shadow-sm backdrop-blur-md"
+          : "border-b border-transparent bg-void/90 backdrop-blur-md"
       }`}
     >
-      <nav aria-label="Main" className={`${container} flex h-16 items-center justify-between`}>
+      <nav aria-label="Main" className={`${container} flex h-20 items-center justify-between`}>
         <a
           href="#main"
           className="rounded-sm"
@@ -49,7 +49,7 @@ export function Navbar() {
             <a
               key={link.href}
               href={link.href}
-              className="text-sm text-fog transition-colors hover:text-frost"
+              className="text-[15px] font-medium text-fog transition-colors hover:text-volt"
             >
               {link.label}
             </a>
@@ -58,7 +58,7 @@ export function Navbar() {
             href={site.calendly}
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-md bg-volt px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-volt-bright"
+            className="rounded-lg bg-volt px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-volt-bright"
           >
             Book a call
           </a>
@@ -66,7 +66,7 @@ export function Navbar() {
 
         <button
           type="button"
-          className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-line text-frost md:hidden"
+          className="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-line bg-white text-frost md:hidden"
           aria-expanded={open}
           aria-controls="mobile-nav"
           aria-label={open ? "Close menu" : "Open menu"}
@@ -84,7 +84,7 @@ export function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.18, ease: "easeOut" }}
-            className="border-b border-line bg-void/95 backdrop-blur-md md:hidden"
+            className="border-b border-line bg-void shadow-sm md:hidden"
           >
             <div className={`${container} flex flex-col gap-1 py-4`}>
               {navLinks.map((link) => (
@@ -101,7 +101,7 @@ export function Navbar() {
                 href={site.calendly}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-3 inline-flex items-center justify-center rounded-md bg-volt px-4 py-2.5 text-sm font-medium text-white"
+                className="mt-3 inline-flex min-h-12 items-center justify-center rounded-lg bg-volt px-4 py-2.5 text-[15px] font-medium text-white transition-colors hover:bg-volt-bright"
                 onClick={() => setOpen(false)}
               >
                 Book a call

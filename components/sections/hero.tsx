@@ -16,61 +16,37 @@ const fadeUp = (delay: number) => ({
 
 export function Hero() {
   return (
-    <section className="relative isolate flex min-h-[min(900px,100svh)] flex-col justify-center overflow-hidden bg-void pb-32 pt-36 sm:pt-40 lg:pb-36">
+    <section className="relative isolate flex min-h-[min(820px,100svh)] flex-col justify-center overflow-hidden bg-void pb-28 pt-36 sm:pt-40 lg:pb-32">
       <HeroVideo />
 
-      <div
-        className={`${container} relative z-10`}
-      >
-        <div className="max-w-2xl">
-          <m.p
-            {...fadeUp(0)}
-            className="inline-flex items-center gap-2.5 rounded-full border border-line bg-raise/60 px-4 py-1.5 font-mono text-[11px] uppercase tracking-[0.2em] text-fog"
-          >
-            <span
-              aria-hidden="true"
-              className="h-1.5 w-1.5 rounded-full bg-volt shadow-[0_0_10px_rgba(124,90,255,0.9)]"
-            />
-            Physics-first · Adaptive CFD
-          </m.p>
-
+      <div className={`${container} relative z-10`}>
+        <div className="max-w-[660px]">
           <m.h1
-            {...fadeUp(0.1)}
-            className="mt-7 font-display text-[2.6rem] font-semibold leading-[1.06] tracking-tight text-frost sm:text-6xl lg:text-[4.25rem]"
+            {...fadeUp(0)}
+            className="text-balance font-display text-[2.7rem] font-medium leading-[1.08] tracking-tight text-frost sm:text-6xl lg:text-[4.25rem]"
           >
             Building the next generation of{" "}
-            <span className="whitespace-nowrap bg-gradient-to-r from-volt-bright to-pulse bg-clip-text text-transparent">
-              CFD.
-            </span>
+            <span className="whitespace-nowrap text-volt">CFD.</span>
           </m.h1>
 
           <m.p
-            {...fadeUp(0.2)}
-            className="mt-6 max-w-xl text-lg leading-relaxed text-frost/80"
+            {...fadeUp(0.1)}
+            className="mt-7 max-w-[560px] text-lg leading-relaxed text-fog"
           >
-            Nabla AI is developing a new CFD engine aimed at faster simulations,
-            lower costs and higher resolution, concentrating compute where the
-            physics demands it.
+            Drop in a geometry, run, read the results. No meshing, no parameter
+            tuning. Nabla AI is building a CFD engine that is faster, cheaper,
+            more accurate and supercharged by AI.
           </m.p>
 
-          <m.div {...fadeUp(0.3)} className="mt-9 flex flex-wrap gap-4">
+          <m.div {...fadeUp(0.2)} className="mt-9 flex flex-wrap gap-4">
             <CTA href={site.calendly}>
               Book a conversation
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </CTA>
-            <CTA href="#approach" variant="secondary" className="bg-void/35 backdrop-blur-sm">
-              Explore our approach
+            <CTA href="#approach" variant="secondary">
+              See how it works
             </CTA>
           </m.div>
-
-          <m.ul
-            {...fadeUp(0.42)}
-            className="mt-12 flex flex-wrap gap-x-8 gap-y-2.5 border-t border-white/15 pt-6 font-mono text-xs uppercase tracking-[0.14em] text-frost/70"
-          >
-            <li>Physics-led simulation</li>
-            <li>Adaptive resolution</li>
-            <li>In development</li>
-          </m.ul>
         </div>
       </div>
 
@@ -78,7 +54,7 @@ export function Hero() {
         <a
           href="#problem"
           aria-label="Scroll to the next section"
-          className="rounded-full p-2 text-fog/60 transition-colors hover:text-frost"
+          className="rounded-full p-2 text-fog transition-colors hover:text-frost"
         >
           <ChevronDown className="anim-bob h-5 w-5" aria-hidden="true" />
         </a>

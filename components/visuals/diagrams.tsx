@@ -32,8 +32,8 @@ function gridLines(
   return d;
 }
 
-const label = "font-mono uppercase";
-const labelStyle = { fontSize: 8.5, letterSpacing: "0.12em" } as const;
+const label = "font-sans font-medium";
+const labelStyle = { fontSize: 10, letterSpacing: "0" } as const;
 
 export function AMRDiagram() {
   return (

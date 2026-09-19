@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, JetBrains_Mono, Space_Grotesk } from "next/font/google";
+import { Inter } from "next/font/google";
 import { MotionProvider } from "@/components/motion-provider";
 import { site } from "@/lib/site";
 import "./globals.css";
@@ -7,19 +7,6 @@ import "./globals.css";
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
-  display: "swap",
-});
-
-const spaceGrotesk = Space_Grotesk({
-  subsets: ["latin"],
-  variable: "--font-space-grotesk",
-  display: "swap",
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500"],
-  variable: "--font-jetbrains-mono",
   display: "swap",
 });
 
@@ -64,8 +51,8 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#05070d",
-  colorScheme: "dark",
+  themeColor: "#fcfcfa",
+  colorScheme: "light",
 };
 
 export default function RootLayout({
@@ -80,7 +67,7 @@ export default function RootLayout({
           attribute mismatches are suppressed, children still validate. */}
       <body
         suppressHydrationWarning
-        className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} font-sans`}
+        className={`${inter.variable} font-sans`}
       >
         <a
           href="#main"

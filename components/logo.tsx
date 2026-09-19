@@ -8,8 +8,8 @@ export function NablaMark({ className = "h-6 w-6" }: { className?: string }) {
     >
       <defs>
         <linearGradient id="nabla-grad" x1="3" y1="4" x2="21" y2="21">
-          <stop offset="0%" stopColor="#a18aff" />
-          <stop offset="100%" stopColor="#4f8dff" />
+          <stop offset="0%" stopColor="#6446d7" />
+          <stop offset="100%" stopColor="#3269b8" />
         </linearGradient>
       </defs>
       <path
@@ -25,8 +25,8 @@ export function NablaMark({ className = "h-6 w-6" }: { className?: string }) {
 export function Wordmark() {
   return (
     <span className="inline-flex items-center gap-2.5">
-      <NablaMark className="h-5 w-5" />
-      <span className="font-display text-[17px] font-semibold tracking-tight text-frost">
+      <NablaMark className="h-6 w-6" />
+      <span className="font-display text-xl font-semibold tracking-tight text-frost">
         Nabla AI
       </span>
     </span>

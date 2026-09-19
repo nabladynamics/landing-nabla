@@ -17,8 +17,8 @@ export default function OpenGraphImage() {
           justifyContent: "center",
           padding: "80px",
           background:
-            "radial-gradient(ellipse 80% 70% at 25% 20%, #16113a 0%, #05070d 60%)",
-          color: "#eef1f8",
+            "radial-gradient(ellipse 80% 70% at 85% 20%, #ebe6fc 0%, #fcfcfa 70%)",
+          color: "#182331",
           fontSize: 32,
         }}
       >
@@ -26,7 +26,7 @@ export default function OpenGraphImage() {
           <svg width="72" height="72" viewBox="0 0 24 24" fill="none">
             <path
               d="M3.6 4.5h16.8L12 20.4 3.6 4.5Z"
-              stroke="#a18aff"
+              stroke="#6446d7"
               strokeWidth="2"
               strokeLinejoin="round"
             />
@@ -50,7 +50,7 @@ export default function OpenGraphImage() {
             display: "flex",
             marginTop: 32,
             fontSize: 30,
-            color: "#9aa4bb",
+            color: "#626b78",
             maxWidth: 900,
           }}
         >

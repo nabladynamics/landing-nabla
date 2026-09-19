@@ -3,31 +3,33 @@
 @theme inline {
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
     "Segoe UI", sans-serif;
-  --font-display: var(--font-space-grotesk), var(--font-inter), ui-sans-serif,
+  --font-display: var(--font-inter), ui-sans-serif,
     system-ui, sans-serif;
-  --font-mono: var(--font-jetbrains-mono), ui-monospace, "SF Mono", "Menlo",
-    monospace;
 }
 
 @theme {
   /* Surfaces */
-  --color-void: #05070d;
-  --color-raise: #0a0e19;
+  --color-void: #fcfcfa;
+  --color-raise: #f2f3f7;
   /* Hairlines */
-  --color-line: #8fa0c226;
-  --color-line-strong: #8fa0c240;
+  --color-line: #e2e5eb;
+  --color-line-strong: #cbd1dc;
   /* Text */
-  --color-frost: #eef1f8;
-  --color-fog: #9aa4bb;
+  --color-frost: #182331;
+  --color-fog: #626b78;
   /* Accents */
-  --color-volt: #7c5aff;
-  --color-volt-bright: #a18aff;
-  --color-pulse: #4f8dff;
+  --color-volt: #6446d7;
+  --color-volt-bright: #5435bf;
+  --color-pulse: #3269b8;
 }
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 5.5rem;
+  color-scheme: light;
+}
+
+#contact-form {
+  scroll-margin-top: 6rem;
 }
 
 body {
@@ -38,7 +40,7 @@ body {
 }
 
 ::selection {
-  background: rgba(124, 90, 255, 0.35);
+  background: rgba(100, 70, 215, 0.15);
   color: var(--color-frost);
 }
 

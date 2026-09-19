@@ -1,8 +1,8 @@
 import { Footer } from "@/components/footer";
 import { Navbar } from "@/components/navbar";
-import { Applications } from "@/components/sections/applications";
+import { Approach } from "@/components/sections/approach";
+import { Comparison } from "@/components/sections/comparison";
 import { Contact } from "@/components/sections/contact";
-import { Differentiation } from "@/components/sections/differentiation";
 import { Hero } from "@/components/sections/hero";
 import { Problem } from "@/components/sections/problem";
 import { Team } from "@/components/sections/team";
@@ -15,8 +15,8 @@ export default function Home() {
       <main id="main">
         <Hero />
         <Problem />
-        <Differentiation />
-        <Applications />
+        <Approach />
+        <Comparison />
         <Vision />
         <Team />
         <Contact />

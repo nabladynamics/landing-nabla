@@ -8,13 +8,13 @@ type CTAProps = {
 } & AnchorHTMLAttributes<HTMLAnchorElement>;
 
 const base =
-  "inline-flex items-center justify-center gap-2 rounded-md px-5 py-3 text-sm font-medium transition-colors duration-200";
+  "inline-flex min-h-12 items-center justify-center gap-2.5 rounded-lg px-6 py-3 text-[15px] font-medium transition-colors duration-200";
 
 const variants = {
   primary:
-    "bg-volt text-white shadow-[0_0_28px_rgba(124,90,255,0.32)] hover:bg-volt-bright",
+    "bg-volt text-white shadow-sm hover:bg-volt-bright",
   secondary:
-    "border border-line-strong text-frost hover:border-volt/70 hover:text-white",
+    "border border-line-strong bg-white/80 text-frost hover:border-volt/50 hover:bg-white hover:text-volt",
 } as const;
 
 export function CTA({
