@@ -58,8 +58,8 @@ export function Hero() {
               Book a conversation
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </CTA>
-            <CTA href="#technology" variant="secondary" className="bg-void/35 backdrop-blur-sm">
-              Explore the technology
+            <CTA href="#approach" variant="secondary" className="bg-void/35 backdrop-blur-sm">
+              Explore our approach
             </CTA>
           </m.div>
 
@@ -67,7 +67,7 @@ export function Hero() {
             {...fadeUp(0.42)}
             className="mt-12 flex flex-wrap gap-x-8 gap-y-2.5 border-t border-white/15 pt-6 font-mono text-xs uppercase tracking-[0.14em] text-frost/70"
           >
-            <li>Vortex-based flow</li>
+            <li>Physics-led simulation</li>
             <li>Adaptive resolution</li>
             <li>In development</li>
           </m.ul>

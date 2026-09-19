@@ -45,7 +45,7 @@ const approaches: {
     rows: [
       { text: "Physics-first", pro: true },
       { text: "Adaptive compute", pro: true },
-      { text: "Vortex-based flow", pro: true },
+      { text: "Physical validation", pro: true },
       { text: "Workflow automation", pro: true },
     ],
   },

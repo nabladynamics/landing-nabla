@@ -35,7 +35,7 @@ export const metadata: Metadata = {
   keywords: [
     "CFD",
     "computational fluid dynamics",
-    "vortex-based simulation",
+    "physics-led simulation",
     "adaptive resolution",
     "physical validation",
     "AI-generated design",

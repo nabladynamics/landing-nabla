@@ -22,7 +22,7 @@ const blocks: Block[] = [
   {
     index: "01",
     title: "Dynamic resolution allocation",
-    body: "Moving vortex elements follow the evolving flow, with adaptive resolution intended to concentrate computation where aerodynamic detail matters.",
+    body: "Adaptive resolution is intended to concentrate computation where the evolving flow demands it and where aerodynamic detail matters.",
     diagram: <AMRDiagram />,
   },
   {
@@ -34,7 +34,7 @@ const blocks: Block[] = [
   {
     index: "03",
     title: "Beyond body-fitted volume meshes",
-    body: "Our vortex-based approach removes the need for conventional body-fitted volume meshing, with the aim of reducing preparation time and computing cost.",
+    body: "Our approach removes the need for conventional body-fitted volume meshing, with the aim of reducing preparation time and computing cost.",
     diagram: <GPUDiagram />,
   },
   {
@@ -52,7 +52,7 @@ export function Technology() {
         <SectionHeading
           eyebrow="Technology"
           title="Resolution where the physics demands it."
-          lede="We are developing a CFD engine based on moving vortex elements, with adaptive resolution guided by the evolving flow. Faster preparation, shorter simulations and lower computing costs are development goals."
+          lede="We are developing a CFD engine with adaptive resolution guided by the evolving flow. Faster preparation, shorter simulations and lower computing costs are development goals."
         />
 
         <div className="mt-14 grid gap-x-10 gap-y-14 md:grid-cols-2">

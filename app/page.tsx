@@ -6,7 +6,6 @@ import { Differentiation } from "@/components/sections/differentiation";
 import { Hero } from "@/components/sections/hero";
 import { Problem } from "@/components/sections/problem";
 import { Team } from "@/components/sections/team";
-import { Technology } from "@/components/sections/technology";
 import { Vision } from "@/components/sections/vision";
 
 export default function Home() {
@@ -16,7 +15,6 @@ export default function Home() {
       <main id="main">
         <Hero />
         <Problem />
-        <Technology />
         <Differentiation />
         <Applications />
         <Vision />

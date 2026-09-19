@@ -401,7 +401,7 @@ export function FlowCanvas({ className = "" }: { className?: string }) {
     <div
       ref={wrapRef}
       role="img"
-      aria-label="Animated computational fluid dynamics visualisation: flow past a cylinder sheds a vortex street while an adaptive mesh concentrates resolution around the cylinder wall and wake vortices."
+      aria-label="Animated computational fluid dynamics visualisation showing flow past a cylinder and adaptive resolution in the surrounding fluid."
       className={`relative overflow-hidden ${className}`.trim()}
     >
       <canvas ref={trailRef} aria-hidden="true" className="absolute inset-0 h-full w-full" />

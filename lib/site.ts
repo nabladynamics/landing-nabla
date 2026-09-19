@@ -8,7 +8,7 @@ export const site = {
 } as const;
 
 export const navLinks = [
-  { label: "Technology", href: "#technology" },
+  { label: "Approach", href: "#approach" },
   { label: "Applications", href: "#applications" },
   { label: "Company", href: "#company" },
   { label: "Contact", href: "#contact" },
