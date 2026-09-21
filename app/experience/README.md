@@ -106,6 +106,8 @@ CAD asset mapping: `public/experience/cad-assets.js`.
 Presentation finishes: `public/experience/cad-finishes.js`; these apply colour
 and PBR surface treatments at load time without modifying the CAD geometry
 or source files. The liveries are illustrative Nabla presentation colours.
+`public/experience/aircraft-parts.js` identifies the existing engine and vertical
+tail parts once at load time, keeping their paint off the wings and stabilizers.
 `public/experience/studio-reflections.js` supplies their local reflection map,
 without changing the lighting of the other exhibits.
 Engineering studio: `public/experience/engineering-studio.js` and

@@ -1,9 +1,11 @@
+import { assignAircraftParts } from './aircraft-parts.js';
+
 /**
  * Presentation finishes for the supplied CADs. These are illustrative liveries,
  * not manufacturer paint schemes. Geometry, topology and source files stay intact.
  * Masks use the normalized exhibit coordinates, independent of station placement.
  */
-const FINISH_VERSION = 'nabla-cad-finishes-2';
+const FINISH_VERSION = 'nabla-cad-finishes-3';
 
 export function applyCADFinish(THREE, scene, stationId) {
   if (!['aerospace', 'marine', 'automotive'].includes(stationId)) return scene;
@@ -35,6 +37,7 @@ export function applyCADFinish(THREE, scene, stationId) {
     // This transform restores scene units before the fragment masks run.
     const coordinates = rootInverse.clone().multiply(mesh.matrixWorld);
     const normalCoordinates = new THREE.Matrix3().getNormalMatrix(coordinates);
+    const hasAircraftParts = mesh.geometry.hasAttribute('nablaAircraftPart');
     material.onBeforeCompile = (shader) => {
       shader.uniforms.nablaCADMatrix = { value: coordinates };
       shader.uniforms.nablaCADNormalMatrix = { value: normalCoordinates };
@@ -43,14 +46,17 @@ export function applyCADFinish(THREE, scene, stationId) {
           uniform mat4 nablaCADMatrix;
           uniform mat3 nablaCADNormalMatrix;
           varying vec3 vNablaCADPosition;
-          varying vec3 vNablaCADNormal;`)
+          varying vec3 vNablaCADNormal;
+          ${hasAircraftParts ? 'attribute vec2 nablaAircraftPart; varying vec2 vNablaAircraftPart;' : ''}`)
         .replace('#include <begin_vertex>', `#include <begin_vertex>
           vNablaCADPosition = (nablaCADMatrix * vec4(transformed, 1.0)).xyz;
-          vNablaCADNormal = normalize(nablaCADNormalMatrix * objectNormal);`);
+          vNablaCADNormal = normalize(nablaCADNormalMatrix * objectNormal);
+          ${hasAircraftParts ? 'vNablaAircraftPart = nablaAircraftPart;' : ''}`);
       shader.fragmentShader = shader.fragmentShader
         .replace('#include <common>', `#include <common>
           varying vec3 vNablaCADPosition;
           varying vec3 vNablaCADNormal;
+          ${hasAircraftParts ? 'varying vec2 vNablaAircraftPart;' : ''}
           float nablaBand(float value, float lower, float upper, float feather) {
             return smoothstep(lower - feather, lower + feather, value)
               * (1.0 - smoothstep(upper - feather, upper + feather, value));
@@ -63,7 +69,7 @@ export function applyCADFinish(THREE, scene, stationId) {
         '#include <metalnessmap_fragment>', `#include <metalnessmap_fragment>\n${surfaceCode}`,
       );
     };
-    material.customProgramCacheKey = () => `${FINISH_VERSION}:${key}`;
+    material.customProgramCacheKey = () => `${FINISH_VERSION}:${key}:${hasAircraftParts ? 'parts' : 'surface'}`;
     return material;
   }
 
@@ -72,15 +78,15 @@ export function applyCADFinish(THREE, scene, stationId) {
     if (name.includes('tyre')) return plain('Aircraft tyre rubber', palette.rubber, 0.91, 0, { clearcoat: 0 });
     if (name.includes('landing')) return plain('Brushed landing gear alloy', '#87999f', 0.3, 0.78, { clearcoat: 0 });
     if (name.includes('fan')) return plain('Engine fan titanium', '#34464e', 0.34, 0.72, { clearcoat: 0 });
+    assignAircraftParts(THREE, mesh.geometry);
     return patterned(mesh, plain('Pearl, ocean and copper aircraft livery', palette.pearl, 0.3, 0.22,
       { clearcoat: 0.5, clearcoatRoughness: 0.23 }), 'aircraft-livery', `
       // Restrict the belly stripe to the fuselage; leave the broad wings pearl.
       float fuselage = 1.0 - smoothstep(0.47, 0.62, abs(cadP.z));
       float belly = (1.0 - smoothstep(1.10, 1.13, cadP.y)) * fuselage;
-      float tail = smoothstep(3.05, 3.35, cadP.x) * smoothstep(1.65, 1.77, cadP.y)
-        * (1.0 - smoothstep(0.28, 0.45, abs(cadP.z)));
-      float engine = smoothstep(0.85, 1.0, abs(cadP.z))
-        * (1.0 - smoothstep(1.03, 1.10, cadP.y));
+      // Paint whole CAD parts: a height mask also catches the sloping wings.
+      float engine = vNablaAircraftPart.x;
+      float tail = vNablaAircraftPart.y;
       diffuseColor.rgb = mix(${colors.pearl}, ${colors.navy}, max(max(belly, tail), engine));
       float cheatline = nablaBand(cadP.y, 1.125, 1.155, 0.003) * fuselage;
       float tailAccent = nablaBand(cadP.y - 0.27 * cadP.x, 1.34, 1.41, 0.006) * tail;
