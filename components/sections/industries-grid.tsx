@@ -8,7 +8,7 @@ import styles from "./industries-list.module.css";
 const industries = [
   {
     name: "Aviation",
-    body: "Airflow shapes lift, drag and aircraft noise. We are exploring how CFD could help engineers compare wings, airframes and unmanned aircraft designs, with less time spent preparing each simulation.",
+    body: "A wing must deliver low drag in cruise and enough lift for takeoff and landing. CFD helps engineers evaluate both, but resolving thin boundary layers and flow separation across many flight conditions makes reliable design comparisons computationally demanding.",
     image: "aviation",
     alt: "Passenger aircraft approaching with its landing gear extended",
     position: "28% 50%",
@@ -16,7 +16,7 @@ const industries = [
   },
   {
     name: "Space",
-    body: "From launch vehicle aerodynamics to nozzle flows and thermal loads, space systems pose demanding physical questions. Our ambition is to help engineers explore those questions earlier as new designs take shape.",
+    body: "During engine start-up, shocks and flow separation can produce damaging side loads inside a rocket nozzle. CFD helps engineers assess these transient pressures and wall heating, but resolving them requires fine spatial and temporal detail.",
     image: "space",
     alt: "Rocket engines firing during a ground test",
     position: "50% 43%",
@@ -24,7 +24,7 @@ const industries = [
   },
   {
     name: "Marine",
-    body: "Hulls and underwater vehicles must balance resistance, stability and efficiency. Fluid simulation can help examine how a design interacts with the surrounding water, from the bow to the propeller wake.",
+    body: "The wake behind a hull determines how evenly water reaches the propeller, affecting efficiency, cavitation and noise. CFD helps predict these interactions at full scale. The difficulty is resolving ship-scale flow alongside the small, rapidly changing structures around the blades.",
     image: "marine",
     alt: "Overhead view of a motor yacht and its wake",
     position: "50% 50%",
@@ -32,7 +32,7 @@ const industries = [
   },
   {
     name: "Rail",
-    body: "Airflow affects high-speed train drag, crosswind response and ventilation. We see opportunities to bring earlier physical feedback into the design of train bodies and their cooling systems.",
+    body: "Tunnel pressure pulses and crosswinds can set a train’s operating limits. CFD helps engineers assess these loads alongside drag and slipstream effects. Each design must be checked across train speeds, wind directions and tunnel geometries, making the number of cases a bottleneck.",
     image: "rail",
     alt: "High-speed passenger train at a station",
     position: "62% 50%",
@@ -40,7 +40,7 @@ const industries = [
   },
   {
     name: "Wind energy",
-    body: "Rotor blades and turbine wakes influence how wind becomes useful power. Our goal is to support the study of aerodynamic loading and wake interactions, helping engineers explore designs across different operating conditions.",
+    body: "Turbines in a wake receive less energy and more turbulent inflow, reducing power and increasing fatigue loads. CFD helps compare layouts and operating strategies. The challenge is capturing interactions across an entire wind farm without losing the flow detail around individual rotors.",
     image: "wind-energy",
     alt: "Offshore wind turbines above the sea",
     position: "50% 48%",
@@ -48,7 +48,7 @@ const industries = [
   },
   {
     name: "Turbomachinery",
-    body: "Compressors and turbines bring moving blades, confined passages and complex flows together. We are exploring how more accessible fluid simulation could help engineers investigate performance, heat transfer and cooling within rotating machinery.",
+    body: "Leakage through blade-tip gaps and interactions between blade rows reduce efficiency and create unsteady loads. CFD helps identify these losses across the operating range. The challenge is resolving narrow clearances and rotating flow without making each design iteration prohibitively slow.",
     image: "turbomachinery",
     alt: "Close-up of the fan blades of a jet engine",
     position: "50% 38%",
