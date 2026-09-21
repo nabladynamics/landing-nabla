@@ -16,9 +16,7 @@ export function Footer() {
         <StyleLink href="/" aria-label="Nabla AI — home"><SpatialWordmark /></StyleLink>
         <span className={styles.footerMeta}>{site.locations}</span>
         <nav className={styles.footerNav} aria-label="Footer">
-          <StyleLink href="/industries">Industries</StyleLink>
-          <StyleLink href="/platform">Platform</StyleLink>
-          <StyleLink href="/contact">Let’s talk</StyleLink>
+          {navLinks.map((link) => <StyleLink key={link.href} href={link.href}>{link.label}</StyleLink>)}
         </nav>
       </footer>
     );

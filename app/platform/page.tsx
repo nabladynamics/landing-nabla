@@ -1,9 +1,6 @@
-import type { Metadata } from "next";
+import { redirect } from "next/navigation";
 
-export const metadata: Metadata = {
-  title: "Platform",
-  description:
-    "Drop in an STL, run, read the results. No body-fitted meshing, resolution that follows the flow, and turbulence resolved rather than approximated.",
-};
-
-export { default } from "@/components/pages/platform-page";
+// Keep the page implementation for a future release; old links return home.
+export default function DeferredPlatformPage() {
+  redirect("/");
+}

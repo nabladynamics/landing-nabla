@@ -140,7 +140,7 @@ export function WorkflowStory() {
               <li><span>02</span><div><h3>Let the physics guide the computation.</h3><p>Concentrate resolution where the flow requires it, with physical simulation at the core.</p></div></li>
               <li><span>03</span><div><h3>Turn results into a clear report.</h3><p>A detailed report generated with the results, tailored to the project, the client and the questions that matter.</p></div></li>
             </ol>
-            <Link href="/platform" className={styles.link}>Explore the platform <ArrowUpRight size={18} aria-hidden="true" /></Link>
+            <Link href="/contact" className={styles.link}>Talk about your project <ArrowUpRight size={18} aria-hidden="true" /></Link>
           </div>
 
           <Reveal delay={.12} className={styles.reportColumn}>

@@ -45,8 +45,8 @@ export function Hero() {
               Book a conversation
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </CTA>
-            <CTA href="/platform" variant="secondary">
-              Explore the platform
+            <CTA href="/industries" variant="secondary">
+              Explore industries
             </CTA>
           </m.div>
         </div>

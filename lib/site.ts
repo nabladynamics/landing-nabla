@@ -10,8 +10,7 @@ export const site = {
 export const navLinks = [
   { label: "Home", href: "/" },
   { label: "Industries", href: "/industries" },
-  { label: "Platform", href: "/platform" },
-  { label: "Contact", href: "/contact" },
+  { label: "Let’s Talk", href: "/contact" },
 ] as const;
 
 export const container = "mx-auto w-full max-w-6xl px-6 lg:px-8";

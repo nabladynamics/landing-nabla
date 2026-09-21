@@ -5,9 +5,12 @@ https://www.beyond-aero.com/. The former `/experience` route redirects home.
 
 ## Navigation and variants
 
-Spatial has its own presentation of `/industries`, `/platform` and `/contact`.
+The menu contains Home, Industries and Let’s Talk. Spatial has its own
+presentation of `/industries` and `/contact`.
 The other designs live at `/styles/{default|deeptech|editorial|industrial|lab}`
-with the same three section paths appended. The header and footer keep links
+with the same two section paths appended. Platform is deferred: its page
+component is retained, but its routes temporarily redirect to the corresponding
+style’s home and no public navigation links to it. The header and footer keep links
 inside the active design; switching styles preserves the section being viewed.
 The URL owns the selection, including on reload. Legacy `?theme=` links redirect
 to the corresponding style route; old browser preferences cannot override it.

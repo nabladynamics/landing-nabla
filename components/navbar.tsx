@@ -8,14 +8,11 @@ import { Wordmark } from "@/components/logo";
 import { ThemeSwitcher } from "@/components/theme-switcher";
 import { StyleLink } from "@/components/style-link";
 import { useStyle } from "@/components/style-provider";
-import { container } from "@/lib/site";
+import { container, navLinks } from "@/lib/site";
 import { sectionFromPath } from "@/lib/themes";
 import styles from "@/components/experience/spatial-navigation.module.css";
 
-const links = [
-  { label: "Industries", href: "/industries" },
-  { label: "Platform", href: "/platform" },
-] as const;
+const links = navLinks.filter((link) => link.href !== "/contact");
 
 export function SpatialWordmark() {
   return (
@@ -94,7 +91,7 @@ export function Navbar() {
               aria-current={activeSection === "/contact" ? "page" : undefined}
               className={spatial ? styles.navCta : "inline-flex items-center gap-5 rounded-ctl bg-cta px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-cta-bright"}
             >
-              Let’s talk <ArrowUpRight size={15} aria-hidden="true" />
+              Let’s Talk <ArrowUpRight size={15} aria-hidden="true" />
             </StyleLink>
           </div>
           <ThemeSwitcher />
@@ -123,7 +120,7 @@ export function Navbar() {
             className={`${styles.mobilePanel} ${spatial ? styles.spatialMobilePanel : "border-b border-line bg-void shadow-sm"}`}
           >
             <nav aria-label="Mobile navigation" className={`${container} flex flex-col gap-1 py-4`}>
-              {[...links, { label: "Let’s talk", href: "/contact" }].map((link) => (
+              {navLinks.map((link) => (
                 <StyleLink
                   key={link.href}
                   href={link.href}
