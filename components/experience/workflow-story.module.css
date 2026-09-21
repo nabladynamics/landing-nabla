@@ -7,16 +7,16 @@
 .story h2 em { font-style: normal; color: #758077; }
 .intro > p { font-size: 18px; color: var(--muted); line-height: 1.7; margin: 0 0 4px; max-width: 375px; }
 .process { margin: 64px 0 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 22px 0 26px; }
-.process figcaption { display: flex; justify-content: space-between; gap: 24px; font-size: 13px; color: var(--muted); }
-.process figcaption span:last-child { color: #875e4e; }
+.process figcaption { display: flex; align-items: center; justify-content: space-between; gap: 24px; font-size: 13px; color: var(--muted); }
+.animationToggle { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 36px; min-width: 64px; font-size: 12px; color: var(--muted); }
+.animationToggle:hover { color: var(--accent); }
 .processSteps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); list-style: none; padding: 0; margin: 28px 0 20px; }
 .processSteps li { padding: 0 24px; border-right: 1px solid var(--rule); }
 .processSteps li:first-child { padding-left: 0; }
 .processSteps li:last-child { border-right: 0; padding-right: 0; }
 .stepHeading { display: flex; justify-content: space-between; gap: 16px; align-items: center; font-size: 20px; }
 .stepHeading svg { color: #a2aaa1; }
-.processSteps li > svg { width: 100%; height: 112px; margin: 20px 0 14px; color: #667971; }
-.warningStroke { stroke: var(--accent); }
+.processSteps li > svg { width: 100%; height: 140px; margin: 16px 0 14px; color: #667971; }
 .stepNote { font-size: 13px; color: var(--muted); }
 .returnPath { display: flex; align-items: center; justify-content: center; gap: 9px; color: #a25338; font-size: 13px; width: 64%; margin: 0 0 0 6%; padding-top: 17px; position: relative; }
 .returnPath::before { content: ""; position: absolute; inset: 0 0 auto; height: 12px; border: 1px solid #ad4e3050; border-top: 0; border-radius: 0 0 8px 8px; }
@@ -76,7 +76,7 @@
 .goals li { font-size: 17px; }
 .goals li:not(:first-child) { border-left: 1px solid var(--rule); padding-left: 28px; }
 .developmentNote { color: #5e6a5f; font-size: 12px; line-height: 1.7; margin: 24px 0 0; max-width: 820px; }
-@media (min-width: 1600px) { .processSteps li > svg { height: 135px; } }
+@media (min-width: 1600px) { .processSteps li > svg { height: 155px; } }
 @media (max-width: 1100px) {
   .inner { width: 88%; }
   .intro { grid-template-columns: 1.5fr 1fr; gap: 6%; }
@@ -95,13 +95,12 @@
   .intro > p { max-width: 480px; }
   .process { margin-top: 36px; padding-top: 18px; }
   .process figcaption { font-size: 12px; }
-  .process figcaption span:last-child { display: none; }
   .processSteps { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 26px; }
   .processSteps li { padding: 0 18px; }
   .processSteps li:nth-child(odd) { padding-left: 0; }
   .processSteps li:nth-child(even) { border: 0; padding-right: 0; }
   .stepHeading svg { display: none; }
-  .processSteps li > svg { height: 92px; margin: 14px 0 8px; }
+  .processSteps li > svg { height: 112px; margin: 14px 0 8px; }
   .stepHeading { font-size: 18px; }
   .stepNote { font-size: 11px; }
   .returnPath { width: 100%; margin: 0; text-align: center; font-size: 12px; line-height: 1.5; }
@@ -129,4 +128,8 @@
   .goals ul { display: grid; gap: 12px; }
   .goals li:not(:first-child) { padding-left: 0; border: 0; }
 }
-@media (prefers-reduced-motion: reduce) { .reportSwitch button { transition: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .reportSwitch button { transition: none; }
+  .animationToggle { display: none; }
+}
+:global(html[data-static]) .animationToggle { display: none; }

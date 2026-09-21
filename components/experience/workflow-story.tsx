@@ -1,23 +1,24 @@
 "use client";
 
-import { useState } from "react";
-import { ArrowRight, ArrowUpRight, RotateCcw } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { ArrowRight, ArrowUpRight, Pause, Play, RotateCcw } from "lucide-react";
 import { StyleLink as Link } from "@/components/style-link";
 import { Reveal } from "@/components/ui/reveal";
+import { ProcessDrawing } from "./workflow-process";
 import styles from "./workflow-story.module.css";
 
 const friction = [
   {
-    title: "Days before the first run.",
-    text: "Software configuration, geometry preparation and manual meshing can take days before a simulation even starts.",
+    title: "Days in preparation.",
+    text: "Setup and manual meshing delay the first run.",
   },
   {
-    title: "Days in. Back to the beginning.",
-    text: "A run can fail after days of computation. Diagnose the problem, revisit the setup and start again.",
+    title: "Time lost to restarts.",
+    text: "A failed simulation can waste days of compute.",
   },
   {
-    title: "Same geometry. Different answers.",
-    text: "Different meshes, settings and modelling choices can lead teams to different results — and more work to understand why.",
+    title: "Same design. Different answers.",
+    text: "Different teams’ setup choices can change the result.",
   },
 ];
 
@@ -38,34 +39,6 @@ const reportViews = {
   },
 };
 
-function ProcessDrawing({ step }: { step: number }) {
-  return <svg viewBox="0 0 220 100" fill="none" aria-hidden="true">
-    {step === 0 && <g stroke="currentColor" strokeWidth="1.1">
-      <path d="m61 32 47-21 51 23-49 24-49-26Zm0 0v39l49 24 49-24V34M110 58v37" />
-      <path d="m61 71 47-21 51 21M108 11v39" opacity=".25" strokeDasharray="3 4" />
-      <path d="M29 28h14M36 21v14M176 70h14M183 63v14" opacity=".45" />
-    </g>}
-    {step === 1 && <g stroke="currentColor" strokeWidth=".8">
-      <path d="M21 78 70 29l76-15 53 44-54 31-78-2-46-9Z" />
-      <path d="m21 78 53-16-4-33 37 20 39-35 10 35 43 9-54 3v28l-36-20-42 18 7-25 35 7-2-20 49 0-11 12-36 8M70 29l76-15M74 62l33-13M67 87l-8-35 48-3M145 89l11-40M199 58l-42 15-12 16M107 49l20-31M74 62 41 57M145 61l-18-43" />
-      <path d="M21 94h178" opacity=".18" />
-    </g>}
-    {step === 2 && <g stroke="currentColor" strokeWidth="1.2">
-      <path d="M24 16v66h172" opacity=".25" />
-      <path d="m29 25 14 14 15-4 15 16 15-1 15 16 13-4 14 10 15-3 9 5" />
-      <path d="m154 74 10-27 11 7 17-39" className={styles.warningStroke} />
-      <circle cx="192" cy="15" r="4" className={styles.warningStroke} />
-    </g>}
-    {step === 3 && <g stroke="currentColor" strokeWidth="1.2">
-      <path d="M24 16v66h172" opacity=".25" />
-      <path d="M30 69c32 0 38-48 73-48s44 28 85 28" />
-      <path d="M30 69c32 0 44-29 73-29s47-1 85-1" opacity=".45" />
-      <path d="M30 69c35 0 42-6 73-6s47 9 85 9" className={styles.warningStroke} />
-      <circle cx="192" cy="49" r="3" /><circle cx="192" cy="39" r="3" opacity=".45" /><circle cx="192" cy="72" r="3" className={styles.warningStroke} />
-    </g>}
-  </svg>;
-}
-
 function ReportDrawing() {
   return <svg viewBox="0 0 440 170" fill="none" aria-hidden="true">
     {[22, 43, 64, 86, 108, 130, 151].map((y, i) => <path key={y}
@@ -77,8 +50,27 @@ function ReportDrawing() {
 }
 
 export function WorkflowStory() {
+  const processRef = useRef<HTMLElement>(null);
+  const [processVisible, setProcessVisible] = useState(false);
+  const [pageVisible, setPageVisible] = useState(true);
+  const [animationsPaused, setAnimationsPaused] = useState(false);
   const [reportView, setReportView] = useState<keyof typeof reportViews>("engineering");
   const report = reportViews[reportView];
+  const processRunning = processVisible && pageVisible && !animationsPaused;
+
+  useEffect(() => {
+    const figure = processRef.current;
+    if (!figure) return;
+    const observer = new IntersectionObserver(([entry]) => setProcessVisible(entry.isIntersecting), { threshold: .1 });
+    observer.observe(figure);
+    const syncVisibility = () => setPageVisible(!document.hidden);
+    syncVisibility();
+    document.addEventListener("visibilitychange", syncVisibility);
+    return () => {
+      observer.disconnect();
+      document.removeEventListener("visibilitychange", syncVisibility);
+    };
+  }, []);
 
   return <div className={styles.story}>
     <section id="perspective" className={styles.problem} aria-labelledby="workflow-problem-title">
@@ -87,21 +79,21 @@ export function WorkflowStory() {
           <p className={styles.eyebrow}>The work behind the answer</p>
           <div className={styles.intro}>
             <h2 id="workflow-problem-title">Engineering is hard.<br /><em>The workflow shouldn’t be.</em></h2>
-            <p>Too often, getting a physical answer means navigating a long chain of manual work, waiting and uncertainty.</p>
+            <p>Manual setup. Long waits. Uncertain results. Too much work between a design and an answer.</p>
           </div>
         </Reveal>
 
         <Reveal delay={.08}>
-          <figure className={styles.process}>
-            <figcaption><span>A conventional CFD workflow</span><span>Where progress can stall</span></figcaption>
-            <ol className={styles.processSteps}>
+          <figure ref={processRef} className={styles.process} data-running={processRunning}>
+            <figcaption><span>A conventional CFD workflow</span><button type="button" className={styles.animationToggle} aria-label={animationsPaused ? "Play workflow animations" : "Pause workflow animations"} aria-controls="conventional-workflow" onClick={() => setAnimationsPaused((paused) => !paused)}>{animationsPaused ? <Play size={13} aria-hidden="true" /> : <Pause size={13} aria-hidden="true" />}{animationsPaused ? "Play" : "Pause"}</button></figcaption>
+            <ol id="conventional-workflow" className={styles.processSteps}>
               {["Prepare", "Mesh", "Run", "Interpret"].map((step, index) => <li key={step}>
                 <div className={styles.stepHeading}><span>{step}</span>{index < 3 && <ArrowRight size={18} aria-hidden="true" />}</div>
-                <ProcessDrawing step={index} />
+                <ProcessDrawing step={index} running={processRunning} />
                 <span className={styles.stepNote}>{["Configure the case", "Resolve the geometry", "Wait for convergence", "Reconcile the results"][index]}</span>
               </li>)}
             </ol>
-            <div className={styles.returnPath}><RotateCcw size={15} aria-hidden="true" /><span>A failed run can send the work back to setup.</span></div>
+            <div className={styles.returnPath}><RotateCcw size={15} aria-hidden="true" /><span>Failure can send you back to setup.</span></div>
           </figure>
         </Reveal>
 
@@ -113,7 +105,7 @@ export function WorkflowStory() {
         <Reveal>
           <div className={styles.humanCost}>
             <p>The cost is more than compute.</p>
-            <p>Lost time. Fewer design iterations. Engineers worn down by repeated troubleshooting instead of doing the work they set out to do.</p>
+            <p>More rework. Fewer iterations. Exhausted engineers.</p>
           </div>
         </Reveal>
       </div>

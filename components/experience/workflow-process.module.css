@@ -1,0 +1,148 @@
+.drawing {
+  --process-ink: #516f64;
+  --process-soft: #81958a;
+  --process-copper: #b16646;
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  color: var(--process-ink);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.drawing :is(path, rect, circle) { vector-effect: non-scaling-stroke; }
+.drawing [data-motion] {
+  animation-duration: 8s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  animation-fill-mode: both;
+  animation-play-state: running;
+}
+.drawing[data-running="false"] [data-motion] { animation-play-state: paused; }
+
+.faceTop { fill: #eaf0e7; }
+.faceLeft { fill: #dfe8df; }
+.faceRight { fill: #cad9ce; }
+.outline { stroke: var(--process-ink); stroke-width: 1.1; }
+.ground { stroke: #a6b2a6; stroke-width: .8; opacity: .32; }
+.dimensions { stroke: #85998c; stroke-width: .75; opacity: .55; }
+.hiddenEdges { stroke: #80988b; stroke-width: .75; stroke-dasharray: 2.5 4; opacity: .45; }
+.handles { fill: #fcfbf5; stroke: var(--process-copper); stroke-width: 1; }
+.prepareObject { transform-box: view-box; transform-origin: 50% 50%; animation-name: edit-proportions; }
+.editFocus { stroke: var(--process-copper); stroke-width: .8; opacity: .35; animation-name: edit-focus; }
+@keyframes edit-proportions {
+  0%, 10%, 88%, 100% { transform: scale(1, 1); }
+  30%, 39% { transform: scale(1.15, .87); }
+  61%, 70% { transform: scale(.84, 1.10); }
+}
+@keyframes edit-focus {
+  0%, 9%, 86%, 100% { opacity: .24; }
+  17%, 29%, 50%, 61% { opacity: .85; }
+  39%, 72% { opacity: .30; }
+}
+
+.meshCoarse { stroke: #55786a; stroke-width: 1.05; opacity: .12; animation-name: mesh-coarse; }
+.meshMiddle { stroke: #5b7d6d; stroke-width: .8; opacity: .20; }
+.meshFine { stroke: #4e7867; stroke-width: .65; opacity: .60; }
+.middleTop { animation-name: mesh-middle-top; }
+.middleLeft { animation-name: mesh-middle-left; }
+.middleRight { animation-name: mesh-middle-right; }
+.fineTop { animation-name: mesh-fine-top; }
+.fineLeft { animation-name: mesh-fine-left; }
+.fineRight { animation-name: mesh-fine-right; }
+@keyframes mesh-coarse {
+  0%, 13%, 100% { opacity: .88; }
+  34% { opacity: .54; }
+  65%, 92% { opacity: .12; }
+}
+@keyframes mesh-middle-top {
+  0%, 8%, 100% { opacity: 0; }
+  25%, 44% { opacity: .85; }
+  66%, 92% { opacity: .20; }
+}
+@keyframes mesh-middle-left {
+  0%, 17%, 100% { opacity: 0; }
+  34%, 50% { opacity: .85; }
+  70%, 92% { opacity: .20; }
+}
+@keyframes mesh-middle-right {
+  0%, 26%, 100% { opacity: 0; }
+  43%, 56% { opacity: .85; }
+  74%, 92% { opacity: .20; }
+}
+@keyframes mesh-fine-top {
+  0%, 40%, 100% { opacity: 0; }
+  60%, 92% { opacity: .60; }
+}
+@keyframes mesh-fine-left {
+  0%, 49%, 100% { opacity: 0; }
+  69%, 92% { opacity: .60; }
+}
+@keyframes mesh-fine-right {
+  0%, 58%, 100% { opacity: 0; }
+  78%, 92% { opacity: .60; }
+}
+
+.axes { stroke: #91a193; stroke-width: .85; opacity: .45; }
+.convergenceGuide { stroke: #8ca490; stroke-width: .7; stroke-dasharray: 2 4; opacity: .30; }
+.traceGhost { stroke: #6d8979; stroke-width: .95; opacity: .15; }
+.drawLine { stroke: var(--process-ink); stroke-width: 1.65; stroke-dasharray: 100 100; stroke-dashoffset: 0; }
+/* Normalized dash lengths must scale with the path, including at browser zoom. */
+.drawing .drawLine { vector-effect: none; }
+.copper { stroke: var(--process-copper); }
+.secondary { stroke: var(--process-soft); }
+.startPoint { fill: var(--process-ink); }
+.endPoint { fill: #f8f7f2; stroke: var(--process-ink); stroke-width: 1.4; }
+.endPoint.copper { stroke: var(--process-copper); }
+.endPoint.secondary { stroke: var(--process-soft); }
+.reveal { opacity: 1; }
+.runTrace { animation-name: run-converge; }
+.runDivergence { animation-name: run-diverge; }
+.failureMark { stroke: var(--process-copper); stroke-width: 1.05; transform-box: view-box; transform-origin: 190px 21px; animation-name: failed-run; }
+.failureMark circle { fill: #f8f7f2; fill-opacity: .88; }
+@keyframes run-converge {
+  0%, 6%, 100% { stroke-dashoffset: 94; }
+  48%, 94% { stroke-dashoffset: 0; }
+}
+@keyframes run-diverge {
+  0%, 48%, 100% { stroke-dashoffset: 100; }
+  72%, 94% { stroke-dashoffset: 0; }
+}
+@keyframes failed-run {
+  0%, 67%, 100% { opacity: 0; transform: scale(.88); }
+  76% { opacity: 1; transform: scale(1.09); }
+  82%, 94% { opacity: 1; transform: scale(1); }
+}
+
+.compareFirst { animation-name: compare-first; }
+.compareSecond { stroke: var(--process-soft); animation-name: compare-second; }
+.compareThird { stroke: var(--process-copper); animation-name: compare-third; }
+.comparisonCue { stroke: #8b9d90; stroke-width: .85; animation-name: comparison-cue; }
+.compareEndpoint { animation-name: comparison-endpoints; }
+@keyframes compare-first {
+  0%, 7%, 100% { stroke-dashoffset: 97; }
+  62%, 94% { stroke-dashoffset: 0; }
+}
+@keyframes compare-second {
+  0%, 9%, 100% { stroke-dashoffset: 97; }
+  66%, 94% { stroke-dashoffset: 0; }
+}
+@keyframes compare-third {
+  0%, 11%, 100% { stroke-dashoffset: 97; }
+  69%, 94% { stroke-dashoffset: 0; }
+}
+@keyframes comparison-endpoints {
+  0%, 64%, 100% { opacity: 0; }
+  74%, 94% { opacity: 1; }
+}
+@keyframes comparison-cue {
+  0%, 72%, 100% { opacity: 0; }
+  83%, 94% { opacity: .7; }
+}
+
+/* Base declarations are complete, informative stills. Disabling animation
+   reveals all three curves, the failure mark and the finished triangular mesh. */
+:global(html[data-static]) .drawing [data-motion] { animation: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  .drawing [data-motion] { animation: none !important; }
+}
