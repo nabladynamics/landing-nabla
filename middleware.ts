@@ -1,22 +1,19 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { isThemeId, themeHref } from "@/lib/themes";
 
-// Preserve links from the earlier query-based style picker.
+// Retired designs resolve to the same page on the single public site.
+const legacyStylePath = /^\/styles\/(?:default|deeptech|editorial|industrial|lab|spatial)(?:\/(industries|contact|platform))?\/?$/;
+
 export function middleware(request: NextRequest) {
   const url = request.nextUrl.clone();
-  const theme = url.searchParams.get("theme");
-  if (isThemeId(theme)) {
-    const destination = themeHref(url.pathname, theme);
-    if (destination !== url.pathname || url.searchParams.has("theme")) {
-      url.pathname = destination;
-      url.searchParams.delete("theme");
-      return NextResponse.redirect(url);
-    }
+  const legacy = url.pathname.match(legacyStylePath);
+  const hasTheme = url.searchParams.has("theme");
+
+  if (legacy) {
+    url.pathname = legacy[1] && legacy[1] !== "platform" ? `/${legacy[1]}` : "/";
   }
-  if (url.pathname === "/styles/spatial" || url.pathname.startsWith("/styles/spatial/")) {
-    url.pathname = url.pathname.replace(/^\/styles\/spatial/, "") || "/";
-    return NextResponse.redirect(url);
-  }
+  if (hasTheme) url.searchParams.delete("theme");
+
+  if (legacy || hasTheme) return NextResponse.redirect(url, 308);
   return NextResponse.next();
 }
 

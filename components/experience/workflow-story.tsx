@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { ArrowRight, ArrowUpRight, Pause, Play, RotateCcw } from "lucide-react";
-import { StyleLink as Link } from "@/components/style-link";
+import Link from "next/link";
 import { Reveal } from "@/components/ui/reveal";
 import { ProcessDrawing } from "./workflow-process";
 import styles from "./workflow-story.module.css";

@@ -1,38 +1,13 @@
 import type { Metadata, Viewport } from "next";
-import {
-  Archivo,
-  DM_Mono,
-  DM_Sans,
-  Geist,
-  Geist_Mono,
-  IBM_Plex_Mono,
-  Inter,
-  JetBrains_Mono,
-  Manrope,
-} from "next/font/google";
+import { Inter } from "next/font/google";
 import { MotionProvider } from "@/components/motion-provider";
-import { StyleProvider } from "@/components/style-provider";
 import { site } from "@/lib/site";
-import { themeIds } from "@/lib/themes";
 import "./globals.css";
 
-// One family per style variant; see the data-theme blocks in globals.css.
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
-const geist = Geist({ subsets: ["latin"], variable: "--font-geist", display: "swap" });
-const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono", display: "swap" });
-const manrope = Manrope({ subsets: ["latin"], variable: "--font-manrope", display: "swap" });
-const jetbrains = JetBrains_Mono({ subsets: ["latin"], variable: "--font-jetbrains", display: "swap" });
-const archivo = Archivo({ subsets: ["latin"], variable: "--font-archivo", display: "swap" });
-const plexMono = IBM_Plex_Mono({ subsets: ["latin"], weight: ["400", "500"], variable: "--font-plex-mono", display: "swap" });
-const dmSans = DM_Sans({ subsets: ["latin"], variable: "--font-dm-sans", display: "swap" });
-const dmMono = DM_Mono({ subsets: ["latin"], weight: ["400", "500"], variable: "--font-dm-mono", display: "swap" });
 
-const fontVariables = [inter, geist, geistMono, manrope, jetbrains, archivo, plexMono, dmSans, dmMono]
-  .map((font) => font.variable)
-  .join(" ");
-
-// The URL owns the variant, including on refresh and before hydration.
-const themeBootScript = `(function(){try{var p=location.pathname.split("/");var ids=${JSON.stringify(themeIds)};var t=p[1]==="styles"&&ids.indexOf(p[2])>-1?p[2]:"spatial";if(t!=="default"){document.documentElement.dataset.theme=t}else{delete document.documentElement.dataset.theme}if(new URLSearchParams(location.search).has("static")){document.documentElement.dataset.static="1"}}catch(e){}})();`;
+// Keep the static preview mode available before hydration.
+const staticPreviewScript = `(function(){try{if(new URLSearchParams(location.search).has("static")){document.documentElement.dataset.static="1"}}catch(e){}})();`;
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
@@ -85,9 +60,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`scroll-smooth ${fontVariables}`} suppressHydrationWarning>
+    <html lang="en" className={`scroll-smooth ${inter.variable}`} suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: themeBootScript }} />
+        <script dangerouslySetInnerHTML={{ __html: staticPreviewScript }} />
       </head>
       {/* suppressHydrationWarning: browser extensions (e.g. Grammarly) inject
           attributes into <body> before hydration; only this element's
@@ -102,7 +77,7 @@ export default function RootLayout({
         >
           Skip to content
         </a>
-        <StyleProvider><MotionProvider>{children}</MotionProvider></StyleProvider>
+        <MotionProvider>{children}</MotionProvider>
       </body>
     </html>
   );

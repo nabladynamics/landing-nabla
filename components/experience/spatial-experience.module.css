@@ -12,7 +12,7 @@
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
 }
-/* More specific than the global typography themes; never changes their state. */
+/* Keep the journey typography independent of the shared page typography. */
 .experience.experience.experience.experience :is(h1, h2, h3, a, button, p, span) {
   font-family: inherit;
   text-transform: none;

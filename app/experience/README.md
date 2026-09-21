@@ -3,22 +3,22 @@
 The primary landing page at `/`, inspired by the continuous camera journey of
 https://www.beyond-aero.com/. The former `/experience` route redirects home.
 
-## Navigation and variants
+## Navigation
 
-The menu contains Home, Industries and Let’s Talk. Spatial has its own
-presentation of `/industries` and `/contact`.
-The other designs live at `/styles/{default|deeptech|editorial|industrial|lab}`
-with the same two section paths appended. Platform is deferred: its page
-component is retained, but its routes temporarily redirect to the corresponding
-style’s home and no public navigation links to it. The header and footer keep links
-inside the active design; switching styles preserves the section being viewed.
-The URL owns the selection, including on reload. Legacy `?theme=` links redirect
-to the corresponding style route; old browser preferences cannot override it.
+Spatial is the sole design. The menu contains Home (`/`), Industries
+(`/industries`) and Let’s Talk (`/contact`). There is no style selector,
+theme provider or saved style preference. Header and footer links use the
+canonical page paths.
 
-Shared page components live in `components/pages/`. All variants use the same
-six real industry photographs and descriptions from `IndustriesGrid`, styled
-with their own palette and typography. Spatial tokens live in `app/globals.css`;
-the shared Spatial header/footer styles are scoped in
+Former `/styles/{default|deeptech|editorial|industrial|lab|spatial}` URLs,
+including their `/industries` and `/contact` paths, redirect to the corresponding
+canonical pages while preserving unrelated query parameters and fragments.
+Legacy `?theme=` parameters are removed. Platform is deferred: `/platform`
+temporarily redirects home and no public navigation links to it.
+
+Page components live in `components/pages/`. Industries uses the six supplied
+photographs and descriptions from `IndustriesGrid`. Spatial tokens live in
+`app/globals.css`; the header/footer styles are scoped in
 `components/experience/spatial-navigation.module.css`.
 
 The 3D scene remains isolated in `components/experience/`, `public/experience/`

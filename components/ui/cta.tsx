@@ -1,4 +1,4 @@
-import { StyleLink as Link } from "@/components/style-link";
+import Link from "next/link";
 import type { AnchorHTMLAttributes, ReactNode } from "react";
 
 type CTAProps = {

@@ -32,6 +32,8 @@ Copy `.env.example` to `.env.local` and fill in the values. Remember to add the 
 
 ## Notes
 
-- The hero background ([components/visuals/hero-video.tsx](components/visuals/hero-video.tsx)) plays `public/videos/meshing-video.mp4` muted, on a loop, at 0.5× speed (roughly 20 seconds per loop). Its framing crops out the source's right-side logo. It pauses off-screen and in hidden tabs, shows a poster under `prefers-reduced-motion`, and includes a play/pause control.
-- Founder avatars are typographic placeholders, ready to be swapped for photos.
-- The footer LinkedIn link is a placeholder (`#`) until the company profile exists.
+- Spatial is the sole design, with Home (`/`), Industries (`/industries`) and Let’s Talk (`/contact`) in the navigation. There is no style selector, theme provider or saved style preference.
+- Former `/styles/{default|deeptech|editorial|industrial|lab|spatial}` URLs, including their `/industries` and `/contact` paths, redirect to the corresponding canonical pages while preserving unrelated query parameters and fragments. The obsolete `theme` parameter is removed. Platform remains deferred; `/platform` temporarily redirects home.
+- Home opens with an interactive 3D journey, followed by the conventional CFD workflow and the approach Nabla is developing. The animated scenes are illustrative, not simulation results. See [the experience documentation](app/experience/README.md) for rendering, accessibility and asset details.
+- Industries uses the six supplied industry photographs. A compact, single-row logo strip presents the founders’ institutional experience near the end of Home; on narrow screens it scrolls horizontally.
+- Contact-form delivery is configured through the environment variables above. Product benefits are presented as development goals.
