@@ -22,40 +22,29 @@ const friction = [
   },
 ];
 
-const reportViews = {
-  engineering: {
-    label: "Engineering review",
-    title: "The detail behind the decision.",
-    audience: "Engineering team",
-    sections: ["Geometry & boundary conditions", "Flow fields & integrated forces", "Convergence, checks & limitations"],
-    footer: "Methods, assumptions and evidence, kept together.",
+const intendedWorkflow = [
+  {
+    stage: "Geometry",
+    title: "Bring the design. Skip the manual mesh.",
+    text: "Automated preparation, without conventional, geometry-fitted volumetric meshing.",
   },
-  client: {
-    label: "Client handover",
-    title: "The findings that move a project forward.",
-    audience: "Project stakeholders",
-    sections: ["Project objectives & design context", "Key findings & design comparisons", "Assumptions, limitations & next steps"],
-    footer: "A clear summary, with the technical detail still attached.",
+  {
+    stage: "Simulation",
+    title: "Let the physics guide the computation.",
+    text: "Resolution concentrated where the flow requires it, with physical simulation at the core.",
   },
-};
-
-function ReportDrawing() {
-  return <svg viewBox="0 0 440 170" fill="none" aria-hidden="true">
-    {[22, 43, 64, 86, 108, 130, 151].map((y, i) => <path key={y}
-      d={`M0 ${y} C75 ${y}, 93 ${y - (i < 3 ? 8 : 0)}, 137 ${y - (i < 3 ? 20 : i > 3 ? -12 : 0)} S249 ${y}, 440 ${y}`}
-      stroke={i === 2 ? "#b56d48" : "#578b90"} strokeWidth={i === 2 ? 1.5 : 1} opacity={i === 0 || i === 6 ? .35 : .7} />)}
-    <path d="M104 88c18-34 82-31 204 0-97 7-180 18-204 0Z" fill="#e2e7e0" stroke="#526c65" strokeWidth="1.2" />
-    <path d="M107 88h200" stroke="#526c65" strokeDasharray="3 4" opacity=".35" />
-  </svg>;
-}
+  {
+    stage: "Results",
+    title: "Turn results into a clear report.",
+    text: "Detailed reports generated from the results, tailored to the project, the client and the questions that matter.",
+  },
+];
 
 export function WorkflowStory() {
   const processRef = useRef<HTMLElement>(null);
   const [processVisible, setProcessVisible] = useState(false);
   const [pageVisible, setPageVisible] = useState(true);
   const [animationsPaused, setAnimationsPaused] = useState(false);
-  const [reportView, setReportView] = useState<keyof typeof reportViews>("engineering");
-  const report = reportViews[reportView];
   const processRunning = processVisible && pageVisible && !animationsPaused;
 
   useEffect(() => {
@@ -111,56 +100,37 @@ export function WorkflowStory() {
       </div>
     </section>
 
-    <section className={styles.solution} aria-labelledby="workflow-solution-title">
+    <section id="approach" className={styles.solution} aria-labelledby="workflow-solution-title">
       <div className={styles.inner}>
         <Reveal>
-          <div className={styles.principle}>
-            <span className={styles.principleMark} aria-hidden="true">↳</span>
-            <div><p>Faster predictions are not enough.</p><p>ML can accelerate exploration. But when a model’s assumptions and limits are hidden, speed alone cannot establish trust. Engineering decisions still need physical evidence.</p></div>
+          <p className={styles.eyebrow}>The approach we’re developing</p>
+          <div className={styles.solutionHeader}>
+            <h2 id="workflow-solution-title">Less friction.<br /><em>More understanding.</em></h2>
+            <div className={styles.solutionIntro}>
+              <p>We’re developing a new CFD engine to make physical simulation easier to use and understand.</p>
+              <p>AI can accelerate exploration. When predictions are difficult to inspect, engineers still need physical evidence, clear assumptions and explicit limitations.</p>
+            </div>
           </div>
         </Reveal>
 
-        <div className={styles.solutionGrid}>
-          <div className={styles.solutionCopy}>
-            <Reveal>
-              <p className={styles.eyebrow}>The workflow we’re building</p>
-              <h2 id="workflow-solution-title">Less friction.<br /><em>More understanding.</em></h2>
-              <p className={styles.solutionLead}>A new CFD engine, grounded in physics. An intuitive path from your geometry to results you can examine, explain and share.</p>
-            </Reveal>
-            <ol className={styles.newSteps}>
-              <li><span>01</span><div><h3>Bring the design. Skip the manual mesh.</h3><p>Automated preparation, without conventional, geometry-fitted volumetric meshing.</p></div></li>
-              <li><span>02</span><div><h3>Let the physics guide the computation.</h3><p>Concentrate resolution where the flow requires it, with physical simulation at the core.</p></div></li>
-              <li><span>03</span><div><h3>Turn results into a clear report.</h3><p>A detailed report generated with the results, tailored to the project, the client and the questions that matter.</p></div></li>
-            </ol>
-            <Link href="/contact" className={styles.link}>Talk about your project <ArrowUpRight size={18} aria-hidden="true" /></Link>
+        <Reveal delay={.08}>
+          <ol className={styles.newSteps} aria-label="Our intended workflow">
+            {intendedWorkflow.map((step, index) => <li key={step.stage}>
+              <div className={styles.stageLabel}><span>{step.stage}</span>{index < intendedWorkflow.length - 1 && <ArrowRight size={17} aria-hidden="true" />}</div>
+              <h3>{step.title}</h3>
+              <p>{step.text}</p>
+            </li>)}
+          </ol>
+        </Reveal>
+
+        <div className={styles.solutionFooter}>
+          <div className={styles.goals} aria-label="Development goals">
+            <p>What we’re working towards</p>
+            <ul><li>Faster simulations</li><li>Lower computing costs</li><li>Higher resolution</li></ul>
           </div>
-
-          <Reveal delay={.12} className={styles.reportColumn}>
-            <div className={styles.reportDemo}>
-              <div className={styles.reportControls}>
-                <p>One study. The right level of detail.</p>
-                <div className={styles.reportSwitch} role="group" aria-label="Report audience">
-                  {(Object.keys(reportViews) as (keyof typeof reportViews)[]).map((view) => <button key={view} type="button" aria-pressed={reportView === view} aria-controls="report-preview" onClick={() => setReportView(view)}>{reportViews[view].label}</button>)}
-                </div>
-              </div>
-              <div id="report-preview" className={styles.reportPaper} aria-live="polite" aria-atomic="true">
-                <div className={styles.reportHeader}><span>Nabla AI</span><span>Illustrative report</span></div>
-                <div className={styles.reportTitle}><p>External aerodynamics</p><h3>{report.title}</h3></div>
-                <div className={styles.reportMeta}><span>Prepared for</span><span>{report.audience}</span></div>
-                <div className={styles.reportFigure}><ReportDrawing /><span>Flow visualisation · schematic</span></div>
-                <ol className={styles.reportContents}>{report.sections.map((section, index) => <li key={section}><span>{String(index + 1).padStart(2, "0")}</span>{section}</li>)}</ol>
-                <p className={styles.reportFooter}>{report.footer}</p>
-              </div>
-              <p className={styles.previewNote}>Report concept. Content and presentation adapted to each project.</p>
-            </div>
-          </Reveal>
+          <Link href="/contact" className={styles.link}>Talk about your project <ArrowUpRight size={18} aria-hidden="true" /></Link>
         </div>
-
-        <div className={styles.goals} aria-label="Development goals">
-          <p>What we’re working towards</p>
-          <ul><li>Faster simulations</li><li>Lower computing costs</li><li>Higher resolution</li></ul>
-        </div>
-        <p className={styles.developmentNote}>Nabla is in development. The workflow and report shown here describe our intended experience, not demonstrated performance. Visuals are illustrative, not simulation results.</p>
+        <p className={styles.developmentNote}>Nabla is in development. This is the workflow we are working towards; the benefits above are development goals. The animated scenes are illustrative, not simulation results.</p>
       </div>
     </section>
   </div>;
