@@ -25,6 +25,7 @@
 .footerMeta { color: #65706b; }
 .footerNav { display: flex; flex-wrap: wrap; align-items: center; gap: 26px; }
 .footerNav a { text-decoration: none; }
+.footerNav .footerSocial { color: #65706b; }
 .footerNav a:hover { color: #ad4e30; }
 @media (max-width: 1050px) {
   .controls, .desktopLinks { gap: 22px; }

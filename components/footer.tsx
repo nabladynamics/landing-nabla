@@ -10,6 +10,7 @@ export function Footer() {
       <span className={styles.footerMeta}>{site.locations}</span>
       <nav className={styles.footerNav} aria-label="Footer">
         {navLinks.map((link) => <Link key={link.href} href={link.href}>{link.label}</Link>)}
+        <a className={styles.footerSocial} href={site.linkedin} target="_blank" rel="noopener noreferrer" aria-label="Nabla Dynamics on LinkedIn">LinkedIn</a>
       </nav>
     </footer>
   );
