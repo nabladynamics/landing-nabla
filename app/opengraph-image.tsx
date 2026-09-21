@@ -16,19 +16,17 @@ export default function OpenGraphImage() {
           flexDirection: "column",
           justifyContent: "center",
           padding: "80px",
-          background:
-            "radial-gradient(ellipse 80% 70% at 85% 20%, #ebe6fc 0%, #fcfcfa 70%)",
-          color: "#182331",
+          background: "#f3f2ec",
+          color: "#243333",
           fontSize: 32,
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: 24 }}>
-          <svg width="72" height="72" viewBox="0 0 24 24" fill="none">
+          <svg width="72" height="72" viewBox="0 0 32 32" aria-hidden="true">
             <path
-              d="M3.6 4.5h16.8L12 20.4 3.6 4.5Z"
-              stroke="#6446d7"
-              strokeWidth="2"
-              strokeLinejoin="round"
+              d="M3 5h26L16 27ZM6.25 6.9 16 23.4 25.75 6.9Z"
+              fill="#111111"
+              fillRule="evenodd"
             />
           </svg>
           <div style={{ fontSize: 52, fontWeight: 700 }}>Nabla AI</div>
@@ -50,7 +48,7 @@ export default function OpenGraphImage() {
             display: "flex",
             marginTop: 32,
             fontSize: 30,
-            color: "#626b78",
+            color: "#65706b",
             maxWidth: 900,
           }}
         >

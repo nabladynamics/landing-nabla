@@ -1,0 +1,34 @@
+.figure { margin: 0; min-width: 0; padding: 27px 28px 23px; background: #f5f5ec; border-top: 1px solid #6b806b50; color: #294238; }
+.heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.heading p { font-size: 19px; line-height: 1.4; margin: 0; }
+.heading > span { font-size: 22px; line-height: 1; color: #708571; }
+.drawing { position: relative; margin: 4px -28px 4px; }
+.drawing svg { display: block; width: 100%; height: auto; }
+.geometryLabel, .sectionLabel { position: absolute; color: #637364; font-size: clamp(10px, .95vw, 12px); line-height: 1.4; }
+.geometryLabel { top: 18.5%; left: 10.5%; }
+.sectionLabel { bottom: 8%; right: 8%; }
+.evidence { display: grid; grid-template-columns: 1fr 1.12fr 1fr; gap: 17px; padding-top: 20px; border-top: 1px solid #6b806b35; }
+.evidence > div + div { padding-left: 17px; border-left: 1px solid #6b806b35; }
+.evidence span { display: block; font-size: 14px; color: #365346; margin-bottom: 7px; }
+.evidence p { font-size: 12px; line-height: 1.65; margin: 0; color: #536653; }
+.caption { margin-top: 25px; padding-top: 15px; border-top: 1px solid #6b806b25; font-size: 11px; line-height: 1.7; color: #536653; max-width: 440px; }
+@media (max-width: 1100px) {
+  .figure { padding: 22px 20px 21px; }
+  .heading p { font-size: 17px; }
+  .drawing { margin-inline: -20px; }
+  .evidence { gap: 12px; }
+  .evidence > div + div { padding-left: 12px; }
+  .evidence span { font-size: 13px; }
+  .evidence p { font-size: 11px; }
+}
+@media (max-width: 480px) {
+  .figure { padding: 22px 18px 19px; }
+  .drawing { margin-inline: -18px; margin-block: 14px 13px; }
+  .geometryLabel, .sectionLabel { font-size: 10px; }
+  .sectionLabel { right: 5%; }
+  .evidence { grid-template-columns: 1fr 1fr 1fr; gap: 10px; padding-top: 17px; }
+  .evidence > div + div { padding-left: 10px; }
+  .evidence span { font-size: 12px; }
+  .evidence p { font-size: 10px; }
+  .caption { font-size: 10px; margin-top: 22px; }
+}

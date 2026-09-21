@@ -43,14 +43,10 @@
 .rotationControls button { min-height: 32px; color: var(--accent); }
 .rotationControls button:disabled { visibility: hidden; }
 .keyboardHelp { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-.sceneLabel { position: absolute; top: 147px; right: 4.6%; display: flex; gap: 9px; align-items: center; font-size: 13px; color: #52615b; }
-.liveDot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
 .skip { position: absolute; left: 4.6%; top: 149px; display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: 12px; text-decoration: none; }
 .skip:hover { color: var(--accent); }
 .copy { position: absolute; left: 4.6%; top: 31%; width: 48%; max-width: 660px; }
 .chapter:not([hidden]) { animation: chapter-in 550ms ease both; }
-.eyebrow { display: flex; align-items: center; gap: 14px; font-size: 14px; color: var(--accent); margin: 0 0 26px; }
-.eyebrow span { color: #6b766f; font-size: 12px; border-right: 1px solid #24333336; padding-right: 14px; }
 .experience.experience.experience .chapter :is(h1, h2) { font-size: clamp(38px, min(4.7vw, 7svh), 76px); white-space: pre-line; }
 .body { color: #5b6861; font-size: 17px; line-height: 1.75; max-width: 410px; margin: 27px 0 23px; }
 .textLink { width: fit-content; display: inline-flex; align-items: center; gap: 26px; min-height: 44px; font-size: 14px; border-bottom: 1px solid #24333350; padding: 4px 0 8px; text-decoration: none; }
@@ -99,10 +95,8 @@
   .rotationSurface { left: 0; right: 0; top: 19%; height: 37%; bottom: auto; }
   .rotationControls { top: 148px; bottom: auto; right: 24px; font-size: 11px; gap: 16px; }
   .sceneWash { background: linear-gradient(0deg, #f3f2ec 0%, #f3f2ec 18%, #f3f2ec00 55%); }
-  .sceneLabel { top: 102px; right: 24px; font-size: 11px; }
   .skip { top: 101px; left: 24px; font-size: 11px; }
   .copy { left: 24px; right: 24px; top: auto; bottom: 124px; width: auto; max-width: 560px; }
-  .eyebrow { margin-bottom: 14px; font-size: 13px; }
   .experience.experience.experience .chapter :is(h1, h2) { font-size: clamp(32px, 7.7vw, 46px); letter-spacing: -0.05em; }
   .body { font-size: 14px; line-height: 1.65; margin: 14px 0 11px; max-width: 390px; }
   .textLink { min-height: 40px; font-size: 13px; gap: 25px; }
@@ -124,9 +118,8 @@
 @media (max-height: 720px) and (min-width: 761px) {
   .copy { top: 25%; }
   .experience.experience.experience .chapter :is(h1, h2) { font-size: 48px; }
-  .eyebrow { margin-bottom: 18px; }
   .body { margin-top: 20px; font-size: 15px; }
-  .sceneLabel, .skip { top: 126px; }
+  .skip { top: 126px; }
 }
 @media (max-width: 760px) and (max-height: 740px) {
   .scene { top: 15%; height: 53%; }
@@ -136,14 +129,13 @@
   .copy { bottom: 111px; }
   .experience.experience.experience .chapter :is(h1, h2) { font-size: 30px; }
   .body { font-size: 13px; line-height: 1.5; margin: 10px 0 6px; }
-  .eyebrow { margin-bottom: 10px; }
 }
 /* Browser zoom and landscape phones retain the finished 3D scene. The copy
    scrolls within its own column so enlarged text never forces a poster view. */
 @media (max-height: 580px) {
   .scene { inset: 0; height: 100%; }
   .sceneWash { background: linear-gradient(90deg, #f3f2ec 0%, #f3f2eced 25%, #f3f2ec80 40%, #f3f2ec00 58%); }
-  .sceneLabel, .skip, .objectNote, .objectNote[data-thermal] { display: none; }
+  .skip, .objectNote, .objectNote[data-thermal] { display: none; }
   .copy {
     top: calc(var(--spatial-header-height) + 16px); bottom: 70px;
     left: 4.6%; right: auto; width: 42%; max-width: 660px;
@@ -153,7 +145,6 @@
   .experience.experience.experience .chapter :is(h1, h2) {
     font-size: clamp(24px, 4vw, 40px); overflow-wrap: anywhere;
   }
-  .eyebrow { margin-bottom: 12px; font-size: 12px; }
   .body { font-size: 14px; line-height: 1.6; margin: 16px 0 12px; }
   .textLink { font-size: 13px; gap: 14px; }
   .rotationSurface { left: 48%; right: 0; top: var(--spatial-header-height); bottom: 60px; height: auto; }

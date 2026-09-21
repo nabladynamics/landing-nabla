@@ -140,12 +140,10 @@ export function SpatialExperience() {
               <span id="rotation-help"><MoveHorizontal size={15} aria-hidden="true" />Drag to rotate<span className={styles.keyboardHelp}>. Use left and right arrow keys to rotate, or Home to reset.</span></span>
               <button type="button" onClick={() => sceneRef.current?.resetRotation()} disabled={!rotation.rotated} aria-label="Reset model rotation"><RotateCcw size={13} aria-hidden="true" />Reset view</button>
             </div>
-            <div className={styles.sceneLabel}><span className={styles.liveDot} />Engineering in motion</div>
             <a href="#perspective" className={styles.skip}>Skip the journey <ArrowDown size={14} /></a>
 
             <div ref={copyRef} className={styles.copy} role="region" aria-label="Current chapter" tabIndex={0}>
               {chapters.map((chapter, index) => <article key={chapter.id} hidden={active !== index} className={styles.chapter} data-chapter={chapter.id}>
-                <p className={styles.eyebrow}><span>{String(index + 1).padStart(2, "0")}</span>{chapter.label}</p>
                 {index === 0 ? <h1>{chapter.title}</h1> : <h2>{chapter.title}</h2>}
                 <p className={styles.body}>{chapter.body}</p>
                 <Link href={chapter.href} className={styles.textLink}>{chapter.link}<ArrowUpRight size={18} /></Link>
@@ -167,7 +165,7 @@ export function SpatialExperience() {
         </section> : <section className={styles.standardJourney} aria-label="Engineering applications">
           <div className={styles.standardControls}><span>A different perspective on CFD</span></div>
           {chapters.map((chapter, index) => <article className={styles.standardChapter} key={chapter.id} id={chapter.id}>
-            <div><p className={styles.eyebrow}>{chapter.label}</p>{index === 0 ? <h1>{chapter.title}</h1> : <h2>{chapter.title}</h2>}<p className={styles.body}>{chapter.body}</p><Link href={chapter.href} className={styles.textLink}>{chapter.link}<ArrowUpRight size={18} /></Link></div>
+            <div>{index === 0 ? <h1>{chapter.title}</h1> : <h2>{chapter.title}</h2>}<p className={styles.body}>{chapter.body}</p><Link href={chapter.href} className={styles.textLink}>{chapter.link}<ArrowUpRight size={18} /></Link></div>
           </article>)}
         </section>}
 

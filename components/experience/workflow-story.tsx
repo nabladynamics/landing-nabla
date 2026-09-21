@@ -5,6 +5,7 @@ import { ArrowRight, ArrowUpRight, Pause, Play, RotateCcw } from "lucide-react";
 import Link from "next/link";
 import { Reveal } from "@/components/ui/reveal";
 import { ProcessDrawing } from "./workflow-process";
+import { ApproachVisual } from "./approach-visual";
 import styles from "./workflow-story.module.css";
 
 const friction = [
@@ -93,7 +94,7 @@ export function WorkflowStory() {
         <Reveal>
           <div className={styles.humanCost}>
             <p>The cost is more than compute.</p>
-            <p>With conventional CFD, faster iteration can mean lower resolution. Building confidence in the results takes refinement and repeat runs. This means more time, more compute and more pressure on engineers.</p>
+            <p><strong>With conventional CFD, faster iteration can mean lower resolution. Building confidence in the results takes refinement and repeat runs. This means more time, more compute and more pressure on engineers.</strong></p>
           </div>
         </Reveal>
       </div>
@@ -101,25 +102,29 @@ export function WorkflowStory() {
 
     <section id="approach" className={styles.solution} aria-labelledby="workflow-solution-title">
       <div className={styles.inner}>
-        <Reveal>
-          <div className={styles.solutionHeader}>
+        <div className={styles.solutionLayout}>
+          <Reveal className={styles.solutionHeader}>
             <h2 id="workflow-solution-title">Less friction.<br /><em>More understanding.</em></h2>
             <div className={styles.solutionIntro}>
               <p>We’re developing a new CFD engine to make physical simulation easier to use and understand.</p>
               <p>AI can accelerate exploration. When predictions are difficult to inspect, engineers still need physical evidence, clear assumptions and explicit limitations.</p>
             </div>
-          </div>
-        </Reveal>
+          </Reveal>
 
-        <Reveal delay={.08}>
-          <ol className={styles.newSteps} aria-label="Our intended workflow">
-            {intendedWorkflow.map((step, index) => <li key={step.stage}>
-              <div className={styles.stageLabel}><span>{step.stage}</span>{index < intendedWorkflow.length - 1 && <ArrowRight size={17} aria-hidden="true" />}</div>
-              <h3>{step.title}</h3>
-              <p>{step.text}</p>
-            </li>)}
-          </ol>
-        </Reveal>
+          <Reveal className={styles.solutionVisual} delay={.08}>
+            <ApproachVisual />
+          </Reveal>
+
+          <Reveal className={styles.solutionSteps} delay={.08}>
+            <ol className={styles.newSteps} aria-label="Our intended workflow">
+              {intendedWorkflow.map((step) => <li key={step.stage}>
+                <span className={styles.stageLabel}>{step.stage}</span>
+                <h3>{step.title}</h3>
+                <p>{step.text}</p>
+              </li>)}
+            </ol>
+          </Reveal>
+        </div>
 
         <div className={styles.solutionFooter}>
           <div className={styles.goals} aria-label="Development goals">

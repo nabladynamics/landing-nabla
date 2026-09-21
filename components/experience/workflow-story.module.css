@@ -28,20 +28,22 @@
 .humanCost { margin-top: 52px; padding-top: 26px; border-top: 1px solid var(--rule); display: grid; grid-template-columns: 1fr 1.3fr; gap: 10%; }
 .humanCost p { margin: 0; }
 .humanCost p:first-child { font-size: 24px; letter-spacing: -.025em; }
-.humanCost p:last-child { color: var(--muted); font-size: 16px; line-height: 1.75; max-width: 570px; }
+.humanCost p:last-child { color: var(--ink); font-size: 16px; line-height: 1.75; max-width: 570px; }
+.humanCost strong { font-weight: 700; }
 .solution { background: var(--sage); padding: 105px 0 52px; scroll-margin-top: var(--spatial-header-height); }
-.solutionHeader { display: grid; grid-template-columns: 1.05fr 1fr; gap: 9%; align-items: start; }
-.solutionIntro { max-width: 525px; padding-top: 3px; }
+.solutionLayout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.04fr); grid-template-areas: "intro visual" "steps visual"; column-gap: 7%; row-gap: 34px; align-items: start; }
+.solutionHeader { grid-area: intro; min-width: 0; }
+.solutionVisual { grid-area: visual; min-width: 0; align-self: center; }
+.solutionSteps { grid-area: steps; min-width: 0; }
+.solutionIntro { max-width: 525px; margin-top: 28px; }
 .solutionIntro p { margin: 0; }
-.solutionIntro p:first-child { font-size: 23px; line-height: 1.5; letter-spacing: -.025em; }
-.solutionIntro p + p { font-size: 15px; line-height: 1.8; color: #5e6a5f; margin-top: 20px; }
-.newSteps { list-style: none; padding: 0; margin: 64px 0 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 42px; }
-.newSteps li { position: relative; border-top: 1px solid #7d91796b; padding-top: 22px; }
-.newSteps li::before { content: ""; position: absolute; top: -3px; left: 0; width: 5px; height: 5px; background: #647f69; border-radius: 50%; }
-.stageLabel { display: flex; align-items: center; justify-content: space-between; gap: 16px; color: #536d58; font-size: 14px; margin-bottom: 30px; }
-.stageLabel svg { color: #71836b; }
-.newSteps h3 { max-width: 300px; font-size: 25px; line-height: 1.3; margin: 0 0 16px; min-height: 2.6em; }
-.newSteps p { color: #5e6a5f; font-size: 15px; line-height: 1.8; margin: 0; max-width: 360px; }
+.solutionIntro p:first-child { font-size: 21px; line-height: 1.5; letter-spacing: -.025em; }
+.solutionIntro p + p { font-size: 14px; line-height: 1.8; color: #5e6a5f; margin-top: 16px; }
+.newSteps { list-style: none; padding: 0; margin: 0; display: grid; gap: 23px; }
+.newSteps li { border-top: 1px solid #7d91796b; padding-top: 18px; }
+.stageLabel { display: block; color: #536d58; font-size: 12px; margin-bottom: 9px; }
+.newSteps h3 { font-size: 22px; line-height: 1.3; margin: 0 0 9px; }
+.newSteps p { color: #5e6a5f; font-size: 14px; line-height: 1.75; margin: 0; max-width: 500px; }
 .solutionFooter { display: flex; justify-content: space-between; align-items: end; gap: 28px; margin-top: 44px; padding-top: 28px; border-top: 1px solid var(--rule); }
 .link { display: inline-flex; align-items: center; gap: 35px; min-height: 44px; font-size: 14px; padding-bottom: 6px; border-bottom: 1px solid #24333370; text-decoration: none; flex-shrink: 0; }
 .link:hover { color: var(--accent); border-color: var(--accent); }
@@ -56,10 +58,9 @@
   .inner { width: 88%; }
   .intro { grid-template-columns: 1.5fr 1fr; gap: 6%; }
   .intro > p { font-size: 16px; }
-  .solutionHeader { gap: 6%; }
-  .solutionIntro p:first-child { font-size: 21px; }
-  .newSteps { gap: 28px; }
-  .newSteps h3 { font-size: 22px; }
+  .solutionLayout { column-gap: 5%; }
+  .solutionIntro p:first-child { font-size: 20px; }
+  .newSteps h3 { font-size: 21px; }
   .solutionFooter { flex-direction: column; align-items: start; gap: 24px; }
   .friction h3 { font-size: 19px; }
 }
@@ -89,16 +90,12 @@
   .humanCost p:first-child { font-size: 23px; }
   .humanCost p:last-child { font-size: 15px; }
   .solution { padding: 65px 0 36px; }
-  .solutionHeader { grid-template-columns: 1fr; gap: 30px; }
-  .solutionIntro { max-width: 540px; }
+  .solutionLayout { grid-template-columns: minmax(0, 1fr); grid-template-areas: "intro" "visual" "steps"; row-gap: 34px; }
+  .solutionIntro { max-width: 540px; margin-top: 24px; }
   .solutionIntro p:first-child { font-size: 20px; }
   .solutionIntro p + p { font-size: 15px; margin-top: 16px; }
-  .newSteps { grid-template-columns: 1fr; gap: 30px; margin-top: 40px; }
-  .newSteps li { padding-top: 17px; }
-  .stageLabel { margin-bottom: 18px; font-size: 13px; }
-  .stageLabel svg { transform: rotate(90deg); }
-  .newSteps h3 { font-size: 25px; min-height: 0; max-width: 370px; margin-bottom: 12px; }
-  .newSteps p { font-size: 14px; max-width: 500px; }
+  .newSteps { gap: 25px; }
+  .newSteps h3 { font-size: 23px; }
   .solutionFooter { flex-direction: column; gap: 20px; margin-top: 35px; padding-top: 24px; }
   .goals ul { display: grid; gap: 12px; }
   .goals li:not(:first-child) { padding-left: 0; border: 0; }
