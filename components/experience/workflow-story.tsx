@@ -105,7 +105,7 @@ export function WorkflowStory() {
         <Reveal>
           <div className={styles.humanCost}>
             <p>The cost is more than compute.</p>
-            <p>More rework. Fewer iterations. Exhausted engineers.</p>
+            <p>With conventional CFD, faster iteration can mean lower resolution. Building confidence in the results takes refinement and repeat runs — more time, more compute and more pressure on engineers.</p>
           </div>
         </Reveal>
       </div>
