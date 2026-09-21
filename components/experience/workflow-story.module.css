@@ -51,7 +51,6 @@
 .goals ul { list-style: none; padding: 0; margin: 0; display: flex; gap: 28px; }
 .goals li { font-size: 17px; }
 .goals li:not(:first-child) { border-left: 1px solid var(--rule); padding-left: 28px; }
-.developmentNote { color: #5e6a5f; font-size: 12px; line-height: 1.7; margin: 24px 0 0; max-width: 820px; }
 @media (min-width: 1600px) { .processSteps li > svg { height: 155px; } }
 @media (max-width: 1100px) {
   .inner { width: 88%; }

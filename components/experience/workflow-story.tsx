@@ -129,7 +129,6 @@ export function WorkflowStory() {
           </div>
           <Link href="/contact" className={styles.link}>Talk about your project <ArrowUpRight size={18} aria-hidden="true" /></Link>
         </div>
-        <p className={styles.developmentNote}>Nabla is in development. This is the workflow we are working towards; the benefits above are development goals. The animated scenes are illustrative, not simulation results.</p>
       </div>
     </section>
   </div>;
