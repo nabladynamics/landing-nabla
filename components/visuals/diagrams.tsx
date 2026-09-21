@@ -10,7 +10,7 @@ function Frame({ children }: { children: ReactNode }) {
   return (
     <div
       aria-hidden="true"
-      className="relative overflow-hidden rounded-lg border border-line bg-raise/40"
+      className="relative overflow-hidden rounded-ctl border border-line bg-raise/40"
     >
       <svg viewBox="0 0 320 190" className="block h-auto w-full">
         {children}

@@ -1,0 +1,182 @@
+.experience {
+  --ink: #243333;
+  --muted: #65706b;
+  --paper: #f3f2ec;
+  --accent: #ad4e30;
+  --journey-progress: 0;
+  --spatial-header-height: 108px;
+  position: relative;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-inter), Arial, sans-serif;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+/* More specific than the global typography themes; never changes their state. */
+.experience.experience.experience.experience :is(h1, h2, h3, a, button, p, span) {
+  font-family: inherit;
+  text-transform: none;
+}
+.experience.experience.experience.experience :is(a, button, p, span) { letter-spacing: normal; }
+.experience.experience.experience.experience :is(h1, h2) {
+  font-weight: 400;
+  letter-spacing: -0.055em;
+  line-height: 1.065;
+  margin: 0;
+}
+.experience :is(a, button):focus-visible { outline: 2px solid var(--accent); outline-offset: 6px; }
+.experience button { cursor: pointer; }
+.journey { position: relative; height: 650svh; }
+.stage { position: sticky; top: 0; height: 100svh; overflow: hidden; isolation: isolate; }
+.scene, .canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.canvas { display: block; opacity: 0; }
+.canvasReady { opacity: 1; }
+.sceneWash { pointer-events: none; position: absolute; inset: 0; background: linear-gradient(90deg, #f3f2ec 0%, #f3f2eced 25%, #f3f2ec99 40%, #f3f2ec00 58%), linear-gradient(0deg, #f3f2ec 0%, #f3f2ec00 21%); }
+.rotationSurface { position: absolute; left: 48%; right: 0; top: 21%; bottom: 23%; cursor: grab; touch-action: pan-y pinch-zoom; user-select: none; -webkit-user-select: none; border-radius: 18px; }
+.rotationSurface[aria-disabled="true"] { pointer-events: none; }
+.rotationSurface[data-dragging="true"] { cursor: grabbing; }
+.rotationSurface:focus { outline: none; }
+.rotationSurface:focus-visible + .rotationControls > span { text-decoration: underline; text-underline-offset: 4px; }
+.rotationControls { position: absolute; right: 8%; bottom: calc(18% - 42px); display: flex; align-items: center; gap: 20px; color: var(--muted); font-size: 12px; }
+.rotationControls[hidden] { display: none; }
+.rotationControls > span, .rotationControls button { display: inline-flex; align-items: center; gap: 7px; }
+.rotationControls button { min-height: 32px; color: var(--accent); }
+.rotationControls button:disabled { visibility: hidden; }
+.keyboardHelp { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.sceneLabel { position: absolute; top: 147px; right: 4.6%; display: flex; gap: 9px; align-items: center; font-size: 13px; color: #52615b; }
+.liveDot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+.skip { position: absolute; left: 4.6%; top: 149px; display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: 12px; text-decoration: none; }
+.skip:hover { color: var(--accent); }
+.copy { position: absolute; left: 4.6%; top: 31%; width: 48%; max-width: 660px; }
+.chapter:not([hidden]) { animation: chapter-in 550ms ease both; }
+.eyebrow { display: flex; align-items: center; gap: 14px; font-size: 14px; color: var(--accent); margin: 0 0 26px; }
+.eyebrow span { color: #6b766f; font-size: 12px; border-right: 1px solid #24333336; padding-right: 14px; }
+.experience.experience.experience .chapter :is(h1, h2) { font-size: clamp(38px, min(4.7vw, 7svh), 76px); white-space: pre-line; }
+.body { color: #5b6861; font-size: 17px; line-height: 1.75; max-width: 410px; margin: 27px 0 23px; }
+.textLink { width: fit-content; display: inline-flex; align-items: center; gap: 26px; min-height: 44px; font-size: 14px; border-bottom: 1px solid #24333350; padding: 4px 0 8px; text-decoration: none; }
+.textLink:hover { color: var(--accent); border-color: var(--accent); }
+.objectNote { position: absolute; right: 8%; bottom: 18%; color: #586760; font-size: 12px; padding-left: 20px; border-left: 1px solid #a7b2a4; }
+.objectNote[data-thermal] { display: flex; align-items: center; gap: 18px; }
+.coolLegend, .warmLegend { display: inline-flex; align-items: center; gap: 7px; }
+.coolLegend::before, .warmLegend::before { content: ""; width: 16px; height: 3px; border-radius: 3px; background: #2189aa; }
+.warmLegend::before { background: #c76b37; }
+.bottomBar { position: absolute; bottom: 28px; left: 4.6%; right: 4.6%; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 24px; }
+.scrollPrompt { display: flex; align-items: center; gap: 14px; font-size: 13px; text-align: left; min-height: 44px; }
+.scrollPrompt svg { color: var(--accent); }
+.chapterNav { display: flex; align-items: center; gap: 0; }
+.chapterNav button { display: flex; flex-direction: column; gap: 15px; align-items: center; width: 68px; height: 57px; justify-content: end; color: #788079; font-size: 11px; }
+.chapterNav i { width: 5px; height: 5px; border-radius: 50%; background: #a3aaa1; position: relative; }
+.chapterNav button:not(:last-child) i::after { content: ""; position: absolute; left: 8px; top: 2px; width: 57px; height: 1px; background: #c7cdc3; }
+.chapterNav button[aria-current] { color: var(--ink); }
+.chapterNav button[aria-current] i { background: var(--accent); box-shadow: 0 0 0 5px #ad4e301a; }
+.progressTrack { position: absolute; bottom: 0; left: 0; width: 100%; height: 2px; background: #dfe2d7; }
+.progressTrack > div { height: 100%; background: var(--accent); width: 100%; transform: scaleX(var(--journey-progress)); transform-origin: left; }
+.perspective { scroll-margin-top: 0; position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 8%; padding: 140px 8%; background: #e8ebdf; border-top: 1px solid #24333310; }
+.experience.experience.experience .perspective h2 { font-size: clamp(40px, 4.4vw, 70px); }
+.perspectiveBody > p:first-child { font-size: 20px; line-height: 1.65; margin: 0 0 32px; }
+.perspectiveBody ul { list-style: none; padding: 0; margin: 0; }
+.perspectiveBody li { border-top: 1px solid #24333324; padding: 20px 0; display: grid; gap: 7px; }
+.perspectiveBody li span:first-child { font-size: 17px; }
+.perspectiveBody li span:last-child { font-size: 14px; line-height: 1.6; color: #627061; }
+.developmentNote { font-size: 12px; line-height: 1.75; color: #627061; margin: 12px 0 24px; }
+.contact { padding: 130px 8%; text-align: center; }
+.contact .eyebrow { justify-content: center; }
+.experience.experience.experience .contact h2 { font-size: clamp(48px, 7vw, 105px); }
+.contactButton { display: inline-flex; align-items: center; gap: 36px; background: #283b34; color: #f3f2ec; padding: 19px 25px; margin-top: 40px; font-size: 15px; text-decoration: none; border-radius: 3px; }
+.contactButton:hover { background: #ad4e30; }
+.contact > p:last-child { max-width: 385px; margin: 24px auto 0; font-size: 14px; color: var(--muted); line-height: 1.75; }
+.standardJourney { padding: 140px 4.6% 50px; }
+.standardControls { display: flex; justify-content: space-between; gap: 24px; color: var(--muted); font-size: 13px; padding: 20px 0 40px; }
+.standardControls button { display: flex; align-items: center; gap: 12px; color: var(--accent); }
+.standardChapter { max-width: 800px; padding: 50px 0; border-bottom: 1px solid #24333320; }
+.experience.experience.experience .standardChapter :is(h1, h2) { white-space: pre-line; font-size: clamp(38px, 4.3vw, 66px); }
+@keyframes chapter-in { from { opacity: 0; transform: translateY(13px); } to { opacity: 1; transform: translateY(0); } }
+
+@media (min-width: 1600px) { .copy { top: 34%; } }
+@media (max-width: 767px) { .experience { --spatial-header-height: 80px; } }
+@media (max-width: 1050px) {
+  .copy { width: 53%; }
+  .chapterNav button { width: 51px; }
+  .chapterNav button:not(:last-child) i::after { width: 40px; }
+  .body { max-width: 340px; font-size: 16px; }
+  .objectNote { right: 5%; bottom: 17%; }
+  .rotationControls { right: 5%; bottom: calc(17% - 42px); }
+}
+@media (max-width: 760px) {
+  .journey { height: 610svh; }
+  .scene { top: 19%; height: 57%; }
+  .rotationSurface { left: 0; right: 0; top: 19%; height: 37%; bottom: auto; }
+  .rotationControls { top: 148px; bottom: auto; right: 24px; font-size: 11px; gap: 16px; }
+  .sceneWash { background: linear-gradient(0deg, #f3f2ec 0%, #f3f2ec 18%, #f3f2ec00 55%); }
+  .sceneLabel { top: 102px; right: 24px; font-size: 11px; }
+  .skip { top: 101px; left: 24px; font-size: 11px; }
+  .copy { left: 24px; right: 24px; top: auto; bottom: 124px; width: auto; max-width: 560px; }
+  .eyebrow { margin-bottom: 14px; font-size: 13px; }
+  .experience.experience.experience .chapter :is(h1, h2) { font-size: clamp(32px, 7.7vw, 46px); letter-spacing: -0.05em; }
+  .body { font-size: 14px; line-height: 1.65; margin: 14px 0 11px; max-width: 390px; }
+  .textLink { min-height: 40px; font-size: 13px; gap: 25px; }
+  .objectNote { display: none; }
+  .objectNote[data-thermal] { right: 24px; top: 188px; bottom: auto; border: 0; padding: 0; margin: 0; font-size: 11px; gap: 14px; }
+  .bottomBar { left: 24px; right: 24px; bottom: 13px; display: flex; flex-wrap: wrap; gap: 0; }
+  .chapterNav { order: -1; width: 100%; justify-content: space-between; margin-bottom: 8px; }
+  .chapterNav button { height: 34px; gap: 9px; width: 16.667%; font-size: 10px; }
+  .chapterNav button:not(:last-child) i::after { display: none; }
+  .scrollPrompt { font-size: 11px; gap: 9px; }
+  .scrollPrompt svg { width: 15px; }
+  .perspective { grid-template-columns: 1fr; padding: 78px 24px; gap: 40px; }
+  .perspectiveBody > p:first-child { font-size: 17px; }
+  .contact { padding: 85px 24px; }
+  .contact .eyebrow { font-size: 12px; }
+  .contactButton { font-size: 14px; gap: 26px; padding: 18px 22px; margin-top: 30px; }
+  .standardJourney { padding: 110px 24px 30px; }
+  .standardControls { flex-direction: column; }
+  .standardChapter { grid-template-columns: 1fr; min-height: auto; gap: 30px; padding: 45px 0; }
+  .standardChapter .body { font-size: 16px; margin: 20px 0; }
+}
+@media (max-height: 720px) and (min-width: 761px) {
+  .copy { top: 25%; }
+  .experience.experience.experience .chapter :is(h1, h2) { font-size: 48px; }
+  .eyebrow { margin-bottom: 18px; }
+  .body { margin-top: 20px; font-size: 15px; }
+  .sceneLabel, .skip { top: 126px; }
+}
+@media (max-width: 760px) and (max-height: 740px) {
+  .scene { top: 15%; height: 53%; }
+  .rotationSurface { top: 19%; height: 30%; }
+  .rotationControls { top: 128px; }
+  .objectNote[data-thermal] { top: 168px; }
+  .copy { bottom: 111px; }
+  .experience.experience.experience .chapter :is(h1, h2) { font-size: 30px; }
+  .body { font-size: 13px; line-height: 1.5; margin: 10px 0 6px; }
+  .eyebrow { margin-bottom: 10px; }
+}
+/* Browser zoom and landscape phones retain the finished 3D scene. The copy
+   scrolls within its own column so enlarged text never forces a poster view. */
+@media (max-height: 580px) {
+  .scene { inset: 0; height: 100%; }
+  .sceneWash { background: linear-gradient(90deg, #f3f2ec 0%, #f3f2eced 25%, #f3f2ec80 40%, #f3f2ec00 58%); }
+  .sceneLabel, .skip, .objectNote, .objectNote[data-thermal] { display: none; }
+  .copy {
+    top: calc(var(--spatial-header-height) + 16px); bottom: 70px;
+    left: 4.6%; right: auto; width: 42%; max-width: 660px;
+    overflow-y: auto; scrollbar-width: thin; scrollbar-color: #a7b2a4 transparent;
+    padding: 0 12px 12px 0;
+  }
+  .experience.experience.experience .chapter :is(h1, h2) {
+    font-size: clamp(24px, 4vw, 40px); overflow-wrap: anywhere;
+  }
+  .eyebrow { margin-bottom: 12px; font-size: 12px; }
+  .body { font-size: 14px; line-height: 1.6; margin: 16px 0 12px; }
+  .textLink { font-size: 13px; gap: 14px; }
+  .rotationSurface { left: 48%; right: 0; top: var(--spatial-header-height); bottom: 60px; height: auto; }
+  .rotationControls { top: auto; bottom: 52px; right: 4.6%; font-size: 10px; gap: 12px; }
+  .bottomBar { left: 4.6%; right: 4.6%; bottom: 10px; display: flex; justify-content: center; }
+  .scrollPrompt { display: none; }
+  .chapterNav { width: min(100%, 408px); justify-content: space-between; margin: 0; }
+  .chapterNav button { width: 16.667%; height: 34px; font-size: 10px; gap: 8px; }
+  .chapterNav button:not(:last-child) i::after { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .chapter:not([hidden]) { animation: none; }
+  .canvas { transition: none; }
+}

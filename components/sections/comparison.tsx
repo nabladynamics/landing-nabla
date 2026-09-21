@@ -108,7 +108,7 @@ function VerdictIcon({ verdict }: { verdict: Verdict }) {
 
 export function Comparison() {
   return (
-    <section id="compare" className="py-24 md:py-32">
+    <section id="compare" className="border-t border-line py-24 md:py-32">
       <div className={container}>
         <SectionHeading
           title="How it compares."
@@ -116,7 +116,7 @@ export function Comparison() {
         />
 
         <Reveal delay={0.1}>
-          <div className="mt-12 overflow-x-auto rounded-2xl border border-line bg-white [scrollbar-width:thin]">
+          <div className="mt-12 overflow-x-auto rounded-card border border-line bg-white [scrollbar-width:thin]">
             <table className="w-full min-w-[880px] border-collapse text-left text-[15px]">
               <thead>
                 <tr className="border-b border-line">
@@ -128,7 +128,7 @@ export function Comparison() {
                       key={column.name}
                       scope="col"
                       className={`px-5 py-5 align-bottom sm:px-6 ${
-                        column.highlight ? "bg-[#f3f0fc]" : ""
+                        column.highlight ? "bg-tint" : ""
                       }`}
                     >
                       <span
@@ -138,7 +138,7 @@ export function Comparison() {
                       >
                         {column.name}
                       </span>
-                      <span className="mt-1 block text-sm font-normal text-fog">
+                      <span className="font-mono mt-1 block text-sm font-normal text-fog">
                         {column.sub}
                       </span>
                     </th>
@@ -159,7 +159,7 @@ export function Comparison() {
                         key={`${row.label}-${columns[i].name}`}
                         className={`px-5 py-5 align-top sm:px-6 ${
                           columns[i].highlight
-                            ? "bg-[#f3f0fc] font-medium text-frost"
+                            ? "bg-tint font-medium text-frost"
                             : "text-fog"
                         }`}
                       >

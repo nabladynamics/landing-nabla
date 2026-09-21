@@ -97,7 +97,7 @@ export function Problem() {
             {pains.map((pain, i) => (
               <li key={pain.title} className="h-full">
                 <Reveal delay={0.06 * (i % 3)} className="h-full">
-                  <div className="flex h-full flex-col rounded-2xl border border-line bg-white p-6 sm:p-7">
+                  <div className="flex h-full flex-col rounded-card border border-line bg-white p-6 sm:p-7">
                     <p className="font-display text-xl font-semibold leading-snug tracking-tight text-frost">
                       {pain.title}
                     </p>

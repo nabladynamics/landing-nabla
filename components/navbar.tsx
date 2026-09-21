@@ -1,14 +1,43 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import { AnimatePresence, m } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { ArrowUpRight, Menu, X } from "lucide-react";
 import { Wordmark } from "@/components/logo";
-import { container, navLinks, site } from "@/lib/site";
+import { ThemeSwitcher } from "@/components/theme-switcher";
+import { StyleLink } from "@/components/style-link";
+import { useStyle } from "@/components/style-provider";
+import { container } from "@/lib/site";
+import { sectionFromPath } from "@/lib/themes";
+import styles from "@/components/experience/spatial-navigation.module.css";
+
+const links = [
+  { label: "Industries", href: "/industries" },
+  { label: "Platform", href: "/platform" },
+] as const;
+
+export function SpatialWordmark() {
+  return (
+    <span className={styles.brand}>
+      <svg viewBox="0 0 32 32" width="29" height="29" fill="none" strokeLinejoin="round" aria-hidden="true">
+        <path d="M9 11h14L16 25Z" stroke="#b56b4b" strokeWidth="2" />
+        <path d="M5 5h22L16 27Z" stroke="currentColor" strokeWidth="2.2" />
+      </svg>
+      <span>Nabla AI</span>
+    </span>
+  );
+}
 
 export function Navbar() {
+  const pathname = usePathname();
+  const { theme } = useStyle();
+  const spatial = theme === "spatial";
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const activeSection = sectionFromPath(pathname);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -17,63 +46,70 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => { setOpen(false); }, [pathname]);
+
   useEffect(() => {
     if (!open) return;
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setOpen(false);
+      if (event.key === "Escape") {
+        setOpen(false);
+        menuButtonRef.current?.focus();
+      }
+    };
+    const onPointer = (event: PointerEvent) => {
+      if (!headerRef.current?.contains(event.target as Node)) setOpen(false);
     };
     window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    document.addEventListener("pointerdown", onPointer);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.removeEventListener("pointerdown", onPointer);
+    };
   }, [open]);
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${
-        scrolled || open
-          ? "border-b border-line bg-void/95 shadow-sm backdrop-blur-md"
-          : "border-b border-transparent bg-void/90 backdrop-blur-md"
-      }`}
+      ref={headerRef}
+      className={spatial ? styles.header : `fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${scrolled || open ? "border-b border-line bg-void/95 shadow-sm backdrop-blur-md" : "border-b border-transparent bg-void/90 backdrop-blur-md"}`}
     >
-      <nav aria-label="Main" className={`${container} flex h-20 items-center justify-between`}>
-        <a
-          href="#main"
-          className="rounded-sm"
-          aria-label="Nabla AI — back to top"
-          onClick={() => setOpen(false)}
-        >
-          <Wordmark />
-        </a>
+      <nav aria-label="Main" className={`${styles.navigation} ${spatial ? styles.nav : `${container} flex h-20 items-center justify-between gap-3`}`}>
+        <StyleLink href="/" className="shrink-0 rounded-sm" aria-label="Nabla AI — home">
+          {spatial ? <SpatialWordmark /> : <Wordmark />}
+        </StyleLink>
 
-        <div className="hidden items-center gap-8 md:flex">
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="text-[15px] font-medium text-fog transition-colors hover:text-volt"
+        <div className={`${styles.controls} ${spatial ? styles.spatialControls : ""}`}>
+          <div className={styles.desktopLinks}>
+            {links.map((link) => (
+              <StyleLink
+                key={link.href}
+                href={link.href}
+                aria-current={activeSection === link.href ? "page" : undefined}
+                className={spatial ? styles.navLink : `text-[15px] font-medium transition-colors hover:text-volt ${activeSection === link.href ? "text-frost" : "text-fog"}`}
+              >
+                {link.label}
+              </StyleLink>
+            ))}
+            <StyleLink
+              href="/contact"
+              aria-current={activeSection === "/contact" ? "page" : undefined}
+              className={spatial ? styles.navCta : "inline-flex items-center gap-5 rounded-ctl bg-cta px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-cta-bright"}
             >
-              {link.label}
-            </a>
-          ))}
-          <a
-            href={site.calendly}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="rounded-lg bg-volt px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-volt-bright"
+              Let’s talk <ArrowUpRight size={15} aria-hidden="true" />
+            </StyleLink>
+          </div>
+          <ThemeSwitcher />
+          <button
+            ref={menuButtonRef}
+            type="button"
+            className={`${styles.mobileButton} ${spatial ? styles.spatialMobileButton : "rounded-ctl border border-line bg-white text-frost"}`}
+            aria-expanded={open}
+            aria-controls="mobile-nav"
+            aria-label={open ? "Close navigation" : "Open navigation"}
+            onClick={() => setOpen((value) => !value)}
           >
-            Book a call
-          </a>
+            {open ? <X size={20} aria-hidden="true" /> : <Menu size={20} aria-hidden="true" />}
+          </button>
         </div>
-
-        <button
-          type="button"
-          className="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-line bg-white text-frost md:hidden"
-          aria-expanded={open}
-          aria-controls="mobile-nav"
-          aria-label={open ? "Close menu" : "Open menu"}
-          onClick={() => setOpen((v) => !v)}
-        >
-          {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </button>
       </nav>
 
       <AnimatePresence>
@@ -84,29 +120,21 @@ export function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.18, ease: "easeOut" }}
-            className="border-b border-line bg-void shadow-sm md:hidden"
+            className={`${styles.mobilePanel} ${spatial ? styles.spatialMobilePanel : "border-b border-line bg-void shadow-sm"}`}
           >
-            <div className={`${container} flex flex-col gap-1 py-4`}>
-              {navLinks.map((link) => (
-                <a
+            <nav aria-label="Mobile navigation" className={`${container} flex flex-col gap-1 py-4`}>
+              {[...links, { label: "Let’s talk", href: "/contact" }].map((link) => (
+                <StyleLink
                   key={link.href}
                   href={link.href}
-                  className="rounded-md px-2 py-2.5 text-[15px] text-fog transition-colors hover:bg-raise hover:text-frost"
+                  aria-current={activeSection === link.href ? "page" : undefined}
+                  className={spatial ? styles.mobileLink : `rounded-ctl px-2 py-3 text-[15px] transition-colors hover:bg-raise hover:text-frost ${activeSection === link.href ? "text-frost" : "text-fog"}`}
                   onClick={() => setOpen(false)}
                 >
-                  {link.label}
-                </a>
+                  {link.label}{link.href === "/contact" && <ArrowUpRight size={16} aria-hidden="true" />}
+                </StyleLink>
               ))}
-              <a
-                href={site.calendly}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-3 inline-flex min-h-12 items-center justify-center rounded-lg bg-volt px-4 py-2.5 text-[15px] font-medium text-white transition-colors hover:bg-volt-bright"
-                onClick={() => setOpen(false)}
-              >
-                Book a call
-              </a>
-            </div>
+            </nav>
           </m.div>
         ) : null}
       </AnimatePresence>

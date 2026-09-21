@@ -14,7 +14,7 @@ type Status = "idle" | "submitting" | "success" | "error";
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const inputClass =
-  "w-full rounded-lg border border-line-strong bg-white px-4 py-3 text-base text-frost placeholder:text-fog transition-colors focus:border-volt focus:outline-none focus:ring-2 focus:ring-volt/10 aria-[invalid=true]:border-red-600";
+  "w-full rounded-ctl border border-line-strong bg-white px-4 py-3 text-base text-frost placeholder:text-fog transition-colors focus:border-volt focus:outline-none focus:ring-2 focus:ring-volt/10 aria-[invalid=true]:border-red-600";
 
 const labelClass =
   "mb-2 block text-sm font-medium text-frost";
@@ -41,7 +41,7 @@ function validate(values: ContactPayload): FieldErrors {
   return errors;
 }
 
-export function Contact() {
+export function Contact({ standalone = false }: { standalone?: boolean }) {
   const [values, setValues] = useState<ContactPayload>(emptyForm);
   const [errors, setErrors] = useState<FieldErrors>({});
   const [status, setStatus] = useState<Status>("idle");
@@ -75,7 +75,11 @@ export function Contact() {
   return (
     <section
       id="contact"
-      className="border-t border-line bg-raise/50 py-24 md:py-32"
+      className={
+        standalone
+          ? "pb-24 pt-36 sm:pt-40 md:pb-32"
+          : "border-t border-line bg-raise/50 py-24 md:py-32"
+      }
     >
       <div className={container}>
         <div className="grid gap-14 lg:grid-cols-[0.95fr_1.05fr] lg:gap-20">
@@ -110,7 +114,7 @@ export function Contact() {
           </div>
 
           <Reveal delay={0.2}>
-            <div className="rounded-2xl border border-line bg-white p-6 shadow-[0_12px_48px_rgba(24,35,49,0.05)] sm:p-8 lg:p-10">
+            <div className="rounded-card border border-line bg-white p-6 shadow-[0_12px_48px_rgba(24,35,49,0.05)] sm:p-8 lg:p-10">
               {status === "success" ? (
                 <div
                   className="flex min-h-[420px] flex-col items-center justify-center text-center"
@@ -130,7 +134,7 @@ export function Contact() {
                   <button
                     type="button"
                     onClick={reset}
-                    className="mt-7 rounded-lg border border-line-strong px-4 py-2.5 text-sm font-medium text-frost transition-colors hover:border-volt/70 hover:bg-volt/5"
+                    className="mt-7 rounded-ctl border border-line-strong px-4 py-2.5 text-sm font-medium text-frost transition-colors hover:border-volt/70 hover:bg-volt/5"
                   >
                     Send another message
                   </button>
@@ -226,7 +230,7 @@ export function Contact() {
 
                   <div aria-live="polite">
                     {status === "error" ? (
-                      <div className="mt-5 flex items-start gap-3 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">
+                      <div className="mt-5 flex items-start gap-3 rounded-ctl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">
                         <AlertCircle
                           className="mt-0.5 h-4 w-4 shrink-0"
                           aria-hidden="true"
@@ -240,7 +244,7 @@ export function Contact() {
                   <button
                     type="submit"
                     disabled={status === "submitting"}
-                    className="mt-7 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-volt px-5 py-3.5 text-base font-medium text-white transition-colors hover:bg-[#5338bc] disabled:cursor-not-allowed disabled:opacity-60"
+                    className="mt-7 inline-flex w-full items-center justify-center gap-2 rounded-ctl bg-cta px-5 py-3.5 text-base font-medium text-white transition-colors hover:bg-cta-bright disabled:cursor-not-allowed disabled:opacity-60"
                   >
                     {status === "submitting" ? (
                       <>

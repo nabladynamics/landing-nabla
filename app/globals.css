@@ -1,26 +1,273 @@
 @import "tailwindcss";
 
 @theme inline {
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
+  --font-sans: var(--font-body), ui-sans-serif, system-ui, -apple-system,
     "Segoe UI", sans-serif;
-  --font-display: var(--font-inter), ui-sans-serif,
-    system-ui, sans-serif;
+  --font-display: var(--font-heading), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-code), ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
 @theme {
   /* Surfaces */
-  --color-void: #fcfcfa;
-  --color-raise: #f2f3f7;
+  --color-void: var(--t-void);
+  --color-raise: var(--t-raise);
+  --color-tint: var(--t-tint);
+  --color-tint-strong: var(--t-tint-strong);
   /* Hairlines */
-  --color-line: #e2e5eb;
-  --color-line-strong: #cbd1dc;
+  --color-line: var(--t-line);
+  --color-line-strong: var(--t-line-strong);
   /* Text */
-  --color-frost: #182331;
-  --color-fog: #626b78;
+  --color-frost: var(--t-frost);
+  --color-fog: var(--t-fog);
   /* Accents */
-  --color-volt: #6446d7;
-  --color-volt-bright: #5435bf;
+  --color-volt: var(--t-volt);
+  --color-volt-bright: var(--t-volt-bright);
+  --color-cta: var(--t-cta);
+  --color-cta-bright: var(--t-cta-bright);
   --color-pulse: #3269b8;
+  /* Radii */
+  --radius-card: var(--t-radius-card);
+  --radius-ctl: var(--t-radius-ctl);
+}
+
+/* ---------------------------------------------------------------------------
+   Style variants. The current URL sets data-theme on <html>;
+   every token above resolves through these --t-* variables.
+   --------------------------------------------------------------------------- */
+
+:root {
+  --font-body: var(--font-inter);
+  --font-heading: var(--font-inter);
+  --font-code: var(--font-inter);
+
+  --t-void: #fcfcfa;
+  --t-raise: #f2f3f7;
+  --t-tint: #f3f0fc;
+  --t-tint-strong: #f1eef9;
+  --t-line: #e2e5eb;
+  --t-line-strong: #cbd1dc;
+  --t-frost: #182331;
+  --t-fog: #626b78;
+  --t-volt: #6446d7;
+  --t-volt-bright: #5435bf;
+  --t-cta: #6446d7;
+  --t-cta-bright: #5435bf;
+  --t-radius-card: 20px;
+  --t-radius-ctl: 8px;
+}
+
+/* Spatial: the same warm studio palette across the journey and inner pages. */
+:root[data-theme="spatial"] {
+  --t-void: #f3f2ec;
+  --t-raise: #eaeae3;
+  --t-tint: #eeeee6;
+  --t-tint-strong: #e5e6dd;
+  --t-line: #d8dcd3;
+  --t-line-strong: #bdc6bd;
+  --t-frost: #243333;
+  --t-fog: #5b6861;
+  --t-volt: #ad4e30;
+  --t-volt-bright: #913f26;
+  --t-cta: #243333;
+  --t-cta-bright: #172626;
+  --t-radius-card: 4px;
+  --t-radius-ctl: 3px;
+}
+
+/* Deep-tech (after nTop): warm paper, ink black, engineering blue, sharp corners,
+   mono for numerals and labels. */
+:root[data-theme="deeptech"] {
+  --font-body: var(--font-geist);
+  --font-heading: var(--font-geist);
+  --font-code: var(--font-geist-mono);
+
+  --t-void: #f6f2ef;
+  --t-raise: #eee9e4;
+  --t-tint: #e9eff4;
+  --t-tint-strong: #e2e9f0;
+  --t-line: #d9d3cc;
+  --t-line-strong: #c8c4bf;
+  --t-frost: #0d0c0b;
+  --t-fog: #6d6c6a;
+  --t-volt: #16489d;
+  --t-volt-bright: #0f377a;
+  --t-cta: #0d0c0b;
+  --t-cta-bright: #000000;
+  --t-radius-card: 0px;
+  --t-radius-ctl: 0px;
+}
+
+/* Editorial (after Luminary): off-white, off-black, light-weight headlines,
+   mono labels, a single violet pop. */
+:root[data-theme="editorial"] {
+  --font-body: var(--font-manrope);
+  --font-heading: var(--font-manrope);
+  --font-code: var(--font-jetbrains);
+
+  --t-void: #fcfcfa;
+  --t-raise: #f0f0f0;
+  --t-tint: #f3eeff;
+  --t-tint-strong: #e9defc;
+  --t-line: #e0e0e0;
+  --t-line-strong: #c9c9c9;
+  --t-frost: #2a2c2f;
+  --t-fog: #697077;
+  --t-volt: #7f57f1;
+  --t-volt-bright: #6a3fe0;
+  --t-cta: #2a2c2f;
+  --t-cta-bright: #111214;
+  --t-radius-card: 4px;
+  --t-radius-ctl: 2px;
+}
+
+/* Industrial (after Varda): cool white, navy ink, orange accent, bold uppercase
+   headlines, square cards. */
+:root[data-theme="industrial"] {
+  --font-body: var(--font-archivo);
+  --font-heading: var(--font-archivo);
+  --font-code: var(--font-plex-mono);
+
+  --t-void: #fafcff;
+  --t-raise: #eaecee;
+  --t-tint: #e9eff4;
+  --t-tint-strong: #dfe7f0;
+  --t-line: #cfd4d9;
+  --t-line-strong: #acb6ba;
+  --t-frost: #282c3d;
+  --t-fog: #5d6c7b;
+  --t-volt: #d06b23;
+  --t-volt-bright: #b26127;
+  --t-cta: #0a3065;
+  --t-cta-bright: #1a4682;
+  --t-radius-card: 0px;
+  --t-radius-ctl: 4px;
+}
+
+/* Lab (after Isomorphic): near-white, carbon black, hydro blue, pastel section
+   tints, generous radii, light headlines. */
+:root[data-theme="lab"] {
+  --font-body: var(--font-dm-sans);
+  --font-heading: var(--font-dm-sans);
+  --font-code: var(--font-dm-mono);
+
+  --t-void: #fafafa;
+  --t-raise: #f5f8f9;
+  --t-tint: #f5f8f9;
+  --t-tint-strong: #e8fac3;
+  --t-line: #e4e6e8;
+  --t-line-strong: #c8c8c8;
+  --t-frost: #1e1e1e;
+  --t-fog: #5b6770;
+  --t-volt: #304a57;
+  --t-volt-bright: #223640;
+  --t-cta: #1e1e1e;
+  --t-cta-bright: #000000;
+  --t-radius-card: 20px;
+  --t-radius-ctl: 999px;
+}
+
+/* Typographic voice per variant. Unlayered rules win over utility classes. */
+:root[data-theme="spatial"] :is(h1, h2) {
+  font-weight: 400;
+  letter-spacing: -0.045em;
+}
+:root[data-theme="spatial"] h3 {
+  font-weight: 500;
+  letter-spacing: -0.025em;
+}
+
+:root[data-theme="deeptech"] :is(h1, h2, h3) {
+  font-weight: 500;
+  letter-spacing: -0.03em;
+}
+:root[data-theme="deeptech"] .font-mono,
+:root[data-theme="deeptech"] dt {
+  font-family: var(--font-code), ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-weight: 500;
+}
+
+:root[data-theme="editorial"] :is(h1, h2) {
+  font-weight: 300;
+  letter-spacing: -0.025em;
+}
+:root[data-theme="editorial"] h3 {
+  font-weight: 500;
+}
+:root[data-theme="editorial"] .font-mono {
+  font-family: var(--font-code), ui-monospace, SFMono-Regular, Menlo, monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.8em;
+}
+
+:root[data-theme="industrial"] :is(h1, h2) {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+:root[data-theme="industrial"] h3 {
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+:root[data-theme="industrial"] .font-mono,
+:root[data-theme="industrial"] nav a:not([aria-label]):not([role="menuitemradio"]) {
+  font-family: var(--font-code), ui-monospace, SFMono-Regular, Menlo, monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.85em;
+}
+
+:root[data-theme="lab"] :is(h1, h2) {
+  font-weight: 300;
+  letter-spacing: -0.02em;
+}
+:root[data-theme="lab"] h3 {
+  font-weight: 400;
+}
+:root[data-theme="lab"] .font-mono {
+  font-family: var(--font-code), ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.9em;
+}
+
+/* Editorial: flat, hairline-separated blocks instead of boxed cards. */
+:root[data-theme="editorial"] :is(li > div > div.bg-white, article.bg-white, li.bg-tint) {
+  background: transparent;
+  border-width: 1px 0 0 0;
+  border-color: var(--color-frost);
+  border-radius: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+:root[data-theme="editorial"] li.bg-tint > svg {
+  display: none;
+}
+
+/* Hero video fades, expressed on the page background so every variant blends. */
+.hero-fade-x {
+  background: linear-gradient(
+    90deg,
+    var(--color-void) 0%,
+    color-mix(in srgb, var(--color-void) 97%, transparent) 28%,
+    color-mix(in srgb, var(--color-void) 85%, transparent) 43%,
+    color-mix(in srgb, var(--color-void) 12%, transparent) 80%
+  );
+}
+.hero-fade-y {
+  background: linear-gradient(
+    180deg,
+    var(--color-void) 0%,
+    color-mix(in srgb, var(--color-void) 20%, transparent) 28%,
+    transparent 65%,
+    var(--color-void) 100%
+  );
+}
+
+/* ?static=1 freezes entrance animations (used for previews and screenshots). */
+html[data-static] [data-reveal] {
+  opacity: 1 !important;
+  transform: none !important;
 }
 
 html {

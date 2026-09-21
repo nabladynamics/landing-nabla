@@ -1,25 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { ArrowRight } from "lucide-react";
 import { Reveal } from "@/components/ui/reveal";
 import { SectionHeading } from "@/components/ui/section-heading";
+import { Steps } from "@/components/ui/steps";
 import { container } from "@/lib/site";
-
-const steps = [
-  {
-    title: "Drop in an STL",
-    body: "Straight from CAD. No cleanup, no body-fitted volume mesh, no parameters to tune.",
-  },
-  {
-    title: "Run",
-    body: "Resolution follows the physics. Compute concentrates where the flow demands it, not where you guessed it would.",
-  },
-  {
-    title: "Read the results",
-    body: "One answer per geometry, independent of who set it up. Analyse, iterate, run the next candidate.",
-  },
-];
 
 const markets = [
   {
@@ -61,31 +46,8 @@ export function Approach() {
           lede="Nature does not build a mesh or tune a model: the flow resolves itself. We have derived the formulation that makes this possible in an engineering tool, the one whose absence has held this class of methods back for thirty years, and validated it analytically and in simulation."
         />
 
-        <Reveal delay={0.1}>
-          <ol className="mt-14 grid gap-4 md:grid-cols-3">
-            {steps.map((step, i) => (
-              <li
-                key={step.title}
-                className="relative flex flex-col rounded-2xl border border-volt/20 bg-[#f3f0fc] p-6 sm:p-7"
-              >
-                <span className="font-display text-sm font-semibold text-volt">
-                  0{i + 1}
-                </span>
-                <h3 className="mt-3 font-display text-xl font-semibold tracking-tight text-frost">
-                  {step.title}
-                </h3>
-                <p className="mt-3 text-[15px] leading-relaxed text-fog">
-                  {step.body}
-                </p>
-                {i < steps.length - 1 ? (
-                  <ArrowRight
-                    aria-hidden="true"
-                    className="absolute -right-4 top-1/2 hidden h-5 w-5 -translate-y-1/2 text-volt md:block"
-                  />
-                ) : null}
-              </li>
-            ))}
-          </ol>
+        <Reveal delay={0.1} className="mt-14">
+          <Steps />
         </Reveal>
 
         <div id="applications" className="mt-24 space-y-20 scroll-mt-24 md:mt-32 md:space-y-28">
@@ -95,7 +57,7 @@ export function Approach() {
               <Reveal key={market.name}>
                 <article className="grid items-center gap-8 lg:grid-cols-2 lg:gap-16">
                   <div
-                    className={`relative aspect-[16/9] overflow-hidden rounded-[20px] border border-line bg-raise ${
+                    className={`relative aspect-[16/9] overflow-hidden rounded-card border border-line bg-raise ${
                       flipped ? "lg:order-2" : ""
                     }`}
                   >

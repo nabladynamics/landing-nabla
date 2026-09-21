@@ -21,37 +21,37 @@ type Block = {
 const blocks: Block[] = [
   {
     index: "01",
-    title: "Dynamic resolution allocation",
-    body: "Adaptive resolution is intended to concentrate computation where the evolving flow demands it and where aerodynamic detail matters.",
-    diagram: <AMRDiagram />,
-  },
-  {
-    index: "02",
-    title: "Workflow automation",
-    body: "We are developing automation to reduce simulation preparation and manual solver setup, helping engineers move from geometry to physical evaluation.",
-    diagram: <OrchestratorDiagram />,
-  },
-  {
-    index: "03",
-    title: "Beyond body-fitted volume meshes",
-    body: "Our approach removes the need for conventional body-fitted volume meshing, with the aim of reducing preparation time and computing cost.",
+    title: "No body-fitted volume mesh",
+    body: "The geometry goes in as an STL straight from CAD. There is no volume mesh to build, tune, debug or regenerate, so the largest share of preprocessing disappears with it.",
     diagram: <GPUDiagram />,
   },
   {
+    index: "02",
+    title: "Resolution that follows the flow",
+    body: "Instead of fixing resolution upfront, compute concentrates where the evolving flow demands it: boundary layers, wakes, shear layers and the small eddies that decide drag and noise.",
+    diagram: <AMRDiagram />,
+  },
+  {
+    index: "03",
+    title: "Automated end to end",
+    body: "Upload, run, analyse. No solver expertise required to get a first result, and one answer per geometry regardless of who set it up.",
+    diagram: <OrchestratorDiagram />,
+  },
+  {
     index: "04",
-    title: "Higher resolution, targeted effort",
-    body: "Our goal is to resolve more flow detail while keeping simulations practical in time and cost. Performance will be assessed through benchmarks against published experiments.",
+    title: "Resolved turbulence, affordable",
+    body: "Turbulence is resolved rather than approximated by a surrogate, at a cost that makes it practical for design iteration. Performance is validated against published experiments.",
     diagram: <FidelityDiagram />,
   },
 ];
 
 export function Technology() {
   return (
-    <section id="technology" className="py-24 md:py-32">
+    <section id="technology" className="border-t border-line py-24 md:py-32">
       <div className={container}>
         <SectionHeading
-          title="Resolution where the physics demands it."
-          lede="We are developing a CFD engine with adaptive resolution guided by the evolving flow. Faster preparation, shorter simulations and lower computing costs are development goals."
+          title="What is under the hood."
+          lede="A CFD engine that eliminates conventional body-fitted volume meshing and concentrates computational power where the physics demands it."
         />
 
         <div className="mt-14 grid gap-x-10 gap-y-14 md:grid-cols-2">
@@ -59,7 +59,7 @@ export function Technology() {
             <Reveal key={block.index} delay={0.08 * (i % 2)}>
               {block.diagram}
               <div className="mt-6 flex items-baseline gap-4">
-                <span className="text-sm font-medium text-volt-bright">
+                <span className="font-mono text-sm font-medium text-volt-bright">
                   {block.index}
                 </span>
                 <div>

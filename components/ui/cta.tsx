@@ -1,3 +1,4 @@
+import { StyleLink as Link } from "@/components/style-link";
 import type { AnchorHTMLAttributes, ReactNode } from "react";
 
 type CTAProps = {
@@ -8,11 +9,11 @@ type CTAProps = {
 } & AnchorHTMLAttributes<HTMLAnchorElement>;
 
 const base =
-  "inline-flex min-h-12 items-center justify-center gap-2.5 rounded-lg px-6 py-3 text-[15px] font-medium transition-colors duration-200";
+  "inline-flex min-h-12 items-center justify-center gap-2.5 rounded-ctl px-6 py-3 text-[15px] font-medium transition-colors duration-200";
 
 const variants = {
   primary:
-    "bg-volt text-white shadow-sm hover:bg-volt-bright",
+    "bg-cta text-white shadow-sm hover:bg-cta-bright",
   secondary:
     "border border-line-strong bg-white/80 text-frost hover:border-volt/50 hover:bg-white hover:text-volt",
 } as const;
@@ -24,16 +25,34 @@ export function CTA({
   className = "",
   ...rest
 }: CTAProps) {
-  const external = href.startsWith("http");
+  const classes = `${base} ${variants[variant]} ${className}`.trim();
+
+  if (href.startsWith("http")) {
+    return (
+      <a
+        href={href}
+        className={classes}
+        target="_blank"
+        rel="noopener noreferrer"
+        {...rest}
+      >
+        {children}
+      </a>
+    );
+  }
+
+  // Hash links stay plain anchors so in-page scrolling keeps working.
+  if (href.startsWith("#")) {
+    return (
+      <a href={href} className={classes} {...rest}>
+        {children}
+      </a>
+    );
+  }
 
   return (
-    <a
-      href={href}
-      className={`${base} ${variants[variant]} ${className}`.trim()}
-      {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-      {...rest}
-    >
+    <Link href={href} className={classes} {...rest}>
       {children}
-    </a>
+    </Link>
   );
 }

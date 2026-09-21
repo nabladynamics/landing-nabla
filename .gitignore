@@ -33,3 +33,13 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Local source assets; the website serves optimized exports from public/.
+/lib/CADs/
+/lib/Industries/
+/lib/logos-institutions/
+
+# Offline CAD conversion previews are not used by the live 3D scene.
+/public/experience/assets/*-poster.webp
+__pycache__/
+*.pyc

@@ -1,0 +1,72 @@
+.header {
+  position: fixed;
+  z-index: 50;
+  inset: 0 0 auto;
+  border-bottom: 1px solid #24333315;
+  background: #f3f2eceb;
+  color: #243333;
+  backdrop-filter: blur(12px);
+  font-family: var(--font-inter), Arial, sans-serif;
+}
+.nav { height: 108px; padding: 0 4.6%; display: flex; align-items: center; justify-content: space-between; gap: 28px; }
+.brand { display: inline-flex; align-items: center; gap: 10px; font-size: 23px; font-weight: 550; white-space: nowrap; line-height: 1.2; }
+.controls { display: flex; align-items: center; gap: 28px; }
+.desktopLinks { display: flex; align-items: center; gap: 30px; }
+.navLink { font-size: 14px; text-decoration: none; }
+.navLink:hover, .navLink[aria-current], .navCta:hover, .navCta[aria-current] { color: #ad4e30; }
+.navCta { display: inline-flex; align-items: center; gap: 24px; padding: 13px 19px; border: 1px solid #24333338; border-radius: 3px; font-size: 14px; text-decoration: none; }
+.switcher { position: relative; flex-shrink: 0; }
+.styleButton { display: flex; align-items: center; gap: 12px; min-height: 44px; padding: 0 12px; font-size: 14px; white-space: nowrap; transition: color 160ms, border-color 160ms; }
+.styleButton svg { flex-shrink: 0; }
+.spatialSwitcher { color: #243333; }
+.spatialSwitcher .styleButton { padding-right: 0; gap: 15px; }
+.spatialSwitcher .styleButton:hover { color: #ad4e30; }
+.styleMenu { position: absolute; top: calc(100% + 12px); right: 0; z-index: 60; width: min(330px, calc(100vw - 32px)); padding: 8px; border-width: 1px; border-style: solid; max-height: calc(100dvh - 130px); overflow-y: auto; overscroll-behavior: contain; box-shadow: 0 16px 48px #1823311a; }
+.spatialMenu { background: #fafaf7; border-color: #24333324; border-radius: 3px; }
+.menuLabel { padding: 8px 12px 12px; color: var(--color-fog); font-size: 12px; line-height: 1.5; }
+.spatialMenu .menuLabel { color: #65706b; }
+.styleItem { display: flex; align-items: flex-start; gap: 12px; padding: 12px; text-align: left; text-decoration: none; transition: background-color 160ms; }
+.check { display: flex; justify-content: center; align-items: center; width: 17px; height: 22px; flex-shrink: 0; color: var(--color-volt); }
+.styleName { display: block; font-size: 14px; font-weight: 500; color: var(--color-frost); line-height: 1.5; }
+.styleHint { display: block; font-size: 12px; line-height: 1.55; color: var(--color-fog); margin-top: 3px; }
+.spatialMenu .styleItem:hover { background: #eaeae3; }
+.spatialMenu .selected { background: #ad4e300b; }
+.spatialMenu .check { color: #ad4e30; }
+.spatialMenu .styleName { color: #243333; }
+.spatialMenu .styleHint { color: #65706b; }
+.mobileButton { display: none; width: 40px; height: 44px; flex-shrink: 0; align-items: center; justify-content: center; }
+.mobilePanel { display: none; }
+.spatialMobileButton { border: 1px solid #24333338; border-radius: 3px; }
+.spatialMobilePanel { border-bottom: 1px solid #24333324; background: #f3f2ec; }
+.mobileLink { display: flex; align-items: center; justify-content: space-between; padding: 13px 0; font-size: 15px; text-decoration: none; }
+.mobileLink:hover, .mobileLink[aria-current] { color: #ad4e30; }
+.header :is(a, button):focus-visible, .spatialSwitcher :is(a, button):focus-visible, .footer a:focus-visible { outline: 2px solid #ad4e30; outline-offset: 4px; }
+.footer { border-top: 1px solid #24333320; padding: 33px 4.6%; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px; background: #f3f2ec; color: #243333; font-size: 13px; font-family: var(--font-inter), Arial, sans-serif; }
+.footer .brand { font-size: 20px; }
+.footerMeta { color: #65706b; }
+.footerNav { display: flex; flex-wrap: wrap; align-items: center; gap: 26px; }
+.footerNav a { text-decoration: none; }
+.footerNav a:hover { color: #ad4e30; }
+@media (max-width: 1050px) {
+  .controls, .desktopLinks { gap: 22px; }
+  .nav { gap: 20px; }
+}
+@media (max-width: 767px) {
+  .nav { height: 80px; padding: 0 20px; gap: 12px; }
+  .brand { gap: 7px; font-size: 19px; }
+  .brand svg { width: 25px; height: 25px; }
+  .controls { gap: 8px; }
+  .desktopLinks { display: none; }
+  .mobileButton { display: inline-flex; }
+  .mobilePanel { display: block; }
+  .styleButton { padding: 0 8px; gap: 7px; font-size: 12px; }
+  .spatialSwitcher .styleButton { padding-right: 8px; gap: 8px; }
+  .styleMenu { right: -48px; max-height: calc(100dvh - 106px); }
+  .footer { padding: 28px 24px; gap: 22px; font-size: 12px; }
+  .footerMeta { width: 100%; }
+  .footerNav { gap: 23px; }
+}
+
+@media (max-width: 359px) {
+  .navigation { padding-left: 16px; padding-right: 16px; gap: 8px; }
+}

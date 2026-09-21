@@ -7,7 +7,7 @@ export function Vision() {
   return (
     <section
       id="vision"
-      className="border-y border-volt/10 bg-[#f1eef9] py-24 md:py-32"
+      className="border-y border-volt/10 bg-tint-strong py-24 md:py-32"
     >
       <div className={`${container} text-center`}>
         <Reveal>

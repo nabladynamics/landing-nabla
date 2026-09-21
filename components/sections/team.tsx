@@ -5,14 +5,15 @@ import { Reveal } from "@/components/ui/reveal";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { container } from "@/lib/site";
 
-// Drop an SVG or PNG in public/logos/ and set `logo` (e.g. "/logos/nasa.svg")
-// to render it. Entries without a logo render as a typographic wordmark.
-const institutions: { name: string; logo?: string }[] = [
-  { name: "Imperial College London" },
-  { name: "CFIS" },
-  { name: "NASA" },
-  { name: "Rolls-Royce" },
-  { name: "CIMNE" },
+// Logos live in public/logos/ (trimmed, transparent background, 240px tall).
+// `height` balances visual weight: wide wordmarks sit shorter than emblems.
+const institutions = [
+  { name: "Imperial College London", logo: "/logos/imperial.png", width: 2151, height: "h-5 sm:h-6" },
+  { name: "CFIS · UPC", logo: "/logos/cfis.png", width: 459, height: "h-10 sm:h-12" },
+  { name: "NASA", logo: "/logos/nasa.png", width: 293, height: "h-12 sm:h-14" },
+  { name: "Rolls-Royce", logo: "/logos/rolls-royce.png", width: 209, height: "h-12 sm:h-14" },
+  { name: "CIMNE", logo: "/logos/cimne.png", width: 827, height: "h-10 sm:h-12" },
+  { name: "Barcelona Supercomputing Center", logo: "/logos/bsc.png", width: 985, height: "h-10 sm:h-12" },
 ];
 
 export function Team() {
@@ -26,25 +27,19 @@ export function Team() {
         />
 
         <Reveal delay={0.1}>
-          <ul className="mt-12 flex flex-wrap items-center justify-center gap-x-12 gap-y-8 sm:gap-x-16">
+          <ul className="mt-14 flex flex-wrap items-center justify-center gap-x-14 gap-y-10 sm:gap-x-20">
             {institutions.map((institution) => (
               <li
                 key={institution.name}
-                className="flex h-12 items-center opacity-70 grayscale transition hover:opacity-100 hover:grayscale-0"
+                className="flex items-center opacity-80 grayscale transition duration-300 hover:opacity-100 hover:grayscale-0"
               >
-                {institution.logo ? (
-                  <Image
-                    src={institution.logo}
-                    alt={institution.name}
-                    width={160}
-                    height={48}
-                    className="h-10 w-auto object-contain sm:h-12"
-                  />
-                ) : (
-                  <span className="font-display text-lg font-semibold tracking-tight text-frost sm:text-xl">
-                    {institution.name}
-                  </span>
-                )}
+                <Image
+                  src={institution.logo}
+                  alt={institution.name}
+                  width={institution.width}
+                  height={240}
+                  className={`w-auto object-contain ${institution.height}`}
+                />
               </li>
             ))}
           </ul>

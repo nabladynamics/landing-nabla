@@ -87,8 +87,8 @@ export function HeroVideo() {
           onError={() => setHasError(true)}
         />
         <div className="absolute inset-0 bg-void/70 lg:bg-void/10" />
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,#fcfcfa_0%,rgba(252,252,250,0.97)_28%,rgba(252,252,250,0.85)_43%,rgba(252,252,250,0.12)_80%)]" />
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,#fcfcfa_0%,rgba(252,252,250,0.2)_28%,transparent_65%,#fcfcfa_100%)]" />
+        <div className="hero-fade-x absolute inset-0" />
+        <div className="hero-fade-y absolute inset-0" />
       </div>
 
       {!hasError && (

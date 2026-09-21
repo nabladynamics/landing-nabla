@@ -22,6 +22,7 @@ export function Hero() {
       <div className={`${container} relative z-10`}>
         <div className="max-w-[660px]">
           <m.h1
+            data-reveal
             {...fadeUp(0)}
             className="text-balance font-display text-[2.7rem] font-medium leading-[1.08] tracking-tight text-frost sm:text-6xl lg:text-[4.25rem]"
           >
@@ -30,6 +31,7 @@ export function Hero() {
           </m.h1>
 
           <m.p
+            data-reveal
             {...fadeUp(0.1)}
             className="mt-7 max-w-[560px] text-lg leading-relaxed text-fog"
           >
@@ -38,13 +40,13 @@ export function Hero() {
             more accurate and supercharged by AI.
           </m.p>
 
-          <m.div {...fadeUp(0.2)} className="mt-9 flex flex-wrap gap-4">
+          <m.div data-reveal {...fadeUp(0.2)} className="mt-9 flex flex-wrap gap-4">
             <CTA href={site.calendly}>
               Book a conversation
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </CTA>
-            <CTA href="#approach" variant="secondary">
-              See how it works
+            <CTA href="/platform" variant="secondary">
+              Explore the platform
             </CTA>
           </m.div>
         </div>
