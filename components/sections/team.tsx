@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Reveal } from "@/components/ui/reveal";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { container } from "@/lib/site";
+import styles from "./team.module.css";
 
 // Logos live in public/logos/ (trimmed, transparent background, 240px tall).
 // `height` balances visual weight: wide wordmarks sit shorter than emblems.
@@ -16,7 +17,35 @@ const institutions = [
   { name: "Barcelona Supercomputing Center", logo: "/logos/bsc.png", width: 985, height: "h-10 sm:h-12" },
 ];
 
-export function Team() {
+export function Team({ compact = false }: { compact?: boolean }) {
+  if (compact) {
+    return (
+      <section id="team" className={styles.strip} aria-labelledby="team-background-title">
+        <div className={styles.inner}>
+          <Reveal>
+            <p id="team-background-title" className={styles.caption}>The experience our founders bring to Nabla</p>
+            <div className={styles.viewport} role="region" aria-label="Founding team institutions" tabIndex={0}>
+              <ul className={styles.logos}>
+                {institutions.map((institution) => (
+                  <li key={institution.name}>
+                    <Image
+                      src={institution.logo}
+                      alt={institution.name}
+                      width={institution.width}
+                      height={240}
+                      sizes="180px"
+                      className={styles.logo}
+                    />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section id="company" className="py-24 md:py-32">
       <div className={container}>

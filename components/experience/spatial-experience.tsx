@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { StyleLink as Link } from "@/components/style-link";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
+import { Team } from "@/components/sections/team";
 import { ArrowDown, ArrowUpRight, MoveDown, MoveHorizontal, RotateCcw } from "lucide-react";
 import { chapters } from "./chapters";
 import { WorkflowStory } from "./workflow-story";
@@ -171,6 +172,7 @@ export function SpatialExperience() {
         </section>}
 
         <WorkflowStory />
+        <Team compact />
         <section className={styles.contact}><p className={styles.eyebrow}>For engineers. For what comes next.</p><h2>What are you<br />working towards?</h2><Link href="/contact" className={styles.contactButton}>Let’s start a conversation <ArrowUpRight size={20} /></Link><p>Engineering teams, researchers and investors — we would love to hear from you.</p></section>
       </main>
       <Footer />
