@@ -6,6 +6,7 @@ import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { ArrowDown, ArrowUpRight, MoveDown, MoveHorizontal, RotateCcw } from "lucide-react";
 import { chapters } from "./chapters";
+import { WorkflowStory } from "./workflow-story";
 import styles from "./spatial-experience.module.css";
 
 type RotationState = { enabled: boolean; rotated: boolean };
@@ -169,14 +170,7 @@ export function SpatialExperience() {
           </article>)}
         </section>}
 
-        <section id="perspective" className={styles.perspective}>
-          <div className={styles.perspectiveIntro}><p className={styles.eyebrow}>A new engine. A different approach.</p><h2>Less preparation.<br />More possibility.</h2></div>
-          <div className={styles.perspectiveBody}><p>We are developing a CFD engine that removes conventional, geometry-fitted volumetric meshing and concentrates computation where the physics requires it.</p>
-            <ul><li><span>Faster simulations</span><span>Shorten the path from a design to physical feedback.</span></li><li><span>Lower computing costs</span><span>Put computational effort where it adds value.</span></li><li><span>Higher resolution</span><span>Bring the details that matter into focus.</span></li></ul>
-            <p className={styles.developmentNote}>These are our development goals. The scenes above are illustrative, not simulation results.</p>
-            <Link href="/platform" className={styles.textLink}>Get to know the platform <ArrowUpRight size={18} /></Link>
-          </div>
-        </section>
+        <WorkflowStory />
         <section className={styles.contact}><p className={styles.eyebrow}>For engineers. For what comes next.</p><h2>What are you<br />working towards?</h2><Link href="/contact" className={styles.contactButton}>Let’s start a conversation <ArrowUpRight size={20} /></Link><p>Engineering teams, researchers and investors — we would love to hear from you.</p></section>
       </main>
       <Footer />
