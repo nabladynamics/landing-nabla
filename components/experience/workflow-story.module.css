@@ -41,7 +41,6 @@
 .solutionIntro p + p { font-size: 14px; line-height: 1.8; color: #5e6a5f; margin-top: 16px; }
 .newSteps { list-style: none; padding: 0; margin: 0; display: grid; gap: 23px; }
 .newSteps li { border-top: 1px solid #7d91796b; padding-top: 18px; }
-.stageLabel { display: block; color: #536d58; font-size: 12px; margin-bottom: 9px; }
 .newSteps h3 { font-size: 22px; line-height: 1.3; margin: 0 0 9px; }
 .newSteps p { color: #5e6a5f; font-size: 14px; line-height: 1.75; margin: 0; max-width: 500px; }
 .solutionFooter { display: flex; justify-content: space-between; align-items: end; gap: 28px; margin-top: 44px; padding-top: 28px; border-top: 1px solid var(--rule); }

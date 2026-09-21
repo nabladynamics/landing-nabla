@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { Team } from "@/components/sections/team";
+import { Comparison } from "@/components/sections/comparison";
 import { ArrowDown, ArrowUpRight, MoveDown, MoveHorizontal, RotateCcw } from "lucide-react";
 import { chapters } from "./chapters";
 import { WorkflowStory } from "./workflow-story";
@@ -140,7 +141,7 @@ export function SpatialExperience() {
               <span id="rotation-help"><MoveHorizontal size={15} aria-hidden="true" />Drag to rotate<span className={styles.keyboardHelp}>. Use left and right arrow keys to rotate, or Home to reset.</span></span>
               <button type="button" onClick={() => sceneRef.current?.resetRotation()} disabled={!rotation.rotated} aria-label="Reset model rotation"><RotateCcw size={13} aria-hidden="true" />Reset view</button>
             </div>
-            <a href="#perspective" className={styles.skip}>Skip the journey <ArrowDown size={14} /></a>
+            <a href="#team" className={styles.skip}>Skip the journey <ArrowDown size={14} /></a>
 
             <div ref={copyRef} className={styles.copy} role="region" aria-label="Current chapter" tabIndex={0}>
               {chapters.map((chapter, index) => <article key={chapter.id} hidden={active !== index} className={styles.chapter} data-chapter={chapter.id}>
@@ -153,7 +154,7 @@ export function SpatialExperience() {
               {active === 4 ? <><span className={styles.coolLegend}>Cool supply</span><span className={styles.warmLegend}>Warm return</span></> : chapters[active].note}
             </p>
             <div className={styles.bottomBar}>
-              <button className={styles.scrollPrompt} onClick={() => active < chapters.length - 1 ? goTo(active + 1) : document.getElementById("perspective")?.scrollIntoView({ behavior: reducedMotionRef.current ? "instant" : "smooth" })}>
+              <button className={styles.scrollPrompt} onClick={() => active < chapters.length - 1 ? goTo(active + 1) : document.getElementById("team")?.scrollIntoView({ behavior: reducedMotionRef.current ? "instant" : "smooth" })}>
                 <MoveDown size={20} /><span>{active === 0 ? "Scroll to explore" : active === chapters.length - 1 ? "Discover Nabla" : "Keep exploring"}</span>
               </button>
               <nav className={styles.chapterNav} aria-label="Journey chapters">
@@ -169,8 +170,9 @@ export function SpatialExperience() {
           </article>)}
         </section>}
 
-        <WorkflowStory />
         <Team />
+        <WorkflowStory />
+        <Comparison />
         <section className={styles.contact}><h2>What are you<br />working towards?</h2><Link href="/contact" className={styles.contactButton}>Let’s start a conversation <ArrowUpRight size={20} /></Link><p>We would love to hear from engineering teams, researchers and investors.</p></section>
       </main>
       <Footer />

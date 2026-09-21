@@ -1,178 +1,107 @@
 "use client";
 
-import { Check, Minus, X } from "lucide-react";
+import { MoveHorizontal } from "lucide-react";
 import { Reveal } from "@/components/ui/reveal";
-import { SectionHeading } from "@/components/ui/section-heading";
-import { container } from "@/lib/site";
+import styles from "./comparison.module.css";
 
-type Verdict = "good" | "partial" | "bad";
-type Cell = { text: string; verdict: Verdict };
-
+// Workflow comparison, not entire vendor portfolios. Sources reviewed 2026-09-21.
+// Nabla describes the intended product, not measured performance.
 const columns = [
-  { name: "Nabla AI", sub: "No-mesh, adaptive CFD", highlight: true },
-  { name: "Traditional CFD", sub: "Fluent, STAR-CCM+, OpenFOAM" },
-  { name: "AI surrogates", sub: "PhysicsX, Neural Concept" },
-  { name: "Wind tunnel", sub: "Physical testing" },
+  { name: "Nabla AI", description: "In development", highlight: true },
+  { name: "Established CFD", description: "Ansys Fluent · STAR-CCM+ · OpenFOAM", highlight: false },
+  { name: "AI surrogate models", description: "PhysicsX · Neural Concept", highlight: false },
 ];
 
-const rows: { label: string; cells: Cell[] }[] = [
+const rows = [
   {
-    label: "Preprocessing",
+    label: "Preparing the geometry",
     cells: [
-      { text: "Drop in an STL", verdict: "good" },
-      { text: "Days to weeks of meshing and setup", verdict: "bad" },
-      { text: "A trained model for that design family", verdict: "partial" },
-      { text: "Build and instrument a scale model", verdict: "bad" },
+      "Automated preparation without a conventional volume mesh.",
+      "Volume meshing and solver setup, with automation options.",
+      "Geometry inputs prepared for a trained or pre-trained model.",
     ],
   },
   {
-    label: "Who can run it",
+    label: "Physical basis",
     cells: [
-      { text: "Any engineer", verdict: "good" },
-      { text: "Specialised meshing and solver team", verdict: "bad" },
-      { text: "ML team plus CFD team for training data", verdict: "bad" },
-      { text: "Test facility and crew", verdict: "bad" },
+      "A new adaptive CFD engine, with physical simulation at its core.",
+      "Numerical solution of the governing physical equations.",
+      "Predictions learned from simulation or experimental data.",
     ],
   },
   {
-    label: "The answer depends on",
+    label: "Level of detail",
     cells: [
-      { text: "The physics", verdict: "good" },
-      { text: "The mesh and parameters chosen", verdict: "bad" },
-      { text: "The training data", verdict: "bad" },
-      { text: "Scale effects and model fidelity", verdict: "partial" },
+      "Resolution concentrated where the flow needs it.",
+      "Mesh refinement and numerical settings, including adaptive options.",
+      "Detail depends on the training data and model architecture.",
     ],
   },
   {
-    label: "Turbulence",
+    label: "Confidence in the result",
     cells: [
-      { text: "Resolved, compute where the flow demands it", verdict: "good" },
-      { text: "Modelled, or resolved at prohibitive cost", verdict: "partial" },
-      { text: "Approximated, no guarantee", verdict: "bad" },
-      { text: "Real, but only where the sensors are", verdict: "partial" },
+      "Physical results accompanied by assumptions, checks and limitations.",
+      "Convergence, mesh sensitivity and validation checks.",
+      "Model validation, applicability checks and uncertainty assessment.",
     ],
   },
   {
-    label: "Designs nobody has simulated before",
+    label: "Sharing the findings",
     cells: [
-      { text: "Same physics, same engine", verdict: "good" },
-      { text: "Yes, with a new mesh", verdict: "partial" },
-      { text: "Unreliable outside the training set", verdict: "bad" },
-      { text: "Yes, with a new model", verdict: "partial" },
-    ],
-  },
-  {
-    label: "Can it fail mid-run",
-    cells: [
-      { text: "No mesh to fail", verdict: "good" },
-      { text: "Yes: remesh and rerun", verdict: "bad" },
-      { text: "No, but it can be silently wrong", verdict: "bad" },
-      { text: "Rarely, but rescheduling costs weeks", verdict: "partial" },
-    ],
-  },
-  {
-    label: "Cost per design iteration",
-    cells: [
-      { text: "Compute only, concentrated where it matters", verdict: "good" },
-      { text: "Engineering hours plus compute", verdict: "bad" },
-      { text: "Cheap to run, expensive to trust", verdict: "partial" },
-      { text: "Very high", verdict: "bad" },
+      "Detailed reports generated for the project and client.",
+      "Post-processing and reporting tools, configured for the study.",
+      "Predicted fields and performance metrics in engineering applications.",
     ],
   },
 ];
 
-function VerdictIcon({ verdict }: { verdict: Verdict }) {
-  if (verdict === "good") {
-    return (
-      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-volt/10 text-volt">
-        <Check className="h-3.5 w-3.5" aria-hidden="true" />
-        <span className="sr-only">Advantage</span>
-      </span>
-    );
-  }
-  if (verdict === "partial") {
-    return (
-      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-raise text-fog">
-        <Minus className="h-3.5 w-3.5" aria-hidden="true" />
-        <span className="sr-only">Partial</span>
-      </span>
-    );
-  }
-  return (
-    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-raise text-fog/60">
-      <X className="h-3.5 w-3.5" aria-hidden="true" />
-      <span className="sr-only">Limitation</span>
-    </span>
-  );
-}
+const sources = [
+  { name: "Ansys Fluent", href: "https://ansys.synopsys.com/products/fluids/ansys-fluent/capabilities" },
+  { name: "Siemens STAR-CCM+", href: "https://www.siemens.com/en-us/products/simcenter/fluids-thermal-simulation/star-ccm/" },
+  { name: "OpenFOAM", href: "https://doc.cfd.direct/openfoam/user-guide-v13/mesh" },
+  { name: "PhysicsX", href: "https://www.physicsx.ai/platform" },
+  { name: "Neural Concept", href: "https://www.neuralconcept.com/post/the-importance-of-uncertainty-quantification-for-deep-learning-models-in-cae" },
+];
 
 export function Comparison() {
   return (
-    <section id="compare" className="border-t border-line py-24 md:py-32">
-      <div className={container}>
-        <SectionHeading
-          title="How it compares."
-          lede="Three ways to find out how a shape behaves in a fluid today, and what changes when the mesh goes away."
-        />
+    <section id="compare" className={styles.section} aria-labelledby="comparison-title">
+      <div className={styles.inner}>
+        <Reveal className={styles.heading}>
+          <h2 id="comparison-title">How the approaches compare</h2>
+          <p>From preparing a design to sharing the findings. Where established tools focus, and what we’re building at Nabla.</p>
+        </Reveal>
 
-        <Reveal delay={0.1}>
-          <div className="mt-12 overflow-x-auto rounded-card border border-line bg-white [scrollbar-width:thin]">
-            <table className="w-full min-w-[880px] border-collapse text-left text-[15px]">
+        <Reveal delay={.08}>
+          <p className={styles.scrollHint} id="comparison-scroll-hint"><MoveHorizontal size={15} aria-hidden="true" />Scroll to compare</p>
+          <div className={styles.viewport} role="region" aria-label="CFD workflow comparison" aria-describedby="comparison-note comparison-scroll-hint" tabIndex={0}>
+            <table className={styles.table}>
+              <caption className={styles.srOnly}>Nabla’s intended workflow compared with established CFD and AI surrogate approaches</caption>
+              <colgroup><col className={styles.criteriaColumn} />{columns.map((column) => <col key={column.name} />)}</colgroup>
               <thead>
-                <tr className="border-b border-line">
-                  <th scope="col" className="w-[18%] px-5 py-5 align-bottom sm:px-6">
-                    <span className="sr-only">Criterion</span>
-                  </th>
-                  {columns.map((column) => (
-                    <th
-                      key={column.name}
-                      scope="col"
-                      className={`px-5 py-5 align-bottom sm:px-6 ${
-                        column.highlight ? "bg-tint" : ""
-                      }`}
-                    >
-                      <span
-                        className={`block font-display text-lg font-semibold tracking-tight ${
-                          column.highlight ? "text-volt" : "text-frost"
-                        }`}
-                      >
-                        {column.name}
-                      </span>
-                      <span className="font-mono mt-1 block text-sm font-normal text-fog">
-                        {column.sub}
-                      </span>
-                    </th>
-                  ))}
+                <tr>
+                  <th scope="col" className={styles.criteriaHeading}>The workflow</th>
+                  {columns.map((column) => <th scope="col" key={column.name} className={column.highlight ? styles.nabla : undefined}>
+                    <span className={styles.columnName}>{column.name}</span>
+                    <span className={column.highlight ? styles.status : styles.columnDescription}>{column.description}</span>
+                  </th>)}
                 </tr>
               </thead>
               <tbody>
-                {rows.map((row) => (
-                  <tr key={row.label} className="border-b border-line last:border-b-0">
-                    <th
-                      scope="row"
-                      className="px-5 py-5 align-top font-medium text-frost sm:px-6"
-                    >
-                      {row.label}
-                    </th>
-                    {row.cells.map((cell, i) => (
-                      <td
-                        key={`${row.label}-${columns[i].name}`}
-                        className={`px-5 py-5 align-top sm:px-6 ${
-                          columns[i].highlight
-                            ? "bg-tint font-medium text-frost"
-                            : "text-fog"
-                        }`}
-                      >
-                        <span className="flex items-start gap-3">
-                          <VerdictIcon verdict={cell.verdict} />
-                          <span className="leading-relaxed">{cell.text}</span>
-                        </span>
-                      </td>
-                    ))}
-                  </tr>
-                ))}
+                {rows.map((row) => <tr key={row.label}>
+                  <th scope="row">{row.label}</th>
+                  {row.cells.map((cell, index) => <td key={columns[index].name} className={columns[index].highlight ? styles.nabla : undefined}>{cell}</td>)}
+                </tr>)}
               </tbody>
             </table>
+          </div>
+          <div className={styles.notes}>
+            <p id="comparison-note">Nabla’s column describes our intended workflow. Established products can combine these approaches; capabilities vary by tool and configuration.</p>
+            <details className={styles.sources}>
+              <summary>Sources and scope</summary>
+              <p>Workflow comparison based on public product documentation, reviewed September 2026. This is not a performance benchmark.</p>
+              <ul>{sources.map((source) => <li key={source.name}><a href={source.href} target="_blank" rel="noopener noreferrer">{source.name}<span className={styles.srOnly}> (opens in a new tab)</span></a></li>)}</ul>
+            </details>
           </div>
         </Reveal>
       </div>

@@ -25,17 +25,14 @@ const friction = [
 
 const intendedWorkflow = [
   {
-    stage: "Geometry",
     title: "Bring the design. Skip the manual mesh.",
     text: "Automated preparation, without conventional, geometry-fitted volumetric meshing.",
   },
   {
-    stage: "Simulation",
     title: "Let the physics guide the computation.",
     text: "Resolution concentrated where the flow requires it, with physical simulation at the core.",
   },
   {
-    stage: "Results",
     title: "Turn results into a clear report.",
     text: "Detailed reports generated from the results, tailored to the project, the client and the questions that matter.",
   },
@@ -117,8 +114,7 @@ export function WorkflowStory() {
 
           <Reveal className={styles.solutionSteps} delay={.08}>
             <ol className={styles.newSteps} aria-label="Our intended workflow">
-              {intendedWorkflow.map((step) => <li key={step.stage}>
-                <span className={styles.stageLabel}>{step.stage}</span>
+              {intendedWorkflow.map((step) => <li key={step.title}>
                 <h3>{step.title}</h3>
                 <p>{step.text}</p>
               </li>)}
