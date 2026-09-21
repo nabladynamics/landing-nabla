@@ -1,5 +1,6 @@
 import { mergeGeometries } from "./vendor/utils/BufferGeometryUtils.js";
 import { createDataCentreMaterials } from "./datacentre-materials.js";
+import { createDataCentrePipeGeometry } from "./datacentre-pipe.js";
 
 /**
  * A compact, open service-aisle exhibit. Dimensions are display units rather than
@@ -46,25 +47,10 @@ export function createDataCentre(THREE) {
     return part;
   }
 
-  // Compact bent tubing: straight runs joined by local radiused elbows. Unlike a
-  // Catmull-Rom spline this does not turn a pipe manifold into a sweeping loop.
+  // Shared tangent elbow geometry keeps both the steel and thermal overlay
+  // smooth at close range, without adding unnecessary rings to straight spans.
   function pipe(parent, points, radius, material = m.steel, bend = 0.1) {
-    const curve = new THREE.CurvePath();
-    const vectors = points.map(p => new THREE.Vector3(...p));
-    let cursor = vectors[0];
-    for (let i = 1; i < vectors.length - 1; i++) {
-      const before = vectors[i - 1];
-      const corner = vectors[i];
-      const after = vectors[i + 1];
-      const distance = Math.min(bend, before.distanceTo(corner) * 0.35, after.distanceTo(corner) * 0.35);
-      const entry = corner.clone().add(before.clone().sub(corner).normalize().multiplyScalar(distance));
-      const exit = corner.clone().add(after.clone().sub(corner).normalize().multiplyScalar(distance));
-      curve.add(new THREE.LineCurve3(cursor, entry));
-      curve.add(new THREE.QuadraticBezierCurve3(entry, corner, exit));
-      cursor = exit;
-    }
-    curve.add(new THREE.LineCurve3(cursor, vectors[vectors.length - 1]));
-    return mesh(parent, new THREE.TubeGeometry(curve, Math.max(12, points.length * 6), radius, radius < 0.03 ? 6 : 10, false), material);
+    return mesh(parent, createDataCentrePipeGeometry(THREE, points, radius, { bend }), material);
   }
 
   function collar(parent, centre, axis, radius, material, width = 0.055) {

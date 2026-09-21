@@ -93,7 +93,9 @@ export function createEngineeringStudio(THREE) {
 
   // One generous shared worktable, with a fine oak edge and a slender structural
   // underframe. The original continuous exhibition floor remains visible.
-  horizontalPanel(root, 8.8, 2.76, 0.13, [0, 1.51, -0.10], m.oak, 0.13, 0.015);
+  const desktopY = 1.51, desktopThickness = 0.13;
+  const desktopTop = desktopY + desktopThickness / 2;
+  horizontalPanel(root, 8.8, 2.76, desktopThickness, [0, desktopY, -0.10], m.oak, 0.13, 0.015);
   horizontalPanel(root, 8.63, 2.60, 0.035, [0, 1.43, -0.10], m.oakEdge, 0.095, 0.006);
   box(root, [7.51, 0.10, 0.08], [0, 1.345, -0.92], m.black);
   box(root, [7.51, 0.10, 0.08], [0, 1.345, 0.72], m.black);
@@ -245,13 +247,28 @@ export function createEngineeringStudio(THREE) {
   rod(root, [1.66, 1.665, 0.73], [2.10, 1.665, 0.87], 0.012, m.aluminium, 10);
   rod(root, [2.10, 1.665, 0.87], [2.16, 1.663, 0.889], 0.007, m.black, 8);
 
-  const tablet = group(root, [1.32, 1.69, -0.55], -0.12, "Review tablet");
-  tablet.rotation.x = -Math.PI / 2 + 0.25;
-  panel(tablet, 1.10, 0.76, 0.035, [0, 0, 0], m.aluminium, 0.047, 0.005);
+  const tabletTilt = 0.25, tabletHeight = 0.76, tabletDepth = 0.035;
+  // Yaw the whole assembly before tilting the screen. Combining both in an
+  // XYZ Euler rotation rolls a front corner below the tabletop.
+  const tabletMount = group(root, [1.32, desktopTop, -0.55], -0.12, "Review tablet mount");
+  const tabletLift = tabletHeight / 2 * Math.sin(tabletTilt) + tabletDepth / 2 * Math.cos(tabletTilt) + 0.003;
+  const tablet = group(tabletMount, [0, tabletLift, 0], 0, "Review tablet");
+  tablet.rotation.x = -Math.PI / 2 + tabletTilt;
+  panel(tablet, 1.10, tabletHeight, tabletDepth, [0, 0, 0], m.aluminium, 0.047, 0.005);
   panel(tablet, 1.083, 0.743, 0.012, [0, 0, 0.021], m.charcoal, 0.042, 0.003);
   plane(tablet, 1.007, 0.670, [0, 0, 0.028], m.tabletScreen);
   sphere(tablet, [0.010, 0.010, 0.002], [0, 0.351, 0.029], m.rubber);
-  tube(root, [[0.90, 1.584, -0.78], [0.90, 1.79, -0.79], [1.61, 1.79, -0.79], [1.61, 1.584, -0.78]], 0.015, m.aluminium, 22, 8);
+  // The stand follows the tablet's yaw and meets the underside, rather than
+  // protruding through the screen when the workspace is viewed from the front.
+  const standZ = -0.25, standRadius = 0.012;
+  const standY = tabletLift - Math.tan(tabletTilt) * standZ - (tabletDepth / 2 + standRadius) / Math.cos(tabletTilt);
+  rod(tabletMount, [-0.355, standY, standZ], [0.355, standY, standZ], standRadius, m.aluminium, 16);
+  [-1, 1].forEach(side => {
+    const x = side * 0.355;
+    rod(tabletMount, [x, 0.01, -0.40], [x, standY, standZ], standRadius, m.aluminium, 16);
+    sphere(tabletMount, [standRadius, standRadius, standRadius], [x, standY, standZ], m.aluminium);
+    cylinder(tabletMount, 0.028, 0.01, [x, 0.005, -0.40], m.rubber, 16);
+  });
 
   const prototype = group(root, [3.12, 1.60, -0.29], -0.14, "Physical wing section study");
   horizontalPanel(prototype, 1.47, 0.73, 0.032, [0, 0, 0], m.aluminium, 0.05, 0.004);

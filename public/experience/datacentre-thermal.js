@@ -1,4 +1,5 @@
 import { mergeGeometries } from "./vendor/utils/BufferGeometryUtils.js";
+import { createDataCentrePipeGeometry } from "./datacentre-pipe.js";
 
 /**
  * Illustrative cooling circulation, not a solved CFD or temperature field.
@@ -9,8 +10,8 @@ export function createDataCentreThermal(THREE) {
   group.name = "Illustrative data centre cooling circulation";
   group.userData.prebatched = true;
   const routes = [];
-  const addPipe = (points, radius, heat, role, phase = 0, speed = 0.105, bend = 0.095) => {
-    routes.push({ points, radius, heat, role, phase, speed, bend, kind: "pipe" });
+  const addPipe = (points, radius, heat, role, phase = 0, speed = 0.105, bend = 0.095, physicalRadius = 0.027) => {
+    routes.push({ points, radius, heat, role, phase, speed, bend, physicalRadius, kind: "pipe" });
   };
   const reverse = points => [...points].reverse();
   const frontX = [-3.15, -1.91, -0.67, 0.57];
@@ -19,8 +20,8 @@ export function createDataCentreThermal(THREE) {
   // Direction follows the circuit: supply leaves the CDU and travels left;
   // the adjacent return header gathers flow travelling right back to the CDU.
   // End at the last connected tee, leaving the capped dead legs unanimated.
-  addPipe([[3.36, 3.18, 0.66], [3.36, 3.18, -0.145], [3.36, 4.035, -0.145], [-2.86, 4.035, -0.145]], 0.065, 0, "Supply header", 0.0, 0.080, 0.13);
-  addPipe([[-2.72, 4.035, 0.145], [3.63, 4.035, 0.145], [3.63, 3.18, 0.145], [3.63, 3.18, 0.66]], 0.065, 1, "Return header", 0.39, 0.076, 0.13);
+  addPipe([[3.36, 3.18, 0.66], [3.36, 3.18, -0.145], [3.36, 4.035, -0.145], [-2.86, 4.035, -0.145]], 0.065, 0, "Supply header", 0.0, 0.080, 0.13, 0.054);
+  addPipe([[-2.72, 4.035, 0.145], [3.63, 4.035, 0.145], [3.63, 3.18, 0.145], [3.63, 3.18, 0.66]], 0.065, 1, "Return header", 0.39, 0.076, 0.13, 0.054);
 
   [frontX, rearX].forEach((positions, row) => {
     const manifoldZ = row === 0 ? 0.526 : -2.328;
@@ -39,7 +40,7 @@ export function createDataCentreThermal(THREE) {
         [1.68, 3.18].forEach((y, hoseIndex) => {
           const destinationX = rackX - 0.10 + heat * 0.15;
           const hose = [[x, y, manifoldZ], [x + 0.07, y, manifoldZ - 0.04], [destinationX, y - 0.08, manifoldZ - 0.055], [destinationX, y - 0.08, rackRear]];
-          addPipe(heat ? reverse(hose) : hose, 0.026, heat, `${heat ? "Return" : "Supply"} short rack hose`, (phase + hoseIndex * 0.38) % 1, 0.20, 0.10);
+          addPipe(heat ? reverse(hose) : hose, 0.026, heat, `${heat ? "Return" : "Supply"} short rack hose`, (phase + hoseIndex * 0.38) % 1, 0.20, 0.10, 0.020);
         });
       });
     });
@@ -51,8 +52,8 @@ export function createDataCentreThermal(THREE) {
     const world = points => points.map(([x, y, depth]) => [x + 3.30, y + 0.135, depth + 1.00]);
     const lower = world([[0.39, 0.68, z], [0.39, 1.02, z], [0.48, 1.02, z], [0.48, 2.93, z]]);
     const upper = world([[0.48, 2.94, z], [0.48, 3.30, z], [0.06 + heat * 0.27, 3.30, z], [0.06 + heat * 0.27, 3.04, -0.34]]);
-    addPipe(heat ? reverse(lower) : lower, 0.051, heat, `${heat ? "Return" : "Supply"} CDU riser`, 0.16 + heat * 0.48, 0.16, 0.08);
-    addPipe(heat ? reverse(upper) : upper, 0.051, heat, `${heat ? "Return" : "Supply"} CDU connection`, 0.31 + heat * 0.39, 0.17, 0.075);
+    addPipe(heat ? reverse(lower) : lower, 0.051, heat, `${heat ? "Return" : "Supply"} CDU riser`, 0.16 + heat * 0.48, 0.16, 0.08, 0.042);
+    addPipe(heat ? reverse(upper) : upper, 0.051, heat, `${heat ? "Return" : "Supply"} CDU connection`, 0.31 + heat * 0.39, 0.17, 0.075, 0.042);
   });
 
   // Four short intake paths approach the visible front doors and stop at the
@@ -77,31 +78,11 @@ export function createDataCentreThermal(THREE) {
   // Exposed for local geometric QA, with no measurements or solver claims.
   group.userData.thermalPaths = routes.map(route => ({ ...route, points: route.points.map(point => [...point]) }));
 
-  function routedCurve(route) {
-    const vectors = route.points.map(point => new THREE.Vector3(...point));
-    if (route.kind === "air") return new THREE.CatmullRomCurve3(vectors, false, "centripetal");
-    // Same tightly radiused routing as the physical pipe builder. Preserving
-    // those local elbows prevents the overlay from drifting off the metal.
-    const curve = new THREE.CurvePath();
-    let cursor = vectors[0];
-    for (let i = 1; i < vectors.length - 1; i++) {
-      const before = vectors[i - 1], corner = vectors[i], after = vectors[i + 1];
-      const distance = Math.min(route.bend, before.distanceTo(corner) * 0.35, after.distanceTo(corner) * 0.35);
-      const entry = corner.clone().add(before.clone().sub(corner).normalize().multiplyScalar(distance));
-      const exit = corner.clone().add(after.clone().sub(corner).normalize().multiplyScalar(distance));
-      curve.add(new THREE.LineCurve3(cursor, entry));
-      curve.add(new THREE.QuadraticBezierCurve3(entry, corner, exit));
-      cursor = exit;
-    }
-    curve.add(new THREE.LineCurve3(cursor, vectors[vectors.length - 1]));
-    return curve;
-  }
-
   const parts = [];
   for (const route of routes) {
-    const curve = routedCurve(route);
-    const segments = route.kind === "air" ? 64 : Math.max(24, route.points.length * 12);
-    const geometry = new THREE.TubeGeometry(curve, segments, route.radius, route.kind === "air" ? 6 : 10, false);
+    const geometry = route.kind === "air"
+      ? new THREE.TubeGeometry(new THREE.CatmullRomCurve3(route.points.map(point => new THREE.Vector3(...point)), false, "centripetal"), 64, route.radius, 6, false)
+      : createDataCentrePipeGeometry(THREE, route.points, route.radius, { bend: route.bend, routeRadius: route.physicalRadius });
     const count = geometry.getAttribute("position").count;
     const data = new Float32Array(count * 4);
     for (let i = 0; i < count; i++) {
