@@ -50,7 +50,7 @@ export function Technology() {
     <section id="technology" className="border-t border-line py-24 md:py-32">
       <div className={container}>
         <SectionHeading
-          title="What is under the hood."
+          title="What is under the hood"
           lede="A CFD engine that eliminates conventional body-fitted volume meshing and concentrates computational power where the physics demands it."
         />
 

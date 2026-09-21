@@ -85,7 +85,7 @@ export function Contact({ standalone = false }: { standalone?: boolean }) {
         <div className="grid gap-14 lg:grid-cols-[0.95fr_1.05fr] lg:gap-20">
           <div>
             <SectionHeading
-              title="Tell us about your simulation workloads."
+              title="Tell us about your simulation workloads"
               lede="We are talking to engineering teams tired of meshing, simulation companies, researchers and investors interested in the next generation of CFD. If that is you, we would like to hear what you are running today."
             />
             <Reveal delay={0.15}>
@@ -125,7 +125,7 @@ export function Contact({ standalone = false }: { standalone?: boolean }) {
                     aria-hidden="true"
                   />
                   <h3 className="mt-5 font-display text-xl font-semibold text-frost">
-                    Message received.
+                    Message received
                   </h3>
                   <p className="mt-2 max-w-sm text-base leading-relaxed text-fog">
                     Thanks for reaching out. We’ll get back to you shortly. If

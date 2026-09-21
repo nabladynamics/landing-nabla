@@ -12,7 +12,7 @@ export function CtaBand() {
         <Reveal className="flex flex-col items-start justify-between gap-8 md:flex-row md:items-center">
           <div className="max-w-2xl">
             <h2 className="text-balance font-display text-3xl font-medium leading-[1.15] tracking-tight text-frost sm:text-4xl">
-              See it run on your geometry.
+              See it run on your geometry
             </h2>
             <p className="mt-4 text-base leading-relaxed text-fog sm:text-lg">
               Bring an STL that is hard to mesh. We will walk you through the

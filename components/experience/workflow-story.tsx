@@ -10,30 +10,30 @@ import styles from "./workflow-story.module.css";
 
 const friction = [
   {
-    title: "Days in preparation.",
+    title: "Days in preparation",
     text: "Setup and manual meshing delay the first run.",
   },
   {
-    title: "Time lost to restarts.",
+    title: "Time lost to restarts",
     text: "A failed simulation can waste days of compute.",
   },
   {
-    title: "Same design. Different answers.",
+    title: "Same design. Different answers",
     text: "Different teams’ setup choices can change the result.",
   },
 ];
 
 const intendedWorkflow = [
   {
-    title: "Bring the design. Skip the manual mesh.",
+    title: "Bring the design. Skip the manual mesh",
     text: "Automated preparation, without conventional, geometry-fitted volumetric meshing.",
   },
   {
-    title: "Let the physics guide the computation.",
+    title: "Let the physics guide the computation",
     text: "Resolution concentrated where the flow requires it, with physical simulation at the core.",
   },
   {
-    title: "Turn results into a clear report.",
+    title: "Turn results into a clear report",
     text: "Detailed reports generated from the results, tailored to the project, the client and the questions that matter.",
   },
 ];
@@ -64,7 +64,7 @@ export function WorkflowStory() {
       <div className={styles.inner}>
         <Reveal>
           <div className={styles.intro}>
-            <h2 id="workflow-problem-title">Engineering is hard.<br /><em>The workflow shouldn’t be.</em></h2>
+            <h2 id="workflow-problem-title">Engineering is hard<br /><em>The workflow shouldn’t be</em></h2>
             <p>Manual setup. Long waits. Uncertain results. Too much work between a design and an answer.</p>
           </div>
         </Reveal>
@@ -90,7 +90,7 @@ export function WorkflowStory() {
         </div>
         <Reveal>
           <div className={styles.humanCost}>
-            <p>The cost is more than compute.</p>
+            <h3>The cost is more than compute</h3>
             <p><strong>With conventional CFD, faster iteration can mean lower resolution. Building confidence in the results takes refinement and repeat runs. This means more time, more compute and more pressure on engineers.</strong></p>
           </div>
         </Reveal>
@@ -101,10 +101,9 @@ export function WorkflowStory() {
       <div className={styles.inner}>
         <div className={styles.solutionLayout}>
           <Reveal className={styles.solutionHeader}>
-            <h2 id="workflow-solution-title">Less friction.<br /><em>More understanding.</em></h2>
+            <h2 id="workflow-solution-title">Less friction<br /><em>More understanding</em></h2>
             <div className={styles.solutionIntro}>
               <p>We’re developing a new CFD engine to make physical simulation easier to use and understand.</p>
-              <p>AI can accelerate exploration. When predictions are difficult to inspect, engineers still need physical evidence, clear assumptions and explicit limitations.</p>
             </div>
           </Reveal>
 
@@ -113,8 +112,9 @@ export function WorkflowStory() {
           </Reveal>
 
           <Reveal className={styles.solutionSteps} delay={.08}>
-            <ol className={styles.newSteps} aria-label="Our intended workflow">
-              {intendedWorkflow.map((step) => <li key={step.title}>
+            <ol className={styles.newSteps} aria-label="Our intended workflow" role="list">
+              {intendedWorkflow.map((step, index) => <li key={step.title}>
+                <span className={styles.stepNumber} aria-hidden="true">{index + 1}</span>
                 <h3>{step.title}</h3>
                 <p>{step.text}</p>
               </li>)}

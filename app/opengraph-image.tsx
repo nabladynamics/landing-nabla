@@ -41,7 +41,7 @@ export default function OpenGraphImage() {
             maxWidth: 950,
           }}
         >
-          Building the next generation of CFD.
+          Building the next generation of CFD
         </div>
         <div
           style={{
