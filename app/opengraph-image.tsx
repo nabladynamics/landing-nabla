@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 import { site } from "@/lib/site";
 
-export const alt = "Nabla AI — Physics-first, adaptive CFD";
+export const alt = "Nabla AI: Physics-first, adaptive CFD";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -54,7 +54,7 @@ export default function OpenGraphImage() {
             maxWidth: 900,
           }}
         >
-          {`${site.tagline} — developing faster simulations with higher resolution at lower cost.`}
+          {`${site.tagline}. Developing faster simulations with higher resolution at lower cost.`}
         </div>
       </div>
     ),

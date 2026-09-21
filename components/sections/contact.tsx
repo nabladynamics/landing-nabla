@@ -128,7 +128,7 @@ export function Contact({ standalone = false }: { standalone?: boolean }) {
                     Message received.
                   </h3>
                   <p className="mt-2 max-w-sm text-base leading-relaxed text-fog">
-                    Thanks for reaching out — we’ll get back to you shortly. If
+                    Thanks for reaching out. We’ll get back to you shortly. If
                     it’s time-sensitive, book a slot directly on our calendar.
                   </p>
                   <button

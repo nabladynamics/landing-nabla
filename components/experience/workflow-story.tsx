@@ -65,7 +65,6 @@ export function WorkflowStory() {
     <section id="perspective" className={styles.problem} aria-labelledby="workflow-problem-title">
       <div className={styles.inner}>
         <Reveal>
-          <p className={styles.eyebrow}>The work behind the answer</p>
           <div className={styles.intro}>
             <h2 id="workflow-problem-title">Engineering is hard.<br /><em>The workflow shouldn’t be.</em></h2>
             <p>Manual setup. Long waits. Uncertain results. Too much work between a design and an answer.</p>
@@ -94,7 +93,7 @@ export function WorkflowStory() {
         <Reveal>
           <div className={styles.humanCost}>
             <p>The cost is more than compute.</p>
-            <p>With conventional CFD, faster iteration can mean lower resolution. Building confidence in the results takes refinement and repeat runs — more time, more compute and more pressure on engineers.</p>
+            <p>With conventional CFD, faster iteration can mean lower resolution. Building confidence in the results takes refinement and repeat runs. This means more time, more compute and more pressure on engineers.</p>
           </div>
         </Reveal>
       </div>
@@ -103,7 +102,6 @@ export function WorkflowStory() {
     <section id="approach" className={styles.solution} aria-labelledby="workflow-solution-title">
       <div className={styles.inner}>
         <Reveal>
-          <p className={styles.eyebrow}>The approach we’re developing</p>
           <div className={styles.solutionHeader}>
             <h2 id="workflow-solution-title">Less friction.<br /><em>More understanding.</em></h2>
             <div className={styles.solutionIntro}>

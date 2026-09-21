@@ -72,7 +72,6 @@
 .progressTrack { position: absolute; bottom: 0; left: 0; width: 100%; height: 2px; background: #dfe2d7; }
 .progressTrack > div { height: 100%; background: var(--accent); width: 100%; transform: scaleX(var(--journey-progress)); transform-origin: left; }
 .contact { padding: 130px 8%; text-align: center; }
-.contact .eyebrow { justify-content: center; }
 .experience.experience.experience .contact h2 { font-size: clamp(48px, 7vw, 105px); }
 .contactButton { display: inline-flex; align-items: center; gap: 36px; background: #283b34; color: #f3f2ec; padding: 19px 25px; margin-top: 40px; font-size: 15px; text-decoration: none; border-radius: 3px; }
 .contactButton:hover { background: #ad4e30; }
@@ -116,7 +115,6 @@
   .scrollPrompt { font-size: 11px; gap: 9px; }
   .scrollPrompt svg { width: 15px; }
   .contact { padding: 85px 24px; }
-  .contact .eyebrow { font-size: 12px; }
   .contactButton { font-size: 14px; gap: 26px; padding: 18px 22px; margin-top: 30px; }
   .standardJourney { padding: 110px 24px 30px; }
   .standardControls { flex-direction: column; }

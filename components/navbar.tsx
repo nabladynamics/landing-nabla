@@ -45,7 +45,7 @@ export function Navbar() {
       className={styles.header}
     >
       <nav aria-label="Main" className={styles.nav}>
-        <Link href="/" className="shrink-0 rounded-sm" aria-label="Nabla AI — home">
+        <Link href="/" className="shrink-0 rounded-sm" aria-label="Nabla AI home">
           <Wordmark />
         </Link>
 

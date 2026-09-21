@@ -173,7 +173,7 @@ export function SpatialExperience() {
 
         <WorkflowStory />
         <Team />
-        <section className={styles.contact}><p className={styles.eyebrow}>For engineers. For what comes next.</p><h2>What are you<br />working towards?</h2><Link href="/contact" className={styles.contactButton}>Let’s start a conversation <ArrowUpRight size={20} /></Link><p>Engineering teams, researchers and investors — we would love to hear from you.</p></section>
+        <section className={styles.contact}><h2>What are you<br />working towards?</h2><Link href="/contact" className={styles.contactButton}>Let’s start a conversation <ArrowUpRight size={20} /></Link><p>We would love to hear from engineering teams, researchers and investors.</p></section>
       </main>
       <Footer />
     </div>
