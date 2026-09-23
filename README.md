@@ -32,9 +32,11 @@ Copy `.env.example` to `.env.local` and fill in the values. Remember to add the 
 
 ## Private page-view counter
 
-Triple-click the separator in `Barcelona · San Francisco` in the footer or Contact section to open the private counter. Keyboard users can focus the separator and press Enter. The password is checked on the server; it is never bundled in browser JavaScript. Closing the dialog clears its password and statistics.
+Triple-click the separator in `Barcelona · San Francisco` in the footer or Contact section to open the private counter. Keyboard users can focus the separator and press Enter. The password is checked on the server; it is never bundled in browser JavaScript. The unlocked dialog keeps its password only in memory to authenticate report changes. Closing it clears the password and statistics.
 
 The counter reports recorded **page views**, including repeat visits, from 23 September 2026 and for the current day in `Europe/London`. These are not unique people. Vercel Web Analytics only loads in production, so local development and preview deployments do not add traffic. Blocked analytics requests are not counted and results can take time to appear.
+
+The expanded report includes date filters, a daily chart (or hourly chart for one selected day), exact bucket counts, countries and CSV export. Report dates and chart buckets use UTC; the Today summary uses Europe/London. Detailed queries are restricted to the last 30 calendar days and never predate activation. The all-time count remains independent of that reporting window. Unknown locations and Vercel’s Others group are retained.
 
 Production setup in the **Nabla** Vercel project:
 

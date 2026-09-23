@@ -63,3 +63,59 @@
   .dialog { padding: 22px; }
   .metrics { gap: 16px; }
 }
+
+.expanded { width: min(1040px, calc(100vw - 32px)); padding: 32px 40px; }
+.expanded .title { margin-top: 14px; }
+.expanded .metrics { grid-template-columns: repeat(3, 1fr); margin: 16px 0 28px; padding: 22px 0; }
+.dialog :is(button, input, select):focus-visible { outline: 2px solid #ad4e30; outline-offset: 3px; }
+.filters { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 16px; margin-top: 26px; }
+.presets { display: flex; gap: 4px; flex-wrap: wrap; }
+.presets button, .download { border: 1px solid #24333326; border-radius: 3px; padding: 8px 10px; background: transparent; color: inherit; font: inherit; font-size: 12px; cursor: pointer; }
+.presets button:hover, .download:hover { background: #2433330c; }
+.dateFields { display: flex; flex-wrap: wrap; gap: 10px; align-items: end; }
+.dateFields label { display: grid; gap: 5px; font-size: 11px; color: #5b6861; }
+.dateFields :is(input, select) { min-height: 36px; min-width: 0; padding: 5px 8px; border: 1px solid #24333338; border-radius: 3px; background: #faf9f4; color: #243333; font: inherit; font-size: 13px; }
+.apply { min-height: 36px; border: 1px solid #243333; border-radius: 3px; background: #243333; color: #f3f2ec; padding: 6px 14px; cursor: pointer; font: inherit; font-size: 12px; }
+.dialog button:disabled { opacity: .5; cursor: wait; }
+.reportHeading { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 24px; }
+.reportHeading p { margin: 0; font-size: 13px; }
+.reportHeading span { color: #65706b; }
+.chartSection { margin-bottom: 32px; }
+.chartHeading { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
+.expanded h3 { margin: 0 0 8px; font-size: 16px; font-weight: 500; }
+.chartHeading p { margin: 0; color: #65706b; font-size: 12px; font-variant-numeric: tabular-nums; }
+.chart { position: relative; height: 196px; padding: 14px 20px 28px 32px; margin-top: 16px; }
+.bars { display: flex; align-items: stretch; height: 100%; gap: 4px; border-bottom: 1px solid #24333355; background: repeating-linear-gradient(to top, transparent 0, transparent calc(50% - 1px), #24333314 calc(50% - 1px), #24333314 50%); }
+.barColumn { position: relative; display: flex; flex: 1; min-width: 0; height: 100%; align-items: end; justify-content: center; border: 0; padding: 0; background: transparent; cursor: pointer; color: inherit; }
+.bar { display: block; width: min(100%, 42px); border-radius: 2px 2px 0 0; background: #48675e; }
+.selectedBar .bar { background: #ad4e30; }
+.tick { position: absolute; top: calc(100% + 8px); left: 50%; transform: translateX(-50%); white-space: nowrap; color: #65706b; font-size: 10px; }
+.axisMax, .axisZero { position: absolute; left: 0; color: #65706b; font-size: 10px; }
+.axisMax { top: 8px; } .axisZero { bottom: 22px; }
+.detailGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+.detailGrid section { min-width: 0; }
+.tableScroll { max-height: 240px; overflow: auto; margin-top: 12px; }
+.table { width: 100%; border-collapse: collapse; font-size: 13px; font-variant-numeric: tabular-nums; }
+.table th, .table td { padding: 10px 8px; text-align: right; border-bottom: 1px solid #24333314; }
+.table th:first-child { text-align: left; padding-left: 0; font-weight: 400; }
+.table thead th { position: sticky; top: 0; z-index: 1; background: #f3f2ec; color: #65706b; font-weight: 400; font-size: 11px; }
+.countryBar { display: block; height: 2px; margin-top: 6px; background: #91a397; }
+.footnote { margin-top: 28px; border-top: 1px solid #24333320; padding-top: 16px; }
+@media (max-width: 640px) {
+  .expanded { padding: 22px; }
+  .filters { gap: 18px; }
+  .dateFields { width: 100%; }
+  .dateFields label { flex: 1 1 40%; }
+  .dateFields input { width: 100%; }
+  .dateFields .apply { flex: 1 1 40%; }
+  .expanded .metrics { gap: 12px; }
+  .expanded .metrics dd { font-size: 29px; }
+  .expanded .metrics dt { font-size: 11px; }
+  .reportHeading { align-items: start; }
+  .download { flex-shrink: 0; }
+  .detailGrid { grid-template-columns: 1fr; gap: 28px; }
+  .chartHeading { flex-wrap: wrap; gap: 0; }
+  .chart { padding-right: 12px; }
+  .bars { gap: 2px; }
+  .tick { font-size: 9px; }
+}

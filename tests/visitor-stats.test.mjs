@@ -5,6 +5,9 @@ import {
   londonDayStart,
   parseTodayPageviews,
   parseTotalPageviews,
+  reportWindow,
+  parseReportSeries,
+  parseCountries,
 } from "../lib/visitor-stats.ts";
 
 const PASSWORD = "test-only-password";
@@ -282,4 +285,80 @@ test("London midnight is correct in winter, summer, and both DST transitions", (
   for (const [instant, midnight] of cases) {
     assert.equal(londonDayStart(new Date(instant)).toISOString(), midnight);
   }
+});
+
+
+test("report windows reject invalid, future, old and excessive hourly ranges", () => {
+  const now = new Date("2026-11-04T12:00:00Z");
+  assert.equal(reportWindow({ from: "2026-11-04", to: "2026-11-04" }, now).grain, "hour");
+  assert.equal(reportWindow({ from: "2026-10-20", to: "2026-11-04" }, now).minimum, "2026-10-06");
+  for (const range of [
+    { from: "2026-10-05", to: "2026-11-04" },
+    { from: "2026-11-04", to: "2026-11-05" },
+    { from: "2026-10-32", to: "2026-11-04" },
+    { from: "2026-11-04", to: "2026-11-03" },
+    { from: "2026-11-03", to: "2026-11-04", grain: "hour" },
+    { from: "2026-11-04", to: "2026-11-04", grain: "country" },
+  ]) assert.throws(() => reportWindow(range, now));
+  assert.equal(reportWindow({ from: "2026-09-23", to: "2026-09-23" }, NOW).minimum, "2026-09-23");
+});
+
+test("hourly and daily series fill only elapsed buckets and reject malformed data", () => {
+  const window = reportWindow({ from: "2026-09-23", to: "2026-09-23" }, NOW);
+  const payload = { version: 1, data: [{ timestamp: "2026-09-23T10:00:00Z", pageviews: 12 }] };
+  const series = parseReportSeries(payload, window);
+  assert.equal(series.length, 13);
+  assert.equal(series[10].views, 12);
+  assert.equal(series[0].views, 0);
+  assert.equal(series.at(-1).timestamp, "2026-09-23T12:00:00.000Z");
+  assert.throws(() => parseReportSeries({ version: 1, data: [...payload.data, ...payload.data] }, window));
+  assert.throws(() => parseReportSeries({ version: 1, data: [{ timestamp: "2026-09-23T13:00:00Z", pageviews: 2 }] }, window));
+  assert.throws(() => parseReportSeries({ version: 1, data: [{ timestamp: "2026-09-23T10:00:00Z", pageviews: -1 }] }, window));
+  const daily = reportWindow({ from: "2026-09-23", to: "2026-09-25", grain: "day" }, new Date("2026-09-25T12:00:00Z"));
+  assert.equal(parseReportSeries({ version: 1, data: [] }, daily).length, 3);
+  assert.throws(() => parseReportSeries(payload, daily));
+});
+
+test("countries preserve unknown and remaining groups without inventing locations", () => {
+  assert.deepEqual(parseCountries({ version: 1, data: [
+    { country: "gb", pageviews: 8 }, { country: null, pageviews: 2 }, { country: "Others", pageviews: 3 },
+  ] }), [{ code: "GB", views: 8 }, { code: "Others", views: 3 }, { code: "Unknown", views: 2 }]);
+  assert.throws(() => parseCountries({ version: 1, data: [{ country: "GB", pageviews: -1 }] }));
+  assert.throws(() => parseCountries({ version: 1, data: [{ country: "GB", pageviews: 1 }, { country: "gb", pageviews: 1 }] }));
+});
+
+test("reports query selected dates with authentication and country breakdown", async () => {
+  const calls = [];
+  const { handler } = setup({ fetch: async (url) => {
+    calls.push(url);
+    return Response.json({ version: 1, data: url.pathname.endsWith("/count") ? { pageviews: 50 }
+      : url.searchParams.get("by") === "country" ? [{ country: "GB", pageviews: 12 }]
+      : [{ timestamp: "2026-09-23T10:00:00Z", pageviews: 12 }] });
+  } });
+  const response = await handler(request({ password: PASSWORD, report: { from: "2026-09-23", to: "2026-09-23", grain: "hour" } }));
+  assert.equal(response.status, 200);
+  const data = await response.json();
+  assert.equal(data.total, 50);
+  assert.equal(data.report.views, 12);
+  assert.equal(data.report.timezone, "UTC");
+  assert.deepEqual(data.report.countries, [{ code: "GB", views: 12 }]);
+  const countryQuery = calls.find(url => url.searchParams.get("by") === "country");
+  assert.equal(countryQuery.searchParams.get("since"), "2026-09-23T00:00:00.000Z");
+  assert.equal(countryQuery.searchParams.get("until"), NOW.toISOString());
+  assert.equal(countryQuery.searchParams.get("filter"), "environment eq 'production'");
+  assert.equal(countryQuery.searchParams.get("limit"), "100");
+});
+
+test("invalid report dates and unauthenticated reports never query the provider", async () => {
+  const { handler, calls } = setup();
+  assert.equal((await handler(request({ password: PASSWORD, report: { from: "2025-01-01", to: "2026-09-23" } }))).status, 400);
+  assert.equal((await handler(request({ password: "wrong", report: { from: "2026-09-23", to: "2026-09-23" } }))).status, 401);
+  assert.equal(calls.length, 0);
+});
+
+test("country query failures do not become empty successful reports", async () => {
+  const { handler } = setup({ fetch: async url => url.searchParams.get("by") === "country"
+    ? new Response("unavailable", { status: 503 })
+    : Response.json({ version: 1, data: url.pathname.endsWith("/count") ? { pageviews: 0 } : [] }) });
+  assert.equal((await handler(request({ password: PASSWORD, report: { from: "2026-09-23", to: "2026-09-23" } }))).status, 502);
 });

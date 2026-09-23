@@ -109,6 +109,72 @@ export function parseTodayPageviews(
   return total;
 }
 
+const DAY_MS = 24 * HOUR_MS;
+
+export function reportWindow(value: unknown, now: Date) {
+  const maximum = now.toISOString().slice(0, 10);
+  const minimum = new Date(Math.max(
+    Date.parse(VISITOR_STATS_SINCE),
+    Date.parse(maximum) - 29 * DAY_MS,
+  )).toISOString().slice(0, 10);
+  if (!record(value)) throw new Error("Invalid report dates");
+  const validDate = (date: unknown): date is string =>
+    typeof date === "string" && /^\d{4}-\d{2}-\d{2}$/.test(date) &&
+    Number.isFinite(Date.parse(date)) && new Date(date).toISOString().slice(0, 10) === date;
+  if (!validDate(value.from) || !validDate(value.to) ||
+      value.from < minimum || value.to > maximum || value.from > value.to) {
+    throw new Error("Choose dates within the available reporting window");
+  }
+  const grain = value.grain ?? (value.from === value.to ? "hour" : "day");
+  if (grain !== "day" && grain !== "hour") throw new Error("Invalid time interval");
+  // Keep hourly reports focused and within the provider's row limit.
+  if (grain === "hour" && value.from !== value.to) throw new Error("Choose a single day for hourly reports");
+  return {
+    from: value.from, to: value.to, grain, minimum, maximum,
+    start: new Date(value.from),
+    end: new Date(Math.min(Date.parse(value.to) + DAY_MS - 1, now.getTime())),
+  };
+}
+
+export function parseReportSeries(payload: unknown, window: ReturnType<typeof reportWindow>) {
+  if (!record(payload) || payload.version !== 1 || !Array.isArray(payload.data)) {
+    throw new Error("Invalid analytics response");
+  }
+  const step = window.grain === "hour" ? HOUR_MS : DAY_MS;
+  const counts = new Map<number, number>();
+  for (const row of payload.data) {
+    if (!record(row) || typeof row.timestamp !== "string") throw new Error("Invalid time bucket");
+    const time = Date.parse(row.timestamp);
+    if (!Number.isFinite(time) || time % step !== 0 ||
+        time < window.start.getTime() || time > window.end.getTime() || counts.has(time)) {
+      throw new Error("Invalid time bucket");
+    }
+    counts.set(time, pageviews(row.pageviews));
+  }
+  const series = [];
+  for (let time = window.start.getTime(); time <= window.end.getTime(); time += step) {
+    series.push({ timestamp: new Date(time).toISOString(), views: counts.get(time) ?? 0 });
+  }
+  return series;
+}
+
+export function parseCountries(payload: unknown) {
+  if (!record(payload) || payload.version !== 1 || !Array.isArray(payload.data)) {
+    throw new Error("Invalid analytics response");
+  }
+  const countries = new Map<string, number>();
+  for (const row of payload.data) {
+    if (!record(row)) throw new Error("Invalid country");
+    const country = row.country;
+    if (country != null && typeof country !== "string") throw new Error("Invalid country");
+    const code = !country ? "Unknown" : /^[A-Za-z]{2}$/.test(country) ? country.toUpperCase()
+      : /^(others|unknown)$/i.test(country) ? country : null;
+    if (code === null || countries.has(code)) throw new Error("Invalid country");
+    countries.set(code, pageviews(row.pageviews));
+  }
+  return [...countries].map(([code, views]) => ({ code, views })).sort((a, b) => b.views - a.views);
+}
+
 function json(body: unknown, status = 200, retryAfter?: number): Response {
   return Response.json(body, {
     status,
@@ -131,7 +197,7 @@ class InvalidBody extends Error {
   }
 }
 
-async function readPassword(request: Request): Promise<string> {
+async function readPassword(request: Request): Promise<{ password: string; report?: unknown }> {
   if (request.headers.get("content-type")?.split(";", 1)[0].trim().toLowerCase() !== "application/json") {
     throw new InvalidBody(415);
   }
@@ -173,7 +239,7 @@ async function readPassword(request: Request): Promise<string> {
   ) {
     throw new InvalidBody(400);
   }
-  return body.password;
+  return { password: body.password, report: body.report };
 }
 
 function digest(value: string): Buffer {
@@ -257,14 +323,14 @@ export function createVisitorStatsHandler(options: HandlerOptions = {}) {
       expiresAt: previous?.expiresAt ?? time + FAILURE_WINDOW_MS,
     });
 
-    let password: string;
+    let credentials: { password: string; report?: unknown };
     try {
-      password = await readPassword(request);
+      credentials = await readPassword(request);
     } catch (error) {
       return json({ error: "Invalid request body." }, error instanceof InvalidBody ? error.status : 400);
     }
 
-    if (!timingSafeEqual(digest(password), digest(secret))) {
+    if (!timingSafeEqual(digest(credentials.password), digest(secret))) {
       return json({ error: "Incorrect password." }, 401);
     }
     failures.delete(key);
@@ -275,6 +341,11 @@ export function createVisitorStatsHandler(options: HandlerOptions = {}) {
       return json({ error: "Visitor statistics are not configured." }, 503);
     }
 
+    let window: ReturnType<typeof reportWindow> | undefined;
+    if (credentials.report !== undefined) {
+      try { window = reportWindow(credentials.report, requestedAt); }
+      catch { return json({ error: "Choose valid report dates within the last 30 days." }, 400); }
+    }
     const since = londonDayStart(requestedAt);
     const countUrl = new URL("count", API_BASE);
     const todayUrl = new URL("aggregate", API_BASE);
@@ -307,16 +378,33 @@ export function createVisitorStatsHandler(options: HandlerOptions = {}) {
         if (!response.ok) throw new Error("Analytics unavailable");
         return response.json();
       };
-      const [totalPayload, todayPayload] = await Promise.all([
+      const reportQuery = (by: string) => {
+        const url = new URL(todayUrl);
+        url.searchParams.set("by", by);
+        url.searchParams.set("since", window!.start.toISOString());
+        url.searchParams.set("until", window!.end.toISOString());
+        return query(url);
+      };
+      const [totalPayload, todayPayload, seriesPayload, countriesPayload] = await Promise.all([
         query(countUrl),
         query(todayUrl),
+        window ? reportQuery(window.grain) : Promise.resolve(null),
+        window ? reportQuery("country") : Promise.resolve(null),
       ]);
+      const series = window ? parseReportSeries(seriesPayload, window) : [];
+      const report = window ? {
+        from: window.from, to: window.to, grain: window.grain,
+        minimum: window.minimum, maximum: window.maximum, timezone: "UTC",
+        views: pageviews(series.reduce((sum, point) => sum + point.views, 0)),
+        series, countries: parseCountries(countriesPayload),
+      } : undefined;
       return json({
         total: parseTotalPageviews(totalPayload),
         today: parseTodayPageviews(todayPayload, since, requestedAt),
         since: VISITOR_STATS_SINCE,
         updatedAt: requestedAt.toISOString(),
         timezone: VISITOR_STATS_TIMEZONE,
+        ...(report ? { report } : {}),
       });
     } catch {
       // Never expose provider response bodies, tokens, or project identifiers.
