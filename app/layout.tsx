@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import { MotionProvider } from "@/components/motion-provider";
 import { site } from "@/lib/site";
 import "./globals.css";
@@ -78,6 +79,7 @@ export default function RootLayout({
           Skip to content
         </a>
         <MotionProvider>{children}</MotionProvider>
+        {process.env.VERCEL_ENV === "production" ? <Analytics /> : null}
       </body>
     </html>
   );

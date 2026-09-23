@@ -5,6 +5,7 @@ import { AlertCircle, ArrowRight, CheckCircle2, Loader2 } from "lucide-react";
 import { CTA } from "@/components/ui/cta";
 import { Reveal } from "@/components/ui/reveal";
 import { SectionHeading } from "@/components/ui/section-heading";
+import { VisitCounter } from "@/components/visit-counter";
 import { submitContact, type ContactPayload } from "@/lib/submit-contact";
 import { container, site } from "@/lib/site";
 
@@ -109,7 +110,7 @@ export function Contact({ standalone = false }: { standalone?: boolean }) {
                   Send a message
                 </CTA>
               </div>
-              <p className="mt-10 text-sm text-fog">{site.locations}</p>
+              <VisitCounter className="mt-10 block text-sm text-fog" />
             </Reveal>
           </div>
 
