@@ -2,7 +2,6 @@ import { createHash, timingSafeEqual } from "node:crypto";
 
 export const VISITOR_STATS_SINCE = "2026-09-23";
 export const VISITOR_STATS_TIMEZONE = "Europe/London";
-const TRACKING_START = "2026-09-22T23:00:00.000Z";
 
 const API_BASE = "https://api.vercel.com/v1/query/web-analytics/visits/";
 const MAX_BODY_BYTES = 4096;
@@ -287,10 +286,8 @@ export function createVisitorStatsHandler(options: HandlerOptions = {}) {
         url.searchParams.set("slug", env.VISITOR_STATS_TEAM_SLUG);
       }
     }
-    // Count queries use the production lifetime dataset, with the launch date
-    // as a lower bound. They cannot reconstruct visits before tracking began.
-    countUrl.searchParams.set("since", TRACKING_START);
-    countUrl.searchParams.set("until", requestedAt.toISOString());
+    // Analytics was enabled on VISITOR_STATS_SINCE. Use the provider's lifetime
+    // production count without date bounds, as documented for this endpoint.
     // Hourly buckets avoid UTC-day rounding when London is on summer time.
     todayUrl.searchParams.set("by", "hour");
     todayUrl.searchParams.set("since", since.toISOString());

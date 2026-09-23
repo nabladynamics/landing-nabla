@@ -63,7 +63,8 @@ test("only authenticated requests fetch counts, with no response caching", async
   assert.equal(calls.length, 2);
   const count = calls.find(({ url }) => url.pathname.endsWith("/count"));
   const today = calls.find(({ url }) => url.pathname.endsWith("/aggregate"));
-  assert.equal(count.url.searchParams.get("since"), "2026-09-22T23:00:00.000Z");
+  assert.equal(count.url.searchParams.has("since"), false);
+  assert.equal(count.url.searchParams.has("until"), false);
   assert.equal(today.url.searchParams.get("since"), "2026-09-22T23:00:00.000Z");
   assert.equal(today.url.searchParams.get("until"), NOW.toISOString());
   assert.equal(today.url.searchParams.get("by"), "hour");
