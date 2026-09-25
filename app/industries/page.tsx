@@ -1,9 +1,5 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Industries",
-  description:
-    "Explore the engineering challenges across aviation, space, marine, rail, wind energy and turbomachinery that guide Nabla AI's CFD development.",
-};
+export const metadata = pageMetadata("industries");
 
 export { default } from "@/components/pages/industries-page";

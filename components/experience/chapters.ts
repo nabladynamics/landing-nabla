@@ -6,7 +6,7 @@ export const chapters = [
     label: "The possibility",
     short: "Start",
     title: "Every great design\nstarts with a question",
-    body: "What if physical simulation could keep pace with your ideas? We are building a new CFD engine to help make that possible.",
+    body: "Nabla AI is developing a computational fluid dynamics (CFD) simulation engine to help engineers test ideas with less setup.",
     link: "Discover Nabla",
     href: "#team",
     image: "boeing",

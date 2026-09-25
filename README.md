@@ -25,10 +25,27 @@ npm run lint
 | `RESEND_API_KEY` | Server-side Resend key used by [app/api/contact/route.ts](app/api/contact/route.ts) to deliver contact-form email. |
 | `CONTACT_TO_EMAIL` | Recipient inbox for contact-form submissions. |
 | `CONTACT_FROM_EMAIL` | Optional sender identity; requires a domain verified in Resend (defaults to `onboarding@resend.dev`). |
-| `NEXT_PUBLIC_SITE_URL` | Canonical URL used for metadata / Open Graph (defaults to `http://localhost:3000`). |
+| `NEXT_PUBLIC_SITE_URL` | Public origin for canonical URLs, sitemap and social previews (defaults to `https://www.nabla.world`). Do not set this to localhost or a Vercel preview URL. |
+| `GOOGLE_SITE_VERIFICATION` | Optional additional Search Console HTML-tag verification token (the `content` value only). The primary owner's public marker is already included in `lib/seo.ts`; keep it to retain verification. |
 | `NEXT_PUBLIC_CONTACT_ENDPOINT` | Optional override for the form's POST target (e.g. Formspree) instead of the built-in `/api/contact`. |
 
 Copy `.env.example` to `.env.local` and fill in the values. Remember to add the server-side vars to your hosting provider (e.g. Vercel) on deploy.
+
+## Search visibility
+
+Public pages have unique titles, descriptions, canonical URLs and social metadata. Home includes `WebSite` and `Organization` structured data linking Nabla AI, Nabla and Nabla World to the public domain. `/sitemap.xml` lists Home, Industries and Contact; `/robots.txt` advertises it. Vercel preview builds use `noindex, nofollow` and disallow crawling. Production remains indexable.
+
+The owner's `https://www.nabla.world/` Search Console URL-prefix property uses the public HTML verification marker in `lib/seo.ts`. It is not a secret. Keep the marker in the rendered HTML so verification persists; no GoDaddy access or DNS changes are needed for this method. Historical `NEXT_PUBLIC_SITE_URL` values using `nabla.world` normalize to the deployed `https://www.nabla.world` origin.
+
+After deploying these changes:
+
+1. Check that `https://www.nabla.world/sitemap.xml` returns XML with the three public URLs and that each page has its own canonical URL. The apex domain should continue redirecting to `www`.
+2. Open [Google Search Console](https://search.google.com/search-console). Add or select the `nabla.world` Domain property and verify the TXT record with the DNS provider. Alternatively, add the `https://www.nabla.world/` URL-prefix property, set `GOOGLE_SITE_VERIFICATION` in Vercel Production to Google's HTML-tag token, redeploy, then verify.
+3. Submit `https://www.nabla.world/sitemap.xml` under **Sitemaps**.
+4. Inspect the home URL, use **Test live URL**, and request indexing. Inspect Industries and Contact if necessary. Check the Page indexing report for Google's actual exclusion reasons; search results alone do not diagnose them.
+5. Keep the website linked from the company LinkedIn profile and other relevant public profiles. Publish useful technical material and validated case studies as they become available, preserving the distinction between development goals and measured results.
+
+Google controls crawling and ranking. Indexing can take days or weeks, and a sitemap or indexing request does not guarantee inclusion or a position for competitive queries such as “CFD simulation”. See [Google's indexing guidance](https://developers.google.com/search/docs/crawling-indexing/ask-google-to-recrawl).
 
 ## Private page-view counter
 

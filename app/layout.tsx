@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { MotionProvider } from "@/components/motion-provider";
 import { site } from "@/lib/site";
+import { googleSiteVerification, isPreview, publicPages, siteUrl } from "@/lib/seo";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
@@ -10,41 +11,24 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "sw
 // Keep the static preview mode available before hydration.
 const staticPreviewScript = `(function(){try{if(new URLSearchParams(location.search).has("static")){document.documentElement.dataset.static="1"}}catch(e){}})();`;
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
-
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Nabla AI | A new physics-first CFD engine",
+    default: publicPages.home.title,
     template: "%s | Nabla AI",
   },
   description: site.description,
-  keywords: [
-    "CFD",
-    "computational fluid dynamics",
-    "physics-led simulation",
-    "adaptive resolution",
-    "physical validation",
-    "AI-generated design",
-    "aerodynamic simulation",
-    "engineering simulation",
-  ],
-  openGraph: {
-    type: "website",
-    siteName: site.name,
-    title: "Nabla AI | A new physics-first CFD engine",
-    description: site.description,
-    locale: "en_US",
-    url: siteUrl,
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Nabla AI | A new physics-first CFD engine",
-    description: site.description,
+  verification: {
+    google: [
+      googleSiteVerification,
+      ...(process.env.GOOGLE_SITE_VERIFICATION?.trim()
+        ? [process.env.GOOGLE_SITE_VERIFICATION.trim()]
+        : []),
+    ],
   },
   robots: {
-    index: true,
-    follow: true,
+    index: !isPreview,
+    follow: !isPreview,
   },
 };
 
